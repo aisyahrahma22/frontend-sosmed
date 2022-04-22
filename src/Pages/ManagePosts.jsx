@@ -28,17 +28,17 @@ class ManagePosts extends React.Component{
         let token = localStorage.getItem('myTkn')
         // this.props.onCheckUserVerify(token)
         this.onCheckIsLogedIn(token)
-
-        axios.get('http://localhost:5000/post/getposts', {headers: {
-            'Authorization': token,
-            'Accept' : 'application/json',
-            'Content-Type': 'application/json'
-        }})
+        const headers = {
+            headers: { 
+                'Authorization': `${token}`,
+            }
+        }
+        axios.get(`${API_URL}/post/getposts`, headers)
         .then((res) => {
             console.log(res)
-            this.setState({data: res.data.data})
-        })
-        .catch((err) => {
+            console.log(res.data)
+            this.setState({ listPosts: res.data })
+        }).catch((err) => {
             console.log(err)
         })
     }
@@ -48,24 +48,12 @@ class ManagePosts extends React.Component{
 
         if(token){
             this.setState({ isLogedIn: true })
-            // const headers = {
-            //     headers: { 
-            //         'Authorization': `Bearer ${token}`,
-            //         'Accept' : 'application/json',
-            //         'Content-Type': 'application/json'
-            //     }
-            // }
-            // axios.get(`${API_URL}/post/getposts`, headers)
-            // .then((res) => {
-            //     this.setState({ listPosts: res.data })
-            // }).catch((err) => {
-            //     console.log(err)
-            // })
         }
     }
 
     onAddImageFileChange = (e) => {
         if(e.target.files[0]) {
+            console.log('add image file', e.target.files[0] )
             this.setState({ addImageFileName: e.target.files[0].name, addImageFile: e.target.files[0]})
         }
         else {
@@ -103,7 +91,7 @@ class ManagePosts extends React.Component{
             console.log('token dari add post fe', token)
             var headers = {
                 headers: {
-                    'Authorization': `Bearer ${token}`,
+                    'Authorization': `${token}`,
                     'Content-Type': 'multipart/form-data'
                 }
             }
@@ -133,7 +121,7 @@ class ManagePosts extends React.Component{
         let token = localStorage.getItem('myTkn')
         const headers = {
             headers: { 
-                'Authorization': `Bearer ${token}`,
+                'Authorization': `${token}`,
             }
         }
         axios.delete(`${API_URL}/post/deletepost/${id}`,headers)
@@ -149,7 +137,7 @@ class ManagePosts extends React.Component{
          let token = localStorage.getItem('myTkn')
         var headers = {
             headers: {
-                'Authorization': `Bearer ${token}`,
+                'Authorization': `${token}`,
                 'Content-Type': 'multipart/form-data'
             }
         }
