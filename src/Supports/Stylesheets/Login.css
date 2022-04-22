@@ -1,0 +1,74 @@
+.my-universe-background-log{
+    background-image: url(./../Images/bg-09.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-x: right;
+}
+
+#login{
+    padding-top: 60px;
+    padding-bottom: 60px;
+    position: fixed;
+    display: flex;
+}
+
+.my-universe-form-input-login {
+    font-size: 0.8rem;
+    margin-top: 10px;
+    color: black;
+    width: 80%;
+    text-align: left;
+  }
+  
+.my-universe-form-input-login a {
+    text-decoration: none;
+    color: purple;
+    font-weight: 600;
+}
+
+.my-universe-login-container{
+    margin-top: 100px;
+}
+
+.my-universe-input-log{
+    border-bottom: 1px solid darkgrey;
+    height: 50px;
+}
+
+.my-universe-validation-alert{
+    height: 20px;
+    font-size: 0.8rem;
+    color: red;
+    font-family: 'Yatra One';
+    margin-left: 3px;
+
+}
+
+#my-universe-btn-log{
+    background-color: rgb(91, 1, 132);
+    color: white;
+    width: 150px;
+}
+
+
+#my-universe-btn-log:hover{
+    background-color: rgb(124, 101, 136);
+    color: black;
+}
+
+
+
+#my-universe-container-img-log{
+    border: 1px solid black;
+}
+
+.my-universe-form-log{
+    width: 300px;
+}
+
+.my-universe-welcome-log{
+    margin-top: 100px;
+    padding-top: 100px ;
+    margin-left: 30px;
+}

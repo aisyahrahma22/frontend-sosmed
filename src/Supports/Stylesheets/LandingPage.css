@@ -1,0 +1,38 @@
+.my-universe-background{
+    background-image: url(./../Images/MainPurple1.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-x: right;
+}
+
+
+#landingpage{
+  padding-top: 50px;
+  padding-bottom: 50px;
+  position: fixed;
+  display: flex;
+}
+
+.my-universe-homepage-image{
+    padding-bottom: 30px;
+    border: 1px solid black;
+    
+}
+
+.my-universe-font{
+    color: purple;
+}
+
+.my-universe-btn{
+    border-radius: 30px;
+    background-color: rgb(91, 1, 132);
+    color: white;
+    width: 150px;
+    margin-top: 20px;
+}
+
+.my-universe-btn:hover{
+    background-color: rgb(124, 101, 136);
+    color: black;
+}

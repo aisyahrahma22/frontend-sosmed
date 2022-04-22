@@ -1,0 +1,173 @@
+:root {
+    --main-light: #8399fe;
+    --main-dark: ;
+    --light: #fff;
+    --dark: ;
+    --secondary:  #00cb8e;
+    --light-grey: #e4e3e3;
+    --grey : #b9b9b9;
+    --warning : #faa816;
+    --danger : #FE4A49
+}
+
+/* My Background Color */
+
+.my-universe-bg-main-light {
+    background-color: var(--main-light);
+}
+
+.my-universe-bg-main-dark {
+    background-color: var(--main-dark);
+}
+
+.my-universe-bg-light {
+    background-color: var(--light);
+}
+
+.my-universe-bg-dark {
+    background-color: var(--dark);
+}
+
+.my-universe-bg-secondary {
+    background-color: var(--secondary);
+}
+
+.my-universe-bg-light-grey {
+    background-color: var(--light-grey);
+}
+
+.my-universe-bg-grey {
+    background-color: var(--grey);
+}
+
+.my-universe-bg-warning {
+    background-color: var(--warning);
+}
+
+.my-universe-bg-danger {
+    background-color: var(--danger);
+}
+
+/* My Font Color */
+
+.my-universe-main-light {
+    color: var(--main-light);
+}
+
+.my-universe-main-dark {
+    color: var(--main-dark);
+}
+
+.my-universe-light {
+    color: var(--light);
+}
+
+.my-universe-dark {
+    color: var(--dark);
+}
+
+.my-universe-secondary {
+    color: var(--secondary);
+}
+
+.my-universe-light-grey {
+    color: var(--light-grey);
+}
+
+.my-universe-grey {
+    color: var(--grey);
+}
+
+.my-universe-warning {
+    color: var(--warning);
+}
+
+/* My Custom Font Size */
+
+.my-universe-font-size-10 {
+    font-size: 10px;
+}
+
+.my-universe-font-size-12 {
+    font-size: 12px;
+}
+
+.my-universe-font-size-14 {
+    font-size: 14px;
+}
+
+.my-universe-font-size-15 {
+    font-size: 15px;
+}
+
+.my-universe-font-size-16 {
+    font-size: 16px;
+}
+
+.my-universe-font-size-18 {
+    font-size: 18px;
+}
+
+.my-universe-font-size-20 {
+    font-size: 20px;
+}
+
+.my-universe-font-size-25 {
+    font-size: 25px;
+}
+
+.my-universe-font-size-30 {
+    font-size: 30px;
+}
+
+.my-universe-font-size-40 {
+    font-size: 40px;
+}
+
+
+.my-universe-font-size-60 {
+    font-size: 60px;
+}
+
+.my-universe-font-size-70 {
+    font-size: 70px;
+}
+
+/* My Another Customs */
+
+.my-universe-link{
+    color: inherit;
+}
+
+.my-universe-link:hover{
+    color: inherit;
+    text-decoration: none;
+}
+
+.my-universe-clickable-element{
+    cursor: pointer;
+    -webkit-user-select: none; /* Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+}
+
+.my-universe-input:focus{
+    outline: none;
+    box-shadow: none;
+}
+
+/* Password eye */
+.my-universe-eye {
+    right: 10px;
+    cursor: pointer;
+    background-color: var(--dark-grey);
+    height: 40px;
+}
+
+.my-universe-eye-log {
+    right: 10px;
+    cursor: pointer;
+    background-color: var(--dark-grey);
+    height: 50px;
+}
