@@ -5,9 +5,9 @@ import { useParams } from 'react-router';
 import axios from 'axios';
 import { API_URL } from '../Supports/Helpers/index';
 import { connect } from 'react-redux';
-import {onUserLogin, onCheckUserLogin, onCheckUserVerify } from './../Redux/Actions/userAction'
+import {onUserLogin, onCheckUserLogin, onCheckUserVerify } from '../Redux/Actions/userAction'
 
-class ProfilePost extends Component {
+class DetailProfilePost extends Component {
 
     state = {
         is_disabled: false,
@@ -133,4 +133,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProfilePost)
+export default connect(mapStateToProps, mapDispatchToProps)(DetailProfilePost)

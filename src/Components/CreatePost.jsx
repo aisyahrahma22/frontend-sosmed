@@ -2,7 +2,9 @@
 import React, { Component } from 'react';
 import {Modal, ModalBody} from 'reactstrap';
 import axios from 'axios';
+import {onCheckUserVerify} from './../Redux/Actions/userAction'
 import { API_URL } from '../Supports/Helpers';
+import Swal from 'sweetalert2';
 
 export class CreatePost extends Component{
 
@@ -14,35 +16,57 @@ export class CreatePost extends Component{
         addImageFileName: 'Select Image...', 
         addImageFile: undefined, 
         captionAdd: '',
+        isLogedIn: false,
         previewImage: null,
     }
 
-    componentDidMount() {
-        const token = localStorage.getItem('token')
+    componentDidMount(){
+        let token = localStorage.getItem('myTkn')
+        // this.props.onCheckUserVerify(token)
+        this.onCheckIsLogedIn(token)
         const headers = {
             headers: { 
-                'Authorization': `Bearer ${token}`,
+                'Authorization': `${token}`,
             }
         }
         axios.get(`${API_URL}/post/getposts`, headers)
         .then((res) => {
+            console.log(res)
+            console.log('ini res.data get',res.data)
             this.setState({ listPosts: res.data })
         }).catch((err) => {
-            console.log(err)
+            console.log('ini err get',err)
         })
+    }
+
+    onCheckIsLogedIn = () => {
+        let token = localStorage.getItem('myTkn')
+
+        if(token){
+            this.setState({ isLogedIn: true })
+        }
     }
 
     onAddImageFileChange = (e) => {
         if(e.target.files[0]) {
-            this.setState({ addImageFileName: e.target.files[0].name, addImageFile: e.target.files[0], previewImage: e.target.files[0]})
+            console.log('add image file', e.target.files[0] )
+            this.setState({ addImageFileName: e.target.files[0].name, addImageFile: e.target.files[0]})
+            const reader = new FileReader()
+            reader.readAsDataURL(e.target.files[0])
+            reader.onload = () => {
+                if(reader.readyState === 2){
+                    this.setState({previewImage: reader.result})
+                }
+            }
         }
         else {
-            this.setState({ addImageFileName: 'Select Image...', addImageFile: undefined, previewImage:'Preview here' })
+            this.setState({ addImageFileName: 'Select Image...', addImageFile: undefined })
         }
     }
 
     onCaptionAddChange = (e) => {
-        if(e.target.value.length <= 100) {
+        console.log('ini caption add', e.target.value)
+        if(e.target.value.length <= 300) {
             this.setState({ captionAdd: e.target.value })
         }
     }
@@ -50,10 +74,11 @@ export class CreatePost extends Component{
     onBtnAddPostClick = () => {
         if(this.state.addImageFile) {
             var formData = new FormData()
-            const token = localStorage.getItem('token')
+            let token = localStorage.getItem('myTkn')
+            console.log('token dari add post fe', token)
             var headers = {
                 headers: {
-                    'Authorization': `Bearer ${token}`,
+                    'Authorization': `${token}`,
                     'Content-Type': 'multipart/form-data'
                 }
             }
@@ -68,16 +93,32 @@ export class CreatePost extends Component{
             axios.post(API_URL + "/post/addpost", formData, headers)
             .then((res) => {
                 this.setState({ listPosts: res.data })
+                Swal.fire({
+                    title: 'Success!',
+                    text: res.data.message,
+                    icon: 'success',
+                    confirmButtonText: 'Okay!'
+                })
+                // this.data.value =''
             })
             .catch((err) =>{
-                console.log(err)
+                Swal.fire({
+                    title: 'Error!',
+                    text: err.message,
+                    icon: 'error',
+                    confirmButtonText: 'Okay!'
+                })
             })
         }
         else {
-            alert('Image harus diisi!')
+            Swal.fire({
+                title: 'Error!',
+                text: 'Image Empty Please Input in JPEG or JPG Format',
+                icon: 'error',
+                confirmButtonText: 'Okay!'
+            })
         }
     }
-
 
     render(){
         return(
@@ -96,7 +137,7 @@ export class CreatePost extends Component{
                         </div>
                         <div className="px-3">
                             <div className="row justify-content-center">
-                                <div className="col-12 d-flex justify-content-center align-items-center border border-primary" style={{width: '100%', height:'200px'}}>
+                                <div className="col-12 d-flex justify-content-center align-items-center border border-secondary" style={{width: '100%', height:'200px'}}>
                                 {
                                     this.state.previewImage? <img src={this.state.previewImage} alt='Image Preview' width='50%' /> : 'Image Preview'
                                 }
@@ -114,7 +155,7 @@ export class CreatePost extends Component{
                                 </div>
                             </div>
                                 <div className="col-12">
-                                    Error Message
+                                 
                                 </div>
                                 <div className="col-12 mt-3">
                                     <input type="button" value="Submit" className="btn btn-primary w-100" onClick={this.onBtnAddPostClick}/>

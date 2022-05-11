@@ -1,4 +1,5 @@
 import Axios from 'axios';
+import Swal from 'sweetalert2';
 
 export const onUserRegister = (username, email, password) => {
     return(dispatch) => {
@@ -44,20 +45,33 @@ export const onUserLogin = (data) => {
             type: 'LOADING'
         })
 
-        if(!data.email || !data.password){
+        if(!data.account || !data.password){
             return dispatch({
                 type: 'LOGIN_ERROR',
-                payload: { error: true, message: 'Fill All Data!' }
+                payload: { error: true, message:  Swal.fire({
+                    title: 'Error!',
+                    text: 'Fill All Data!' ,
+                    icon: 'error',
+                    confirmButtonText: 'Okay!'
+                })
+                }
             })
         }
 
-        Axios.post('http://localhost:5000/user/login', {email: data.email, password: data.password})
+        Axios.post('http://localhost:5000/user/login', {account: data.account, password: data.password})
         .then((res) => {
+            console.log('ini res', res)
             if(res.data.error === true){
+                console.log('ini res.data.error', res.data.error)
                 dispatch(
                     {
                         type: 'LOGIN_ERROR',
-                        payload: res.data
+                        payload: Swal.fire({
+                            title: 'Error!',
+                            text: res.data.message,
+                            icon: 'error',
+                            confirmButtonText: 'Okay!'
+                        })
                     }
                 )
             }else if(res.data.error === false){
@@ -65,7 +79,7 @@ export const onUserLogin = (data) => {
                 dispatch(
                     {
                         type: 'LOGIN_SUCCESS',
-                        payload: { error: res.data.error, message: res.data.message }
+                        payload: { error: res.data.error, message: res.data.message, id:res.data.id }
                     }
                 )
             }
@@ -74,7 +88,12 @@ export const onUserLogin = (data) => {
             dispatch(
                 {
                     type: 'LOGIN_ERROR',
-                    payload: err.response.data // { error: true, message: ... }
+                    payload: Swal.fire({
+                        title: 'Error!',
+                        text:  err.response.data,
+                        icon: 'error',
+                        confirmButtonText: 'Okay!'
+                    })// { error: err.response.data  true, message: ... }
                 }
             )
         })

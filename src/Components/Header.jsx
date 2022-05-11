@@ -4,7 +4,7 @@ import '../Supports/Stylesheets/Navbar.css';
 import { CreatePost } from './CreatePost';
 // Redux
 import {connect} from 'react-redux';
-import {onUserLogin, onCheckUserLogin, onUserLogout } from './../Redux/Actions/userAction'
+import {onUserLogin, onCheckUserLogin, onUserLogout, onCheckUserVerify } from './../Redux/Actions/userAction'
 
 class Header extends React.Component{
 
@@ -42,35 +42,39 @@ class Header extends React.Component{
                    </div>
                 </div>
                 <div className="col-12 col-md-6">
-                    <div className='d-flex mt-2'>
-                        <div className='col-3'>
+                    <div className='d-flex justify-content-center mt-2'>
+                        <div className='mx-3'>
                             <Link to="/" style={{cursor: 'pointer', color: 'black'}}>
                                 <span class="material-icons">
                                     home
                                 </span>  
                             </Link>
                         </div>
-                        <div className='col-3' style={{cursor: 'pointer'}}>
-                            <CreatePost
-                            modalOpen={this.state.modalOpen}
-                            handleModal={this.handleModalLogin}
-                            />
+                        <div className='mx-3' style={{cursor: 'pointer'}}>
+                            {
+                                this.props.user.is_confirmed === 1?
+                               <>
+                                 <CreatePost
+                                    modalOpen={this.state.modalOpen}
+                                    handleModal={this.handleModalLogin}
+                                />
+                               </>
+                                    :
+                                <span className="ml-3">
+                                    <span class="material-icons">
+                                    add_a_photo
+                                    </span>
+                                </span>
+                            }
                         </div>
-                        <div className='col-3'>
+                        <div className='mx-3'>
                             <Link to="/profile">
                                 <span class="material-icons" style={{cursor: 'pointer', color: 'black'}}>
                                     account_circle
                                 </span>
                             </Link>
                         </div>
-                        <div className='col-3'>
-                            <Link to="/manageposts">
-                                <span  style={{cursor: 'pointer', color: 'black'}}>
-                                   post
-                                </span>
-                            </Link>
-                        </div>
-                        <div className='col-3'>
+                        <div className='mx-3'>
                             <span class="material-icons" style={{cursor: 'pointer'}} onClick={this.onBtnLogOutClick}>
                                 logout
                             </span>
@@ -112,7 +116,7 @@ class Header extends React.Component{
 }
 
 const mapDispatchToProps = {
-    onUserLogin, onCheckUserLogin,  onUserLogout
+    onUserLogin, onCheckUserLogin, onUserLogout, onCheckUserVerify
 }
 
 const mapStateToProps = (state) => {

@@ -21,6 +21,8 @@ import thunk from 'redux-thunk';
 import allReducer from './Redux/Reducers/Index';
 import ManagePosts from './Pages/ManagePosts';
 import LandingPage from './Pages/LandingPage';
+import DetailPost from './Components/DetailPost';
+import DetailProfile from './Components/DetailProfile';
 
 const store = createStore(allReducer, applyMiddleware(thunk))
 
@@ -41,6 +43,8 @@ function App() {
           <Route path="/manageposts" element={<ManagePosts />} />
           <Route path="/confirmation/:token" element={<Confirmation />} />
           <Route path="/confirmationcode/:id" element={<ConfirmationCode />} />
+          <Route path="/detailpost/:id" element={<DetailPost />} />
+          <Route path="/detailprofile/:id" element={<DetailProfile />} />
         </Routes>
       </Provider>
     </div>

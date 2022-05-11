@@ -50,7 +50,7 @@ class Login extends React.Component{
 
     onSubmit = () => {
         let data = {
-            email: this.email.value,
+            account: this.account.value,
             password: this.password.value
         }
 
@@ -83,7 +83,7 @@ class Login extends React.Component{
                             <div className="input-group d-flex flex-column">
                                <div className="">
                                <input 
-                                ref={(e) => this.email = e} type="text" placeholder="Email" 
+                                ref={(e) => this.account = e} name="account" type="text" placeholder="Email or Username" 
                                 className='form-control rounded-0 border-top-0 border-left-0 border-right-0'
                                 required />
                                </div>
@@ -104,21 +104,25 @@ class Login extends React.Component{
                             </div>
                         </div>
                         <div className="">
-                            <input 
-                            type="button" name="submit" disabled={this.props.user.loading} className="submit btn w-100 my-universe-bg-secondary my-universe-light" value="Login" 
-                            onClick={() => this.onSubmit()}
-                            id="my-universe-btn-log"/>
+                        <button type="submit" id="my-universe-btn-log" disabled={this.props.user.loading} onClick={() => this.onSubmit()} className="btn w-100 my-universe-bg-secondary my-universe-light">
+                            {
+                                this.props.user.loading?
+                                    'Loading'
+                                :
+                                    'Login'
+                            }
+                        </button>
                         </div>
                     </form>
                     <div>
-                        <h6>
+                        {/* <h6>
                             {
                                 this.props.user.error?
                                     this.props.user.message
                                 :
                                     null
                             }
-                        </h6>
+                        </h6> */}
                     </div>
                 </div>
                 </div>     

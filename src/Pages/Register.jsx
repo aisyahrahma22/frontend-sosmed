@@ -88,7 +88,7 @@ class Register extends React.Component{
             // Validation
             if(username=='' || email =='' ||password == '' || passwordConf == '') throw { message: 'Fill All Data!' }
             if(!/\S+@\S+\.\S+/.test(email)) throw { message: 'Email address is invalid' }
-            if(!username.match("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{4,}") || !username.match("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{4,}")) throw { message: 'Username should be contain uppercase, number, and symbol' }
+            if(!username.match("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{4,}")) throw { message: 'Username should be contain uppercase, number, and symbol' }
             if(!password.match("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])")) throw { message: 'Password should be contain uppercase, number, and symbol' }
             if(password.length < 8) throw { message: 'Password weak, please add more characters' }
             if(password !== passwordConf) throw { message: 'Password and Confirmation Password doesnt match!' }
@@ -200,8 +200,16 @@ class Register extends React.Component{
                          </div>
                      </div>
                      <div className="">
-                         <input type="button" name="submit" id="my-universe-btn-reg" className="submit btn w-100 my-universe-bg-secondary my-universe-light" defaultValue="Register" 
-                         disabled={this.state.is_disabled} onClick={() => this.onSubmit()}  />
+                     <button type="submit" id="my-universe-btn-reg" disabled={this.state.is_disabled} onClick={() => this.onSubmit()} className="btn  w-100 my-universe-bg-secondary my-universe-light">
+                            {
+                                this.state.is_disabled?
+                                    'Loading'
+                                :
+                                    'Register'
+                            }
+                        </button>
+                         {/* <input type="button" name="submit" id="my-universe-btn-reg" className="submit btn w-100 my-universe-bg-secondary my-universe-light" defaultValue="Register" 
+                         disabled={this.state.is_disabled} onClick={() => this.onSubmit()}  /> */}
                      </div>
                  </form>
                  <div>
