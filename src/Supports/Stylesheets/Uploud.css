@@ -1,0 +1,104 @@
+#upload {
+    opacity: 0;
+}
+
+#upload-label {
+    position: absolute;
+    top: 50%;
+    left: 1rem;
+    transform: translateY(-50%);
+}
+
+.uploud-body{
+    background-image: url(./../Images/Peoples01.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-x: right;
+    
+}
+
+#my-universe-btn-uploud{
+    background-color: rgb(91, 1, 132);
+    color: white;
+    width: 150px;
+}
+
+
+#my-universe-btn-uploud:hover{
+    background-color: rgb(124, 101, 136);
+    color: black;
+}
+
+.image-area {
+    border: 2px dashed white;
+    padding: 1rem;
+    position: relative;
+}
+
+.wrap-area{
+    width: 100%;
+    background-color: #fff;
+    border-radius: 31px;
+    position: relative;
+    z-index: 1;
+}
+
+.btn-light {
+    color: #212529;
+    background-color: #f8f9fa;
+    border-color: #f8f9fa;
+}
+
+.btn-uploud {
+    padding: 11px 16px;
+    cursor: pointer;
+    border-width: 1px;
+    border-radius: 0;
+    font-size: 14px;
+    font-weight: 400;
+    box-shadow: 0 10px 20px -6px rgb(0 0 0 / 12%);
+    overflow: hidden!important;
+}
+
+textarea.wrap-area {
+    min-height: 169px;
+    padding: 19px 35px 0 35px;
+}
+
+.caption-container {
+    position: relative;
+    display: block;
+    width: 100%;
+    background: #fff;
+    border-radius: 31px;
+    font-family: Ubuntu-Bold;
+    font-size: 18px;
+    color: #8f8fa1;
+    line-height: 1.2;
+    box-sizing: border-box;
+}
+
+.uploud-container{
+    width: 80%;
+    margin-left: 50px;
+    display: flex;
+    flex-direction: column;
+}
+
+.image-area::before {
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.8rem;
+    z-index: 1;
+}
+
+.image-area img {
+    z-index: 2;
+    position: relative;
+}

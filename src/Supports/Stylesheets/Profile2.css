@@ -1,0 +1,175 @@
+.i {
+    display: flex;
+    height: 80vh;
+  }
+
+  .my-universe-background-pro{
+    background-image: url(./../Images/01.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-x: right;
+}
+  
+  .i-left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+  }
+  
+  .i-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .i-left-wrapper {
+    padding: 0px;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .i-intro {
+    font-size: 30px;
+    font-weight: 300;
+  }
+  
+  .i-name {
+    font-size: 60px;
+    color: rgb(91, 1, 132);
+  }
+  
+  .i-title {
+    height: 50px;
+  }
+  
+  .i-title-wrapper {
+    height: 100%;
+  }
+  
+  .i-title-item {
+    height: 50px;
+    font-size: 30px;
+    font-weight: bold;
+    color: black;
+    display: flex;
+    align-items: center;
+  }
+
+  .a-award-title{
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 10px;
+}
+  
+  .i-scroll {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    bottom: 20px;
+  }
+  
+  .i-img {
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .userImg {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+  }
+  
+  .i-bg {
+    width: 100%;
+    height: 65px;
+  }
+  
+  @media screen and (max-width: 480px) {
+    .i {
+      flex-direction: column;
+    }
+  
+    .i-left-wrapper {
+    
+      padding: 10px;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      height: 100%;
+    }
+  
+    .i-desc{
+      display: none;
+    }
+    
+  }
+  
+/* sesi 2 */
+.pl {
+    padding: 10px 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .pl-texts {
+    width: 65%;
+  }
+  
+  .pl-title {
+    font-size: 50px;
+    font-weight: 600;
+  }
+  
+  .pl-desc {
+    margin: 20px 0px;
+  }
+  
+  .pl-list {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  @media screen and (max-width: 480px) {
+    .pl {
+      padding: 10px;
+    }
+  
+    .pl-texts {
+      width: 100%;
+    }
+  
+    .pl-desc {
+      display: none;
+    }
+  }
+  
+  /* sesi 3 */
+  label {
+    margin-top: 10px;
+    float: left;
+    font-size: 15px;
+    font-weight: bold;
+  }
+  
+  h2 {
+    font-weight: bold;
+  }
+  .modal_container {
+    margin: 0 20%;
+  }

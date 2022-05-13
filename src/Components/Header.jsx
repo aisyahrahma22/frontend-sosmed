@@ -31,57 +31,59 @@ class Header extends React.Component{
     render(){
         if(this.props.user.is_login){
             return(
-                <div className='row'>
-                <div className='col-12 col-md-6'>
-                   <div className='d-flex mx-5'>
-                   <Link to="/" className='m' style={{ textDecoration: "none", color: 'black' }}>
-                        <h3 className='ml-5 px-3 my-universe-font-size-40' id='my-universe-navbar-logo' >
-                           myUniverse
-                        </h3>
-                    </Link>
-                   </div>
-                </div>
-                <div className="col-12 col-md-6">
-                    <div className='d-flex justify-content-center mt-2'>
-                        <div className='mx-3'>
-                            <Link to="/" style={{cursor: 'pointer', color: 'black'}}>
-                                <span class="material-icons">
-                                    home
-                                </span>  
+                <div className='container-fluid' style={{position: 'fixed', zIndex: '2', width: '100%', background: 'white'}}>
+                    <div className='row'>
+                        <div className='col-12 col-md-6'>
+                        <div className='d-flex mx-5'>
+                        <Link to="/" style={{ textDecoration: "none", color: 'black' }}>
+                                <h3 className='ml-5 px-3 my-universe-font-size-40 pb-3' id='my-universe-navbar-logo' >
+                                myUniverse
+                                </h3>
                             </Link>
                         </div>
-                        <div className='mx-3' style={{cursor: 'pointer'}}>
-                            {
-                                this.props.user.is_confirmed === 1?
-                               <>
-                                 <CreatePost
-                                    modalOpen={this.state.modalOpen}
-                                    handleModal={this.handleModalLogin}
-                                />
-                               </>
-                                    :
-                                <span className="ml-3">
-                                    <span class="material-icons">
-                                    add_a_photo
+                        </div>
+                        <div className="col-12 col-md-6">
+                            <div className='d-flex justify-content-center mt-4'>
+                                <div className='mx-3'>
+                                    <Link to="/">
+                                        <span class="material-icons" style={{cursor: 'pointer', color: 'rgb(91, 1, 132)'}}>
+                                            home
+                                        </span>  
+                                    </Link>
+                                </div>
+                                <div className='mx-3' style={{cursor: 'pointer'}}>
+                                    {
+                                        this.props.user.is_confirmed === 1?
+                                    <>
+                                        <CreatePost
+                                            modalOpen={this.state.modalOpen}
+                                            handleModal={this.handleModalLogin}
+                                        />
+                                    </>
+                                            :
+                                        <span className="ml-3">
+                                            <span className="material-icons"  style={{cursor: 'pointer', color: 'rgb(91, 1, 132)'}}>
+                                            add_a_photo
+                                            </span>
+                                        </span>
+                                    }
+                                </div>
+                                <div className='mx-3'>
+                                    <Link to="/profile">
+                                        <span class="material-icons" style={{cursor: 'pointer', color: 'rgb(91, 1, 132)'}}>
+                                            account_circle
+                                        </span>
+                                    </Link>
+                                </div>
+                                <div className='mx-3'>
+                                    <span class="material-icons" style={{cursor: 'pointer', color:'rgb(91, 1, 132)'}} onClick={this.onBtnLogOutClick}>
+                                        logout
                                     </span>
-                                </span>
-                            }
-                        </div>
-                        <div className='mx-3'>
-                            <Link to="/profile">
-                                <span class="material-icons" style={{cursor: 'pointer', color: 'black'}}>
-                                    account_circle
-                                </span>
-                            </Link>
-                        </div>
-                        <div className='mx-3'>
-                            <span class="material-icons" style={{cursor: 'pointer'}} onClick={this.onBtnLogOutClick}>
-                                logout
-                            </span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
             )
         }
 

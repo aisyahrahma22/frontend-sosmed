@@ -2,9 +2,11 @@
 import React, { Component } from 'react';
 import {Modal, ModalBody} from 'reactstrap';
 import axios from 'axios';
-import {onCheckUserVerify} from './../Redux/Actions/userAction'
 import { API_URL } from '../Supports/Helpers';
 import Swal from 'sweetalert2';
+import '../Supports/Stylesheets/Uploud.css';
+import Uploud2 from '../Supports/Images/Uploud2.png';
+
 
 export class CreatePost extends Component{
 
@@ -22,21 +24,7 @@ export class CreatePost extends Component{
 
     componentDidMount(){
         let token = localStorage.getItem('myTkn')
-        // this.props.onCheckUserVerify(token)
         this.onCheckIsLogedIn(token)
-        const headers = {
-            headers: { 
-                'Authorization': `${token}`,
-            }
-        }
-        axios.get(`${API_URL}/post/getposts`, headers)
-        .then((res) => {
-            console.log(res)
-            console.log('ini res.data get',res.data)
-            this.setState({ listPosts: res.data })
-        }).catch((err) => {
-            console.log('ini err get',err)
-        })
     }
 
     onCheckIsLogedIn = () => {
@@ -46,6 +34,8 @@ export class CreatePost extends Component{
             this.setState({ isLogedIn: true })
         }
     }
+
+    
 
     onAddImageFileChange = (e) => {
         if(e.target.files[0]) {
@@ -68,6 +58,13 @@ export class CreatePost extends Component{
         console.log('ini caption add', e.target.value)
         if(e.target.value.length <= 300) {
             this.setState({ captionAdd: e.target.value })
+        }else{
+            Swal.fire({
+                title: 'Error!',
+                text: 'Caption too long',
+                icon: 'error',
+                confirmButtonText: 'Okay!'
+            })
         }
     }
 
@@ -99,7 +96,10 @@ export class CreatePost extends Component{
                     icon: 'success',
                     confirmButtonText: 'Okay!'
                 })
-                // this.data.value =''
+                this.setState({ modalOpen: false })
+                window.location.reload(false)
+
+                
             })
             .catch((err) =>{
                 Swal.fire({
@@ -123,47 +123,59 @@ export class CreatePost extends Component{
     render(){
         return(
             <>
-                <div type="button"  onClick={() => this.setState({modalOpen: true})} className="rounded-0">
-                    <span class="material-icons">
-                    add_a_photo
-                    </span>
-                </div>
-                <Modal toggle={() => this.setState({modalOpen: false})} isOpen={this.state.modalOpen}>
-                    <ModalBody>
-                        <div className="text-center px-3 py-3">
-                            <h3>
-                                Insert Photo
-                            </h3>
+            <div type="button"  onClick={() => this.setState({modalOpen: true})} className="rounded-0">
+                <span className="material-icons"  style={{cursor: 'pointer', color: 'rgb(91, 1, 132)'}}>
+                add_a_photo
+                </span>
+            </div>
+            <Modal toggle={() => this.setState({modalOpen: false})} isOpen={this.state.modalOpen}>
+                <ModalBody className="border border-white">
+                <div className="text-right mytetring-clickable-element">
                         </div>
-                        <div className="px-3">
-                            <div className="row justify-content-center">
-                                <div className="col-12 d-flex justify-content-center align-items-center border border-secondary" style={{width: '100%', height:'200px'}}>
-                                {
-                                    this.state.previewImage? <img src={this.state.previewImage} alt='Image Preview' width='50%' /> : 'Image Preview'
-                                }
-                                </div>
-                                <div className="col-6 mt-3">
-                                    <div>
-                                        <input id="addImagePost" type="file" label={this.state.addImageFileName} onChange={this.onAddImageFileChange}/>
-                                    </div>
-                                </div>
-                                <div className="form-group mt-3 mb-3">
-                                <div className="input-group">
-                                    <textarea value={this.state.captionAdd} onChange={this.onCaptionAddChange} placeholder="Caption.." className="rounded-0"> </textarea>
-                                    <div className="input-group-prepend">
-                                    </div>
-                                </div>
-                            </div>
-                                <div className="col-12">
-                                 
-                                </div>
-                                <div className="col-12 mt-3">
-                                    <input type="button" value="Submit" className="btn btn-primary w-100" onClick={this.onBtnAddPostClick}/>
-                                </div>
+                        <div className="pt-0 pb-3 text-left mr-5">
+                            <div className="pt-1 pb-3 text-right">
+                                <h3><span className="font-weight-bold" style={{fontFamily: "Source Sans Pro"}}>Create</span><span className="font-weight-light">Post</span></h3>
+                                <h5 className="font-weight-normal mytetring-font-size-14 mytetring-grey" style={{fontFamily: "Source Sans Pro"}}>Share your moment with us!</h5>
                             </div>
                         </div>
-                    </ModalBody>
-                </Modal>
+                        <div className="text-center">
+                        {
+                        this.state.previewImage? <img src={this.state.previewImage} id="imageResult" alt='Image Preview' width="300px" className="img-fluid rounded shadow-sm mx-auto d-block" /> :  <img src={Uploud2} alt="" width="300px" />
+                        }  
+                        </div>
+                        <div className="px-5 py-0">
+                            <div className="form-group mt-3 mb-3">
+                                <div className="d-flex justtify-content-center">
+                                <input style={{fontFamily: "Source Sans Pro", color: 'rgb(91, 1, 132)'}} type="file" label={this.state.addImageFileName} onChange={this.onAddImageFileChange} className="form-control rounded-0 border-0"/>
+                                </div>
+                            </div>
+                            <div className="form-group mt-3 mb-3">
+                                <h3 className='ml-2 text-center' style={{fontSize: '16px', color: 'rgb(91, 1, 132)', fontFamily: "Source Sans Pro"}}><span className="font-weight-bold" style={{fontFamily: "Source Sans Pro"}}>What's on</span><span className="font-weight-light mx-2" style={{fontFamily: "Source Sans Pro"}}>your mind?</span></h3>
+                                {/* <div className="input-group" style={{width: '365px', height:'55px', border: '1px solid rgb(124, 101, 136)'}}>
+                                </div> */}
+                                <textarea
+                                value={this.state.captionAdd} onChange={this.onCaptionAddChange} 
+                                name="editUserCaption"
+                                style={{fontFamily: "Source Sans Pro"}}
+                                id="Caption"
+                                type="text"
+                                placeholder="Caption.."
+                                className="form-control rounded-0"
+                                />
+                            </div>
+                            <div className="pt-3 pb-5">
+                                <button style={{fontFamily: "Source Sans Pro"}} disabled={this.state.isLoading} onClick={this.onBtnAddPostClick} className="btn rounded w-100 d-flex justify-content-center" id='my-universe-btn-uploud'>
+                                    {
+                                        this.state.isLoading? 
+                                           'Loading'
+                                        :
+                                            'Submit'
+                                    }    
+                                </button>
+                            </div>
+                        </div>
+                </ModalBody>
+            </Modal>
             </>
         )
     }

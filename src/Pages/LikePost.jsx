@@ -15,7 +15,7 @@ import {onUserLogin, onCheckUserLogin, onCheckUserVerify} from './../Redux/Actio
 // import { flushSync } from 'react-dom';
 
 
-class Home extends React.Component{
+class LikedPost extends React.Component{
     state = {
         limit: 0,
         isLoading: false,
@@ -230,7 +230,7 @@ class Home extends React.Component{
         if(this.props.user.is_login){
             return(
                 <>
-                <div className='container-fluid my-universe-background-home'>
+                <div className='container-fluid'>
                     <div className='pt-3'>
                     {
                         this.props.user.is_confirmed === 1?
@@ -244,14 +244,7 @@ class Home extends React.Component{
                     }                   
                     <div className='container'>
                         <div className='row mt-5 pt-5'>
-                        <InfiniteScroll
-                        dataLength={this.state.listPosts.length}
-                        next={this.getAllPost}
-                        style={{ display: 'flex', flexWrap: 'wrap' }} //To put endMessage and loader to the top.
-                        hasMore={true}
-                    >
                         {this.renderListPosts()}
-                    </InfiniteScroll>
                         </div>
 
                     </div>
@@ -285,4 +278,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home)
+export default connect(mapStateToProps, mapDispatchToProps)(LikedPost)

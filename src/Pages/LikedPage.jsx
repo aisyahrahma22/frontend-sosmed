@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import { Navigate, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import {onUserLogin, onCheckUserLogin, onCheckUserVerify } from './../Redux/Actions/userAction'
+import {onUserLogin, onCheckUserLogin, onCheckUserVerify } from '../Redux/Actions/userAction'
 import Verified from './../Supports/Images/Verified2.png';
 import axios from 'axios';
 import { API_URL } from '../Supports/Helpers/index';
-import ProfilePosts from './ProfilePosts';
+import LikedPost from './LikePost';
 import Swal from 'sweetalert2';
 // import '../Supports/Stylesheets/Coba.css';
 import Peoples88 from '../Supports/Images/Peoples88.png';
 import '../Supports/Stylesheets/Profile2.css';
 
-class Profile extends Component {
+class LikedPage extends Component {
     state = { 
         profileimage: '',
         username: '',
@@ -225,9 +225,6 @@ class Profile extends Component {
                         <div className="pl">
                             <div className='col-12 mb-3' style={{borderTop: '1px solid purple'}}></div>
                             <div className='left'>
-                                <Link to={`/likedpage`} style={{cursor: 'pointer', textDecoration: 'none'}}>
-                                    <span style={{fontFamily: "Source Sans Pro"}}>liked page</span>
-                                </Link>
                                 <span style={{fontFamily: "Source Sans Pro"}}>COLLECTION</span>
                                 <h1 style={{fontFamily: "Source Sans Pro"}}>Welcome to my Gallery</h1>
                                 </div>
@@ -242,7 +239,7 @@ class Profile extends Component {
                                 </p> */}
                             </div>
                             <div className="pl-list">
-                            <ProfilePosts/>
+                            <LikedPost/>
                             </div>
                             </div>
                         </div>
@@ -344,4 +341,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default connect(mapStateToProps, mapDispatchToProps)(LikedPage);

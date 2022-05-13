@@ -1,43 +1,6 @@
 import Axios from 'axios';
 import Swal from 'sweetalert2';
-
-export const onUserRegister = (username, email, password) => {
-    return(dispatch) => {
-        dispatch(
-            {
-                type: 'LOADING'
-            }
-        )
-
-        if(!username || !email || !password){
-            return dispatch(
-                {
-                    type: 'REGISTER_ERROR',
-                    payload: { error: true, message: 'Fill All Data!' }
-                }
-            )
-        }
-
-        Axios.post('http://localhost:5000/user/register', {username, email, password})
-        .then((res) => {
-            console.log(res)
-            dispatch(
-                {
-                    type: 'REGISTER_SUCCESS',
-                    payload: res.data
-                }
-            )
-        })
-        .catch((err) => {
-            dispatch(
-                {
-                    type: 'REGISTER_ERROR',
-                    payload: err.response.data
-                }
-            )
-        })
-    }
-}
+import { API_URL } from '../../Supports/Helpers/index';
 
 export const onUserLogin = (data) => {
     return(dispatch) => {
@@ -52,13 +15,14 @@ export const onUserLogin = (data) => {
                     title: 'Error!',
                     text: 'Fill All Data!' ,
                     icon: 'error',
-                    confirmButtonText: 'Okay!'
+                    confirmButtonText: 'Okay!',
+                    timer: 1500
                 })
                 }
             })
         }
 
-        Axios.post('http://localhost:5000/user/login', {account: data.account, password: data.password})
+        Axios.post(`${API_URL}/user/login`, {account: data.account, password: data.password})
         .then((res) => {
             console.log('ini res', res)
             if(res.data.error === true){
@@ -70,7 +34,8 @@ export const onUserLogin = (data) => {
                             title: 'Error!',
                             text: res.data.message,
                             icon: 'error',
-                            confirmButtonText: 'Okay!'
+                            confirmButtonText: 'Okay!',
+                            timer: 1500
                         })
                     }
                 )
@@ -124,7 +89,7 @@ export const onCheckUserLogin = () => {
 
 export const onCheckUserVerify = (token) => {
     return(dispatch) => {
-        Axios.post('http://localhost:5000/user/checkuserverify', {}, {headers: {
+        Axios.post(`${API_URL}/user/checkuserverify`, {}, {headers: {
             'Authorization': token,
             'Accept' : 'application/json',
             'Content-Type': 'application/json'

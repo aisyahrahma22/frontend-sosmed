@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Navigate, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import {onUserLogin, onCheckUserLogin } from './../Redux/Actions/userAction'
+import {onUserLogin, onCheckUserLogin } from '../Redux/Actions/userAction'
 import ManagePosts from './ManagePosts';
 import axios from 'axios';
 import { API_URL } from '../Supports/Helpers/index';

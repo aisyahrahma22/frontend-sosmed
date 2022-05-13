@@ -1,0 +1,17 @@
+.reset-password {
+    height: 100vh;
+    padding-top: 150px;
+  }
+  
+  .container-reset-password {
+    width: 450px;
+  }
+  
+  .input-invalid {
+    border-color: red;
+  }
+  
+  .validation-alert {
+    margin-top: 7px;
+    font-size: 13px;
+  }

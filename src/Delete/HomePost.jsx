@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { API_URL } from '../Supports/Helpers';
 import { Navigate } from 'react-router-dom';
-import {onUserLogin, onCheckUserLogin } from './../Redux/Actions/userAction'
+import {onUserLogin, onCheckUserLogin } from '../Redux/Actions/userAction'
 import { connect } from 'react-redux';
 
 class HomePosts extends Component {

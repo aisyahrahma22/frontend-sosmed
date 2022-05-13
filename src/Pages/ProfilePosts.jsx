@@ -6,10 +6,11 @@ import "../Components/card.css";
 import Heart from "../Supports/Images/heart.svg";
 import HeartFilled from "../Supports/Images/heartFilled.svg";
 import Comment from "../Supports/Images/comment.svg";
+import '../Supports/Stylesheets/ProfilePosts.css';
 
 // Redux
 import {connect} from 'react-redux';
-import {onUserRegister, onCheckUserLogin,  onCheckUserVerify} from '../Redux/Actions/userAction';
+import {onCheckUserLogin,  onCheckUserVerify} from '../Redux/Actions/userAction';
 
 
 class ProfilePosts extends React.Component{
@@ -55,70 +56,11 @@ class ProfilePosts extends React.Component{
         }
     }
 
-    onAddImageFileChange = (e) => {
-        if(e.target.files[0]) {
-            console.log('add image file', e.target.files[0] )
-            this.setState({ addImageFileName: e.target.files[0].name, addImageFile: e.target.files[0]})
-        }
-        else {
-            this.setState({ addImageFileName: 'Select Image...', addImageFile: undefined })
-        }
-    }
-
-    onEditImageFileChange = (e) => {
-        if(e.target.files[0]) {
-            this.setState({ editImageFileName: e.target.files[0].name, editImageFile: e.target.files[0]})
-        }
-        else {
-            this.setState({ editImageFileName: 'Select Image...', editImageFile: undefined })
-        }
-    }
-
-    onCaptionAddChange = (e) => {
-        // console.log(e.target.value)
-        if(e.target.value.length <= 100) {
-            this.setState({ captionAdd: e.target.value })
-        }
-    }
 
     onCaptionEditChange = (e) => {
         // console.log(e.target.value)
         if(e.target.value.length <= 100) {
             this.setState({ captionEdit: e.target.value })
-        }
-    }
-
-    onBtnAddPostClick = () => {
-        if(this.state.addImageFile) {
-            var formData = new FormData()
-            let token = localStorage.getItem('myTkn')
-            console.log('token dari add post fe', token)
-            var headers = {
-                headers: {
-                    'Authorization': `${token}`,
-                    'Content-Type': 'multipart/form-data'
-                }
-            }
-            console.log('ini headers btn add', headers)
-
-            var data = {
-                caption: this.state.captionAdd
-            }
-
-            formData.append('image', this.state.addImageFile)
-            formData.append('data', JSON.stringify(data))
-
-            axios.post(API_URL + "/post/addpost", formData, headers)
-            .then((res) => {
-                this.setState({ listPosts: res.data })
-                console.log('ini res.data btn add',res.data)
-            })
-            .catch((err) =>{
-                console.log('ini err btn add', err)
-            })
-        }
-        else {
-            alert('Image harus diisi!')
         }
     }
 
@@ -132,6 +74,7 @@ class ProfilePosts extends React.Component{
         axios.delete(`${API_URL}/post/deletepost/${id}`,headers)
         .then((res) => {
             this.setState({ listPosts: res.data })
+            window.location.reload(false)
         }).catch((err) => {
             console.log(err)
         })
@@ -158,6 +101,7 @@ class ProfilePosts extends React.Component{
         axios.put(API_URL + "/post/editpost/" + id, formData, headers)
         .then((res) => {
             this.setState({ listPosts: res.data, selectedEditPostId: 0 })
+            window.location.reload(false)
         })
         .catch((err) =>{
             console.log(err)
@@ -169,58 +113,68 @@ class ProfilePosts extends React.Component{
             console.log('ini item',item)
             if(item.id !== this.state.selectedEditPostId) {
                 return (
-                    <div className='col-12 col-md-6 col-lg-4 my-2' key={index}>
-                        <div className="border border-grey rounded"  >
-                        <div>
-                           <Link to={`/detailpost/${item.id}`}>
-                           <img src={`${API_URL + '/'}${item.image}`} alt={`${item.image}`} className="postImg" />
-                           </Link>
-                        </div>
-                        <div  className="info">
-                                <span className=''>
-                                {item.caption}
-                                </span>
-                        </div>
-                        {
-                            this.props.user.is_confirmed === 1?
-                            <>
-                             <div className="interaction justify-content-around">
-                               <span className="material-icons cardIcon mb-2" style={{fontWeight: 'lighter'}} onClick={() => this.setState({ selectedEditPostId: item.id, captionEdit: item.caption })}>
-                                more_horiz
-                                </span>
-                                <span className="material-icons cardIcon mb-2 mx-2" style={{fontWeight: 'lighter'}} onClick={() => this.onBtnDeletePostClick(item.id)} >
-                                delete
-                                </span> 
+                    <div className='col-12 col-md-6 col-lg-4' key={index}>
+                        <div className="p">
+                    <div className="p-browser d-flex justify-content-between">
+                       {
+                           this.props.user.is_confirmed === 1?
+                          <>
+                            <div className='d-flex' style={{cursor: 'pointer'}} onClick={() => this.setState({ selectedEditPostId: item.id, captionEdit: item.caption })}>
+                                    <div className="p-circle"></div>
+                                    <div className="p-circle"></div>
+                                    <div className="p-circle"></div>
                             </div>
+                            <div>
+                                <div className="p-ex" style={{cursor: 'pointer'}} onClick={() => this.onBtnDeletePostClick(item.id)}>x</div>
+                            </div>
+                          </>
+                            :
+                            <>
+                                <div className='d-flex'>
+                                    <div className="p-circle"></div>
+                                    <div className="p-circle"></div>
+                                    <div className="p-circle"></div>
+                                </div>
+                                <div>
+                                    <div className="p-ex">x</div>
+                                </div>
                             </>
-                                :
-                            <span className="ml-3">
-                            
-                            </span>
-                        }
+                       }
+                        </div>
+                            <Link to={`/detailpost/${item.id}`}>
+                            <img src={`${API_URL + '/'}${item.image}`} alt="" className="p-img" />
+                            </Link>
                         </div>
                     </div>
                 )
             }
             
             return (
-                <div className='col-12 col-md-6 col-lg-4 my-2' key={index}>
-                <div className="border border-grey rounded"  >
-                <div>
-                    <img src={`${API_URL + '/'}${item.image}`} alt={`${item.image}`} className="postImg" />
-                </div>
-                <div className="info">
-                    <textarea value={this.state.captionEdit} onChange={this.onCaptionEditChange}>
-                    </textarea>
-                </div>
-                <div className="interaction justify-content-around">
-                       <span className="material-icons cardIcon mb-2" style={{fontWeight: 'lighter'}} onClick={() => this.setState({ selectedEditPostId: 0 })}>
+            <div className='col-12 col-md-6 col-lg-4 my-2' key={index}>
+                <div className="">
+                    <div className="p-browser">
+                        <div className="p-circle"></div>
+                        <div className="p-circle"></div>
+                        <div className="p-circle"></div>
+                    </div>
+                    <img src={`${API_URL + '/'}${item.image}`} alt="" className="p-img" />
+                    <div>
+                        <textarea
+                            value={this.state.captionEdit} onChange={this.onCaptionEditChange}
+                            style={{fontFamily: "Source Sans Pro", border: '1px solid rgb(91, 1, 132)'}}
+                            type="text"
+                            placeholder="Caption.."
+                            className="form-control rounded-0"
+                        />
+                    </div>
+                    <div className='d-flex justify-content-around' style={{backgroundColor: 'white'}}>
+                        <span className="material-icons mb-2" style={{fontWeight: 'lighter', fontFamily: "Source Sans Pro", color: 'rgb(91, 1, 132)', cursor: 'pointer'}} onClick={() => this.setState({ selectedEditPostId: 0 })}>
                         cancel
                         </span>
-                        <span className="material-icons cardIcon mb-2 mx-2" style={{fontWeight: 'lighter'}} onClick={() => this.onBtnUpdatePostClick(item.id)} >
+                        <span className="material-icons mb-2 mx-2" style={{fontWeight: 'lighter', fontFamily: "Source Sans Pro", color: 'rgb(91, 1, 132)', cursor: 'pointer'}} onClick={() => this.onBtnUpdatePostClick(item.id)} >
                         save
                         </span> 
-                </div>
+                    </div>
                 </div>
             </div>
 
@@ -239,16 +193,18 @@ class ProfilePosts extends React.Component{
             )
         }
 
-        return(
-            <div>
-                123
-            </div>
-        )
+        return <Navigate to='/profile' />
+
+        // return(
+        //     <div>
+        //         123
+        //     </div>
+        // )
     }
 }
 
 const mapDispatchToProps = {
-    onUserRegister, onCheckUserLogin,  onCheckUserVerify
+    onCheckUserLogin,  onCheckUserVerify
 }
 
 const mapStateToProps = (state) => {

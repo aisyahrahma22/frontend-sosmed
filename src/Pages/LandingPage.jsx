@@ -3,7 +3,7 @@ import { Navigate, Link } from 'react-router-dom';
 
 // Redux
 import {connect} from 'react-redux';
-import {onUserRegister, onCheckUserLogin} from './../Redux/Actions/userAction';
+import {onCheckUserLogin} from './../Redux/Actions/userAction';
 
 // SweetAlert
 import '../Supports/Stylesheets/LandingPage.css'
@@ -72,7 +72,7 @@ class LandingPage extends React.Component{
 }
 
 const mapDispatchToProps = {
-    onUserRegister, onCheckUserLogin
+    onCheckUserLogin
 }
 
 const mapStateToProps = (state) => {
