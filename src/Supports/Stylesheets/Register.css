@@ -6,12 +6,6 @@
     background-position-x: right;
 }
 
-#register{
-    padding-top: 60px;
-    padding-bottom: 65px;
-    position: fixed;
-    display: flex;
-}
 
 .my-universe-form-input-register {
     font-size: 0.8rem;

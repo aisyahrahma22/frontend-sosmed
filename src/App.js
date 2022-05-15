@@ -3,34 +3,37 @@ import Register from './Pages/Register';
 import Confirmation from './Pages/Confirmation';
 import Login from './Pages/Login';
 import Profile from './Pages/Profile';
-import EditProfile from './Components/EditProfile';
-import Header from './Components/Header';
 import Home from './Pages/Home';
+import LandingPage from './Pages/LandingPage';
+import ResetPassword from './Pages/ResetPassword';
+import LikedPage from './Pages/LikedPage';
+import ForgotPassword from './Pages/ForgotPassword';
 
-// CSS
-import './Supports/Stylesheets/Utilities.css'
+// Component
+import Header from './Components/Header';
+import DetailPost from './Components/DetailPost';
+import DetailProfile from './Components/DetailProfile';
+import Navbar from './Components/Navbar';
 
-import { Routes, Route } from 'react-router-dom'
+// Route
+import { Routes, Route, useLocation } from 'react-router-dom'
+
 
 // Redux
 import { applyMiddleware, createStore } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import allReducer from './Redux/Reducers/Index';
-import LandingPage from './Pages/LandingPage';
-import DetailPost from './Components/DetailPost';
-import DetailProfile from './Components/DetailProfile';
-import ResetPassword from './Pages/ResetPassword';
-import LikedPage from './Pages/LikedPage';
-import ForgotPassword from './Pages/ForgotPassword';
 
 const store = createStore(allReducer, applyMiddleware(thunk))
 
 function App() {
+  const pathName = useLocation().pathname;
+  
   return (
     <div>
       <Provider store={store}>
-        <Header/>
+         <Header/>
         <Routes>
           <Route path="/register" element={<Register />} />
           <Route exact path="/"  element={<Home/>} />
@@ -38,7 +41,6 @@ function App() {
           <Route path="/landing" element={<LandingPage/>} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/likedpage" element={<LikedPage/>} />
-          <Route path="/editprofile" element={<EditProfile/>} />
           <Route path="/confirmation/:token" element={<Confirmation />} />
           <Route path="/forgotpassword"  element={<ForgotPassword/>} />
           <Route path="/resetpassword/:token" element={<ResetPassword />} />

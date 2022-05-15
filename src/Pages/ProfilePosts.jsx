@@ -2,10 +2,11 @@ import React from 'react';
 import { Navigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { API_URL } from '../Supports/Helpers/index';
-import "../Components/card.css";
+import moment from 'moment';
 import Heart from "../Supports/Images/heart.svg";
 import HeartFilled from "../Supports/Images/heartFilled.svg";
 import Comment from "../Supports/Images/comment.svg";
+import '../Supports/Stylesheets/HomePage.css';
 import '../Supports/Stylesheets/ProfilePosts.css';
 
 // Redux
@@ -38,7 +39,7 @@ class ProfilePosts extends React.Component{
                 'Authorization': `${token}`,
             }
         }
-        axios.get(`${API_URL}/post/getallbyuserid`, headers)
+        axios.get(`${API_URL}/post/getprofilepost`, headers)
         .then((res) => {
             console.log(res)
             console.log('ini res.data get',res.data)
@@ -113,70 +114,143 @@ class ProfilePosts extends React.Component{
             console.log('ini item',item)
             if(item.id !== this.state.selectedEditPostId) {
                 return (
-                    <div className='col-12 col-md-6 col-lg-4' key={index}>
-                        <div className="p">
-                    <div className="p-browser d-flex justify-content-between">
-                       {
+                    <div className='col-12 col-md-6 col-lg-4 my-2' key={index}>
+                    <div className="card product-card">
+                        <div className='tittle'>
+                        <div className='d-flex justify-content-between'>
+                        {
                            this.props.user.is_confirmed === 1?
                           <>
-                            <div className='d-flex' style={{cursor: 'pointer'}} onClick={() => this.setState({ selectedEditPostId: item.id, captionEdit: item.caption })}>
-                                    <div className="p-circle"></div>
-                                    <div className="p-circle"></div>
-                                    <div className="p-circle"></div>
-                            </div>
-                            <div>
-                                <div className="p-ex" style={{cursor: 'pointer'}} onClick={() => this.onBtnDeletePostClick(item.id)}>x</div>
-                            </div>
+                           <div className='d-flex'>
+                                    <span className="material-icons" style={{cursor: 'pointer'}} onClick={() => this.setState({ selectedEditPostId: item.id, captionEdit: item.caption })}>
+                                    more_horiz
+                                    </span>
+                                </div>
+                                <div>
+                                    <span className="material-icons"  style={{cursor: 'pointer'}} onClick={() => this.onBtnDeletePostClick(item.id)}>
+                                    close
+                                    </span>
+                                </div>
                           </>
                             :
                             <>
                                 <div className='d-flex'>
-                                    <div className="p-circle"></div>
-                                    <div className="p-circle"></div>
-                                    <div className="p-circle"></div>
+                                    <span className="material-icons">
+                                    more_horiz
+                                    </span>
                                 </div>
                                 <div>
-                                    <div className="p-ex">x</div>
+                                    <span className="material-icons">
+                                    close
+                                    </span>
                                 </div>
                             </>
                        }
                         </div>
-                            <Link to={`/detailpost/${item.id}`}>
-                            <img src={`${API_URL + '/'}${item.image}`} alt="" className="p-img" />
-                            </Link>
+                           
                         </div>
+                        <Link  to={`/detailpost/${item.id}`} style={{ textDecoration:"none", color: "inherit" }}>
+                        <img src={`${API_URL + '/'}${item.image}`} alt="foto post" id="postImg" />
+                        </Link>
+                        <div className="mt-2">
+                    <div className='d-flex flex-column'>
+                        <span className="text-muted" style={{fontSize: '14px', fontFamily: "Source Sans Pro"}}>{moment(item.created_at).format('LLL')}</span>
                     </div>
+                </div>
+                </div>
+                </div>
+                    // <div className='col-12 col-md-6 col-lg-4' key={index}>
+                    //     <div className="p">
+                    // <div className="p-browser d-flex justify-content-between">
+                    //    {
+                    //        this.props.user.is_confirmed === 1?
+                    //       <>
+                    //         <div className='d-flex' style={{cursor: 'pointer'}} onClick={() => this.setState({ selectedEditPostId: item.id, captionEdit: item.caption })}>
+                    //                 <div className="p-circle"></div>
+                    //                 <div className="p-circle"></div>
+                    //                 <div className="p-circle"></div>
+                    //         </div>
+                    //         <div>
+                    //             <div className="p-ex" style={{cursor: 'pointer'}} onClick={() => this.onBtnDeletePostClick(item.id)}>x</div>
+                    //         </div>
+                    //       </>
+                    //         :
+                    //         <>
+                    //             <div className='d-flex'>
+                    //                 <div className="p-circle"></div>
+                    //                 <div className="p-circle"></div>
+                    //                 <div className="p-circle"></div>
+                    //             </div>
+                    //             <div>
+                    //                 <div className="p-ex">x</div>
+                    //             </div>
+                    //         </>
+                    //    }
+                    //     </div>
+                    //         <Link to={`/detailpost/${item.id}`}>
+                    //         <img src={`${API_URL + '/'}${item.image}`} alt="" className="p-img" />
+                    //         </Link>
+                    //     </div>
+                    // </div>
                 )
             }
             
             return (
-            <div className='col-12 col-md-6 col-lg-4 my-2' key={index}>
-                <div className="">
-                    <div className="p-browser">
-                        <div className="p-circle"></div>
-                        <div className="p-circle"></div>
-                        <div className="p-circle"></div>
+                <div className='col-12 col-md-6 col-lg-4 my-2' key={index}>
+                <div className="card product-card">
+                    <div className='tittle'>
+                        <div className='d-flex justify-content-between'>
+                            Edit your caption
+                        </div>
                     </div>
-                    <img src={`${API_URL + '/'}${item.image}`} alt="" className="p-img" />
-                    <div>
-                        <textarea
+                    <Link  to={`/detailpost/${item.id}`} style={{ textDecoration:"none", color: "inherit" }}>
+                    <img src={`${API_URL + '/'}${item.image}`} alt="foto post" id="postImg" />
+                    </Link>
+                    <div className="mt-2">
+                <div className='d-flex flex-column'>
+                    <span className="text-muted" style={{fontSize: '14px', fontFamily: "Source Sans Pro"}}>{moment(item.created_at).format('LLL')}</span>
+                    <span>
+                    <textarea
                             value={this.state.captionEdit} onChange={this.onCaptionEditChange}
                             style={{fontFamily: "Source Sans Pro", border: '1px solid rgb(91, 1, 132)'}}
                             type="text"
                             placeholder="Caption.."
                             className="form-control rounded-0"
                         />
-                    </div>
-                    <div className='d-flex justify-content-around' style={{backgroundColor: 'white'}}>
-                        <span className="material-icons mb-2" style={{fontWeight: 'lighter', fontFamily: "Source Sans Pro", color: 'rgb(91, 1, 132)', cursor: 'pointer'}} onClick={() => this.setState({ selectedEditPostId: 0 })}>
+                    </span>
+                    <div className='d-flex justify-content-around mt-2' style={{backgroundColor: 'white'}}>
+                        <div className="mb-2" style={{fontWeight: 'lighter', fontSize: '16px', fontFamily: "Source Sans Pro", color: 'rgb(91, 1, 132)', cursor: 'pointer'}} onClick={() => this.setState({ selectedEditPostId: 0 })}>
                         cancel
-                        </span>
-                        <span className="material-icons mb-2 mx-2" style={{fontWeight: 'lighter', fontFamily: "Source Sans Pro", color: 'rgb(91, 1, 132)', cursor: 'pointer'}} onClick={() => this.onBtnUpdatePostClick(item.id)} >
+                        </div>
+                        <div className="mb-2 mx-2" style={{fontWeight: 'lighter', fontSize: '16px', fontFamily: "Source Sans Pro", color: 'rgb(91, 1, 132)', cursor: 'pointer'}} onClick={() => this.onBtnUpdatePostClick(item.id)} >
                         save
-                        </span> 
+                        </div> 
                     </div>
                 </div>
             </div>
+            </div>
+            </div>
+            // <div className='col-12 col-md-6 col-lg-4 my-2' key={index}>
+            //     <div className="">
+            //         <div className="p-browser">
+            //             <div className="p-circle"></div>
+            //             <div className="p-circle"></div>
+            //             <div className="p-circle"></div>
+            //         </div>
+            //         <img src={`${API_URL + '/'}${item.image}`} alt="" className="p-img" />
+            //         <div>
+        
+                    // </div>
+                    // <div className='d-flex justify-content-around' style={{backgroundColor: 'white'}}>
+                    //     <span className="material-icons mb-2" style={{fontWeight: 'lighter', fontFamily: "Source Sans Pro", color: 'rgb(91, 1, 132)', cursor: 'pointer'}} onClick={() => this.setState({ selectedEditPostId: 0 })}>
+                    //     cancel
+                    //     </span>
+                    //     <span className="material-icons mb-2 mx-2" style={{fontWeight: 'lighter', fontFamily: "Source Sans Pro", color: 'rgb(91, 1, 132)', cursor: 'pointer'}} onClick={() => this.onBtnUpdatePostClick(item.id)} >
+                    //     save
+                    //     </span> 
+                    // </div>
+            //     </div>
+            // </div>
 
             )
         })

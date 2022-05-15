@@ -5,6 +5,13 @@
     margin-left: 15px;
 } */
 
+.userImgDet {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
 .my-universe-background-dpost{
     background-image: url(./../Images/01.png);
     background-position: center;
@@ -14,7 +21,7 @@
 }
 /* nn */
 
-#cardIcon{
+#cardIconDet{
     width: 20px;
     height: 20px;
     cursor: pointer;

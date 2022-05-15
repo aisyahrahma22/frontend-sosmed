@@ -83,9 +83,9 @@
     object-fit: cover;
   }
 
-  .userImg {
-    width: 30px;
-    height: 30px;
+  .userImgSet {
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
     object-fit: cover;
     margin-right: 10px;

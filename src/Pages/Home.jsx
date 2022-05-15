@@ -12,6 +12,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 // Redux
 import {connect} from 'react-redux';
 import {onUserLogin, onCheckUserLogin, onCheckUserVerify} from './../Redux/Actions/userAction'
+import Loading from '../Components/Loading';
 // import { flushSync } from 'react-dom';
 
 
@@ -52,10 +53,11 @@ class Home extends React.Component{
         let totalLimit = this.state.limit + 6
         this.setState({ limit: totalLimit, isLoading: true })
     
-        axios.get(API_URL + "/post/getall?_limit=" + totalLimit,  headers)
+        axios.get(API_URL + "/post/getalldata?_limit=" + totalLimit,  headers)
             .then((res) => {
-                this.setState({ listPosts: res.data.results, isLoading: false, listLikes: res.data.results2, });
-                console.log('ini res.data.results home', res.data.results)
+                this.setState({ listPosts: res.data});
+                console.log('ini res.data home', res.data)
+                console.log('ini res.data. myLike home', res.data.myLike)
             }).catch((err) => {
                 console.log(err)
             })
@@ -100,67 +102,67 @@ class Home extends React.Component{
           })
     }
 
-    onCommentAddChange = (e) => {
-        // console.log(e.target.value)
-        if(e.target.value.length <= 300) {
-            this.setState({ commentAdd: e.target.value })
-        }
-    }
+    // onCommentAddChange = (e) => {
+    //     // console.log(e.target.value)
+    //     if(e.target.value.length <= 300) {
+    //         this.setState({ commentAdd: e.target.value })
+    //     }
+    // }
 
-    onBtnAddCommentClick = (id) => {
-        let token = localStorage.getItem('myTkn')
-        var headers = {
-            headers: {
-                'Authorization': `${token}`,
-            }
-        }
-        console.log(id)
+    // onBtnAddCommentClick = (id) => {
+    //     let token = localStorage.getItem('myTkn')
+    //     var headers = {
+    //         headers: {
+    //             'Authorization': `${token}`,
+    //         }
+    //     }
+    //     console.log(id)
 
-        var data = {
-            comment: this.state.commentAdd
-        }
-        console.log('ini data comment', data)
+    //     var data = {
+    //         comment: this.state.commentAdd
+    //     }
+    //     console.log('ini data comment', data)
 
-        axios.post(API_URL + `/post/addcomment/${id}`, data, headers)
-        .then((res) => {
-            this.setState({ addComment: res.data })
-            console.log('ini res.data btn addComment',res.data)
-        })
-        .catch((err) =>{
-            console.log('ini err btn addComment', err)
-        })
-    }
+    //     axios.post(API_URL + `/post/addcomment/${id}`, data, headers)
+    //     .then((res) => {
+    //         this.setState({ addComment: res.data })
+    //         console.log('ini res.data btn addComment',res.data)
+    //     })
+    //     .catch((err) =>{
+    //         console.log('ini err btn addComment', err)
+    //     })
+    // }
 
 
-    onCommentEditChange = (id) => {
-        let token = localStorage.getItem('myTkn')
-        const headers = {
-            headers: { 
-                'Authorization': `${token}`,
-            }
-        }
-        axios.put(`${API_URL}/post/editcomment/${id}`,headers)
-        .then((res) => {
-            this.setState({ editComment: res.data })
-        }).catch((err) => {
-            console.log(err)
-        })
-    }
+    // onCommentEditChange = (id) => {
+    //     let token = localStorage.getItem('myTkn')
+    //     const headers = {
+    //         headers: { 
+    //             'Authorization': `${token}`,
+    //         }
+    //     }
+    //     axios.put(`${API_URL}/post/editcomment/${id}`,headers)
+    //     .then((res) => {
+    //         this.setState({ editComment: res.data })
+    //     }).catch((err) => {
+    //         console.log(err)
+    //     })
+    // }
 
-    onCommentDeleteChange = (id) => {
-        let token = localStorage.getItem('myTkn')
-        const headers = {
-            headers: { 
-                'Authorization': `${token}`,
-            }
-        }
-        axios.delete(`${API_URL}/post/deletecomment/${id}`,headers)
-        .then((res) => {
-            this.setState({ deleteComment: res.data })
-        }).catch((err) => {
-            console.log(err)
-        })
-    }
+    // onCommentDeleteChange = (id) => {
+    //     let token = localStorage.getItem('myTkn')
+    //     const headers = {
+    //         headers: { 
+    //             'Authorization': `${token}`,
+    //         }
+    //     }
+    //     axios.delete(`${API_URL}/post/deletecomment/${id}`,headers)
+    //     .then((res) => {
+    //         this.setState({ deleteComment: res.data })
+    //     }).catch((err) => {
+    //         console.log(err)
+    //     })
+    // }
 
     renderListPosts = () => {
         return this.state.listPosts.map((item, id) => {
@@ -171,24 +173,23 @@ class Home extends React.Component{
                         <div className="card product-card">
                             <div className='tittle'>
                                 <div className='d-flex'>
-                                    <img  src={`${API_URL + '/'}${item.profileimage}`} id="userImg" />
-                                    <Link to={`/detailprofile/${item.userId}`} style={{cursor: 'pointer', textDecoration: 'none'}}>
+                                    <img  src={`${API_URL + '/'}${item.profilepicture}`} id="userImg" />
+                                    <Link to={`/detailprofile/${item.userId}`} style={{cursor: 'pointer', textDecoration: 'none', color: 'black'}}>
                                     <span style={{fontFamily: "Source Sans Pro"}}>{item.username}</span>
                                     </Link>
                                 </div>    
                             </div>
-                       <Link  to={`/detailpost/${item.id}`}style={{ textDecoration:"none", color: "inherit" }}>
-                       <img src={`${API_URL + '/'}${item.image}`} alt="foto post" id="postImg" />
-                       </Link>
+                            <Link  to={`/detailpost/${item.id}`}style={{ textDecoration:"none", color: "inherit" }}>
+                            <img src={`${API_URL + '/'}${item.image}`} alt="foto post" id="postImg" />
+                            </Link>
                             <div className="mt-2">
                         <div className='d-flex flex-column'>
-                            <span className="text-muted" style={{fontSize: '14px', fontFamily: "Source Sans Pro"}}>{moment(item.created_at).format('LL')}</span>
-                            {/* <span className='mt-3' style={{fontSize: '14px'}}>{item.caption}</span> */}
+                            <span className="text-muted" style={{fontSize: '14px', fontFamily: "Source Sans Pro"}}>{moment(item.created_at).format('LLL')}</span>
                             <span>
                             {
                                 this.props.user.is_confirmed === 1?
                                 <div id="interaction">
-                                {this.state.listLikes.includes(item.id)  ? (
+                                {item.myLike > 0 ? (
                                 <img src={HeartFilled} alt="" id="cardIcon" onClick={() => this.handleClick(item.id)}/>
                                 ) : (
                                 <img
@@ -213,11 +214,6 @@ class Home extends React.Component{
                             }
                             </span>
                         </div>
-                        {/* <div className="d-flex flex-row justify-content-end">
-                            <Link to={`/detailpost/${item.id}`}style={{ textDecoration:"none", color: "inherit" }}>
-                                <button style={{fontFamily: "Source Sans Pro"}} className="btn btn-primary mt-2" id="my-universe-btn-home">Show more</button>
-                            </Link>
-                        </div> */}
                     </div>
                     </div>
                     </div>
@@ -253,12 +249,9 @@ class Home extends React.Component{
                         {this.renderListPosts()}
                     </InfiniteScroll>
                         </div>
-
-                    </div>
-                    <div>
                     <h1>
                         {
-                            this.state.isLoading? 'Loading...' : null
+                            this.state.isLoading? 'Loading' : null
                         }
                     </h1>
                 </div> 

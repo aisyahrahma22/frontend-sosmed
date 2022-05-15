@@ -1,9 +1,10 @@
 import React from 'react';
 import { Navigate, Link } from 'react-router-dom';
-import '../Supports/Stylesheets/HomePage.css';
 import axios from 'axios';
 import { API_URL } from '../Supports/Helpers/index';
+import '../Supports/Stylesheets/HomePage.css';
 import Heart from "../Supports/Images/heart.svg";
+import '../Supports/Stylesheets/ProfilePosts.css';
 import HeartFilled from "../Supports/Images/heartFilled.svg";
 import moment from 'moment';
 // // import CardHomePost from '../Components/CardHomePost';
@@ -49,13 +50,14 @@ class LikedPost extends React.Component{
                 'Authorization': `${token}`,
             }
         }
-        let totalLimit = this.state.limit + 6
-        this.setState({ limit: totalLimit, isLoading: true })
-    
-        axios.get(API_URL + "/post/getall?_limit=" + totalLimit,  headers)
+
+        axios.get(API_URL + "/post/getlikedpost",  headers)
             .then((res) => {
-                this.setState({ listPosts: res.data.results, isLoading: false, listLikes: res.data.results2, });
-                console.log('ini res.data.results home', res.data.results)
+                console.log('ini liked post res', res)
+                console.log('ini likes post res.data', res.data)
+                console.log('ini likes post res.data.results', res.data.results)
+                this.setState({ listPosts: res.data });
+                // console.log('ini res.data.results home', res.data.results)
             }).catch((err) => {
                 console.log(err)
             })
@@ -168,59 +170,47 @@ class LikedPost extends React.Component{
             if(item.id !== this.state.selectedEditPostId) {
                 return (
                     <div className='col-12 col-md-6 col-lg-4 my-2' key={id}>
-                        <div className="card product-card">
-                            <div className='tittle'>
-                                <div className='d-flex'>
-                                    <img  src={`${API_URL + '/'}${item.profileimage}`} id="userImg" />
-                                    <Link to={`/detailprofile/${item.userId}`} style={{cursor: 'pointer', textDecoration: 'none'}}>
-                                    <span style={{fontFamily: "Source Sans Pro"}}>{item.username}</span>
-                                    </Link>
-                                </div>    
-                            </div>
-                       <Link  to={`/detailpost/${item.id}`}style={{ textDecoration:"none", color: "inherit" }}>
-                       <img src={`${API_URL + '/'}${item.image}`} alt="foto post" id="postImg" />
-                       </Link>
-                            <div className="mt-2">
-                        <div className='d-flex flex-column'>
-                            <span className="text-muted" style={{fontSize: '14px', fontFamily: "Source Sans Pro"}}>{moment(item.created_at).format('LL')}</span>
-                            {/* <span className='mt-3' style={{fontSize: '14px'}}>{item.caption}</span> */}
-                            <span>
-                            {
-                                this.props.user.is_confirmed === 1?
-                                <div id="interaction">
-                                {this.state.listLikes.includes(item.id)  ? (
-                                <img src={HeartFilled} alt="" id="cardIcon" onClick={() => this.handleClick(item.id)}/>
-                                ) : (
-                                <img
-                                    src={Heart}
-                                    alt=""
-                                    id="cardIcon"
-                                    onClick={() => this.handleClick(item.id)}
-                                />
-                                )}
-                               <span style={{fontSize: '12px', color: 'purple', marginTop: '2px', fontFamily: "Source Sans Pro"}}>
-                               {item.totalLike} peoples love this
-                               </span>
-                                </div>
-                                    :
-                                <span>
-                                <img
-                                    src={Heart}
-                                    alt=""
-                                    id="cardIcon"
-                                />
-                                </span>
-                            }
-                            </span>
+                    <div className="card product-card">
+                        <div className='tittle'>
+                            <div className='d-flex'>
+                                <img  src={`${API_URL + '/'}${item.profileimage}`} id="userImg" />
+                                <Link to={`/detailprofile/${item.userId}`} style={{cursor: 'pointer', textDecoration: 'none', color: 'black'}}>
+                                <span style={{fontFamily: "Source Sans Pro"}}>{item.username}</span>
+                                </Link>
+                            </div>    
                         </div>
-                        {/* <div className="d-flex flex-row justify-content-end">
-                            <Link to={`/detailpost/${item.id}`}style={{ textDecoration:"none", color: "inherit" }}>
-                                <button style={{fontFamily: "Source Sans Pro"}} className="btn btn-primary mt-2" id="my-universe-btn-home">Show more</button>
-                            </Link>
-                        </div> */}
+                        <Link  to={`/detailpost/${item.id}`} style={{ textDecoration:"none", color: "inherit" }}>
+                        <img src={`${API_URL + '/'}${item.image}`} alt="foto post" id="postImg" />
+                        </Link>
+                        <div className="mt-2">
+                    <div className='d-flex flex-column'>
+                        <span className="text-muted" style={{fontSize: '14px', fontFamily: "Source Sans Pro"}}>{moment(item.created_at).format('LLL')}</span>
+                        <span style={{fontSize: '12px', color: 'purple', marginTop: '2px', fontFamily: "Source Sans Pro"}}>
+                           you love this
+                        </span>
                     </div>
-                    </div>
-                    </div>
+                </div>
+                </div>
+                </div>
+                    // <div className='col-12 col-md-6 col-lg-4' key={id}>
+                    //     <div className="p">
+                    // <div className="p-browser d-flex justify-content-between">
+                    //      <>
+                    //         <div className='d-flex'>
+                    //             <div className="p-circle"></div>
+                    //             <div className="p-circle"></div>
+                    //             <div className="p-circle"></div>
+                    //         </div>
+                    //         <div>
+                    //             <div className="p-ex">x</div>
+                    //         </div>
+                    //     </>
+                    //     </div>
+                    //         <Link to={`/detailpost/${item.id}`}>
+                    //         <img src={`${API_URL + '/'}${item.image}`} alt="" className="p-img" />
+                    //         </Link>
+                    //     </div>
+                    // </div>
                 )
             }
         })
@@ -230,34 +220,11 @@ class LikedPost extends React.Component{
         if(this.props.user.is_login){
             return(
                 <>
-                <div className='container-fluid'>
-                    <div className='pt-3'>
-                    {
-                        this.props.user.is_confirmed === 1?
-                        <span>
-                        
-                        </span>
-                            :
-                        <span className="ml-3">
-                            <input type="button" value="Resend Email Confirmation" onClick={() => this.onResendEmail()} className="btn rounded shadow-lg mytodosapps-bg-secondary mytodosapps-light mytodosapps-input" />     
-                        </span>
-                    }                   
-                    <div className='container'>
-                        <div className='row mt-5 pt-5'>
-                        {this.renderListPosts()}
-                        </div>
-
-                    </div>
-                    <div>
-                    <h1>
-                        {
-                            this.state.isLoading? 'Loading...' : null
-                        }
-                    </h1>
-                </div> 
-               </div>
-                  
+             <div className='container'>
+                <div className='row'>
+                {this.renderListPosts()}
                 </div>
+           </div>
                 </>
             )
         }

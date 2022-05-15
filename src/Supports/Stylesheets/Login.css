@@ -6,12 +6,15 @@
     background-position-x: right;
 }
 
-#login{
-    padding-top: 60px;
-    padding-bottom: 60px;
-    position: fixed;
-    display: flex;
+#my-universe-background-con{
+    background-image: url(./../Images/bg-09.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-x: right;
 }
+
+
 
 .my-universe-form-input-login {
     font-size: 0.8rem;

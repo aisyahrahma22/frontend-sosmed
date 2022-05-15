@@ -5,37 +5,20 @@ import axios from 'axios';
 import { API_URL } from '../Supports/Helpers';
 import Swal from 'sweetalert2';
 import '../Supports/Stylesheets/Uploud.css';
-import Uploud2 from '../Supports/Images/Uploud2.png';
+import Peoples44 from '../Supports/Images/Peoples44.png';
 
 
 export class CreatePost extends Component{
 
     state = {
         modalOpen: false,
-        errorMessage: '',
         images: null,
         listPosts: [], 
         addImageFileName: 'Select Image...', 
         addImageFile: undefined, 
         captionAdd: '',
-        isLogedIn: false,
         previewImage: null,
     }
-
-    componentDidMount(){
-        let token = localStorage.getItem('myTkn')
-        this.onCheckIsLogedIn(token)
-    }
-
-    onCheckIsLogedIn = () => {
-        let token = localStorage.getItem('myTkn')
-
-        if(token){
-            this.setState({ isLogedIn: true })
-        }
-    }
-
-    
 
     onAddImageFileChange = (e) => {
         if(e.target.files[0]) {
@@ -98,8 +81,6 @@ export class CreatePost extends Component{
                 })
                 this.setState({ modalOpen: false })
                 window.location.reload(false)
-
-                
             })
             .catch((err) =>{
                 Swal.fire({
@@ -140,7 +121,7 @@ export class CreatePost extends Component{
                         </div>
                         <div className="text-center">
                         {
-                        this.state.previewImage? <img src={this.state.previewImage} id="imageResult" alt='Image Preview' width="300px" className="img-fluid rounded shadow-sm mx-auto d-block" /> :  <img src={Uploud2} alt="" width="300px" />
+                        this.state.previewImage? <img src={this.state.previewImage} id="imageResult" alt='Image Preview' width="300px" className="img-fluid rounded shadow-sm mx-auto d-block" /> :  <img src={Peoples44} alt="" width="300px" />
                         }  
                         </div>
                         <div className="px-5 py-0">

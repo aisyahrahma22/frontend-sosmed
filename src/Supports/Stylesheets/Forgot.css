@@ -1,3 +1,11 @@
+.my-universe-background-for{
+  background-image: url(./../Images/bg-09.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position-x: right;
+}
+
 .forgot-password {
   height: 100vh;
   padding-top: 150px;
@@ -14,4 +22,10 @@
 
 .alert {
   text-align: center;
+}
+
+#my-universe-btn-pass{
+  background-color: rgb(91, 1, 132);
+  color: white;
+  width: 300px;
 }
