@@ -8,7 +8,7 @@ import {onUserLogin, onCheckUserLogin, onUserLogout, onCheckUserVerify } from '.
 
 class Header extends React.Component{
 
-        constructor(props) {
+    constructor(props) {
         super(props);
     
         this.toggle = this.toggle.bind(this);
@@ -16,6 +16,7 @@ class Header extends React.Component{
           isOpen: false
         };
     }
+
     toggle() {
         this.setState({
             isOpen: !this.state.isOpen
@@ -25,7 +26,6 @@ class Header extends React.Component{
     onBtnLogOutClick = () => {
         this.props.onUserLogout()
     }
-
 
 
     render(){
@@ -46,7 +46,7 @@ class Header extends React.Component{
                             <div className='d-flex justify-content-center mt-4'>
                                 <div className='mx-3'>
                                     <Link to="/">
-                                        <span class="material-icons" style={{cursor: 'pointer', color: 'rgb(91, 1, 132)'}}>
+                                        <span className="material-icons" style={{cursor: 'pointer', color: 'rgb(91, 1, 132)'}}>
                                             home
                                         </span>  
                                     </Link>

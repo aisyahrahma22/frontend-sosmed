@@ -22,7 +22,6 @@ export class CreatePost extends Component{
 
     onAddImageFileChange = (e) => {
         if(e.target.files[0]) {
-            console.log('add image file', e.target.files[0] )
             this.setState({ addImageFileName: e.target.files[0].name, addImageFile: e.target.files[0]})
             const reader = new FileReader()
             reader.readAsDataURL(e.target.files[0])
@@ -38,7 +37,6 @@ export class CreatePost extends Component{
     }
 
     onCaptionAddChange = (e) => {
-        console.log('ini caption add', e.target.value)
         if(e.target.value.length <= 300) {
             this.setState({ captionAdd: e.target.value })
         }else{
@@ -55,7 +53,6 @@ export class CreatePost extends Component{
         if(this.state.addImageFile) {
             var formData = new FormData()
             let token = localStorage.getItem('myTkn')
-            console.log('token dari add post fe', token)
             var headers = {
                 headers: {
                     'Authorization': `${token}`,
@@ -111,12 +108,10 @@ export class CreatePost extends Component{
             </div>
             <Modal toggle={() => this.setState({modalOpen: false})} isOpen={this.state.modalOpen}>
                 <ModalBody className="border border-white">
-                <div className="text-right mytetring-clickable-element">
-                        </div>
                         <div className="pt-0 pb-3 text-left mr-5">
-                            <div className="pt-1 pb-3 text-right">
-                                <h3><span className="font-weight-bold" style={{fontFamily: "Source Sans Pro"}}>Create</span><span className="font-weight-light">Post</span></h3>
-                                <h5 className="font-weight-normal mytetring-font-size-14 mytetring-grey" style={{fontFamily: "Source Sans Pro"}}>Share your moment with us!</h5>
+                            <div className="pt-1 pb-3 text-right" style={{fontFamily: "Source Sans Pro"}}>
+                                <h3><span className="font-weight-bold">Create</span><span className="font-weight-light">Post</span></h3>
+                                <h5 className="font-weight-normal" style={{fontSize: '14', color: 'grey'}}>Share your moment with us!</h5>
                             </div>
                         </div>
                         <div className="text-center">
@@ -124,20 +119,18 @@ export class CreatePost extends Component{
                         this.state.previewImage? <img src={this.state.previewImage} id="imageResult" alt='Image Preview' width="300px" className="img-fluid rounded shadow-sm mx-auto d-block" /> :  <img src={Peoples44} alt="" width="300px" />
                         }  
                         </div>
-                        <div className="px-5 py-0">
+                        <div className="px-5 py-0" style={{fontFamily: "Source Sans Pro"}}>
                             <div className="form-group mt-3 mb-3">
                                 <div className="d-flex justtify-content-center">
-                                <input style={{fontFamily: "Source Sans Pro", color: 'rgb(91, 1, 132)'}} type="file" label={this.state.addImageFileName} onChange={this.onAddImageFileChange} className="form-control rounded-0 border-0"/>
+                                <input style={{color: 'rgb(91, 1, 132)'}} type="file" label={this.state.addImageFileName} onChange={this.onAddImageFileChange} className="form-control rounded-0 border-0"/>
                                 </div>
                             </div>
                             <div className="form-group mt-3 mb-3">
-                                <h3 className='ml-2 text-center' style={{fontSize: '16px', color: 'rgb(91, 1, 132)', fontFamily: "Source Sans Pro"}}><span className="font-weight-bold" style={{fontFamily: "Source Sans Pro"}}>What's on</span><span className="font-weight-light mx-2" style={{fontFamily: "Source Sans Pro"}}>your mind?</span></h3>
-                                {/* <div className="input-group" style={{width: '365px', height:'55px', border: '1px solid rgb(124, 101, 136)'}}>
-                                </div> */}
+                                <h3 className='ml-2 text-center' style={{fontSize: '16px', color: 'rgb(91, 1, 132)'}}><span className="font-weight-bold">What's on</span><span className="font-weight-light mx-2">your mind?</span></h3>
                                 <textarea
-                                value={this.state.captionAdd} onChange={this.onCaptionAddChange} 
+                                value={this.state.captionAdd} 
+                                onChange={this.onCaptionAddChange} 
                                 name="editUserCaption"
-                                style={{fontFamily: "Source Sans Pro"}}
                                 id="Caption"
                                 type="text"
                                 placeholder="Caption.."

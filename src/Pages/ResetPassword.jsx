@@ -1,40 +1,31 @@
 import '../Supports/Stylesheets/Forgot.css';
-import {  Navigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import Swal from 'sweetalert2';
 import Axios from "axios";
 import { useEffect, useState } from "react";
+import '../Supports/Stylesheets/Reset.css';
 import Forgot1 from './../Supports/Images/Forgot1.png';
 import Forgot3 from '../Supports/Images/Forgot3.png';
 import React from 'react';
 
 function ResetPassword() {
   let params = useParams();
-  console.log('ini params', params)
+  
   const [data, setData] = useState([]);
-  console.log('ini data', data)
-  console.log('ini params.token',params.token)
-  //State for input values
   let [inputValues, setInputValues] = useState({ password: "" });
-
-  //State for handling validation error
   let [errors, setErrors] = useState({});
-
-  //State to indicate wether form is submitting or not
   let [isSubmitting, setIsSubmitting] = useState(false);
   let [isSubmitted, setIsSubmitted] = useState(false);
   let [submitLoading, setSubmitLoading] = useState(false);
-
-  //State to handling success/error message from backend
   let [resMessage, setResMessage] = useState({ success: "", error: "" });
 
-  //Function for onChange in input form
+  
   const inputHandler = (e) => {
-    //Save input value to state
+
     const { name, value } = e.target;
     setInputValues({ ...inputValues, [name]: value });
 
-    //Reset alert from backend
+    
     if (resMessage.error) {
       setResMessage({ ...resMessage, error: "" });
     }
@@ -86,7 +77,6 @@ function ResetPassword() {
   useEffect(() => {
     if (Object.keys(errors).length === 0 && isSubmitting) {
       setSubmitLoading(true);
-        console.log('ini params.token',params.token)
        var data = {
         password: inputValues.password
         }
@@ -102,8 +92,6 @@ function ResetPassword() {
           setResMessage({ ...resMessage, error: res.data.errMessage });
         } else {
           setIsSubmitted(true);
-          // setData(res.data.result3);
-          // console.log('res.data.result3 reset', res.data.result3)
           setResMessage({ success: res.data.message });
         }
       
@@ -126,27 +114,15 @@ function ResetPassword() {
     }})
     .then((res) => {
       setData(res.data.result3[0])
-      console.log('token', res.data.result3[0])
     }).catch((err) => {
       console.log(err)
 
     })
     }, []);
 
-    // return(
-    //   <div>
-    //     {
-    //       params.token !== data.token ?
-    //       <span>salah</span>
-    //       :
-    //       <span>benar</span>
-    //     }
-    //   </div>
-    // )
-
   if(params.token !== data.token ){
     return(
-      <div className='container-fluid my-universe-background-home' id="my-universe-background-con">
+      <div className='container-fluid my-universe-background-reset'>
       <div className='pt-3'>     
            <div className='container'>
               <div className='row' style={{paddingBottom: '13px'}}>
@@ -188,7 +164,7 @@ function ResetPassword() {
   }else{
     return (
       <>
-      <div className='container-fluid my-universe-background-for'>
+      <div className='container-fluid my-universe-background-reset'>
         <div className='pt-3'>
           <div className='container' style={{paddingBottom: '13px'}}>
               <div className='row'>

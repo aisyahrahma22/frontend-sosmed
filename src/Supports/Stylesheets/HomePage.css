@@ -6,15 +6,15 @@
     background-position-x: right;
 }
 
-
+/* 
 #homepage{
   padding-top: 50px;
   padding-bottom: 50px;
   position: fixed;
   display: flex;
-}
+} */
 
-.my-universe-homepage-image{
+/* .my-universe-homepage-image{
     padding-bottom: 30px;
     border: 1px solid black;
     
@@ -35,9 +35,9 @@
 .my-universe-btn:hover{
     background-color: rgb(124, 101, 136);
     color: black;
-}
+} */
 
-.card-profile {
+/* .card-profile {
     height: 350px;
   }
   
@@ -54,7 +54,7 @@
     font-weight: 500;
     font-size: 14px;
     height: 120px;
-  }
+  } */
   
   .tittle{
     height: 35px;
@@ -80,11 +80,11 @@
       position: relative;
   }
 
-  #my-universe-btn-home{
+  /* #my-universe-btn-home{
     background-color: rgb(91, 1, 132);
     color: white;
     width: 150px;
-}
+} */
 
   #cardIcon{
       width: 20px;
@@ -93,12 +93,12 @@
       margin-right: 10px;
   }
   
-  #infoIcon{
+  /* #infoIcon{
       position: absolute;
       right: 0;
       width: 12px;
       height: 12px;
-  }
+  } */
 
   .product-card {
     padding: 16px;

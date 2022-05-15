@@ -10,7 +10,6 @@ import Peoples88 from '../Supports/Images/Peoples88.png';
 class Login extends React.Component{
 
     state = {
-        isLogedIn: false,
         visible: {
             type: "password",
             title: "Show"
@@ -37,14 +36,6 @@ class Login extends React.Component{
 
     componentDidMount(){
         this.props.onCheckUserLogin()
-    }
-
-    onCheckIsLogedIn = () => {
-        let token = localStorage.getItem('myTkn')
-
-        if(token){
-            this.setState({ isLogedIn: true })
-        }
     }
 
     onSubmit = () => {
@@ -102,7 +93,7 @@ class Login extends React.Component{
                                                 <Link  style={{fontFamily: "Source Sans Pro",  textDecoration: 'none'}} className="text-decoration-none" to ="/forgotpassword"> <span  style={{cursor: 'pointer', color: 'purple'}}>Forgot Password?</span></Link>
                                             </div>
                                             <div>
-                                                <button type="submit" id="my-universe-btn-log" disabled={this.props.user.loading} onClick={() => this.onSubmit()} className="btn w-100 my-universe-bg-secondary my-universe-light">
+                                                <button type="submit" id="my-universe-btn-log" disabled={this.props.user.loading} onClick={() => this.onSubmit()} className="btn w-100">
                                                     {
                                                         this.props.user.loading?
                                                             'Loading'

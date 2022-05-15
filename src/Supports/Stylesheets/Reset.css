@@ -15,3 +15,11 @@
     margin-top: 7px;
     font-size: 13px;
   }
+
+  .my-universe-background-reset{
+    background-image: url(./../Images/01.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-x: right;
+}

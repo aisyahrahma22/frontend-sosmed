@@ -68,7 +68,6 @@ function ForgotPassword() {
           setInputValues({ email: "" });
         }
       }).catch((err) => {
-          console.log(err)
           setResMessage({
             ...resMessage,
             error: "Server error, please try again later",

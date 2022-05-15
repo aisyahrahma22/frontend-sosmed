@@ -1,0 +1,16 @@
+#my-universe-navbar-logo-con{
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+    color: rgb(91, 1, 132);
+    outline: none;
+    font-family: 'Pacifico', cursive;
+}
+
+.my-universe-background-con{
+    background-image: url(./../Images/01.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-x: right;
+}

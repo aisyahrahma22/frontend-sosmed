@@ -3,6 +3,7 @@ import Axios from 'axios'
 import { useParams, Navigate } from 'react-router-dom'
 import Peoples7 from './../Supports/Images/Peoples7.png';
 import { Link } from 'react-router-dom';
+import '../Supports/Stylesheets/COnfirmation.css';
 
 // SweetAlert
 import Swal from 'sweetalert2';
@@ -55,7 +56,7 @@ const Confirmation = () => {
         )
     }else if(!localStorage.setItem('myTkn', params.token)){
         return(  
-            <div className='container-fluid my-universe-background-home' id="my-universe-background-con">
+            <div className='container-fluid my-universe-background-con'>
             <div className='pt-3'>     
                 <div className='container'>
                     <div className='row' style={{paddingBottom: '13px'}}>
@@ -67,7 +68,7 @@ const Confirmation = () => {
                         <div className="col-6" style={{fontFamily: "Source Sans Pro"}}>
                             <div className='text-center mt-5'>
                             <h3 style={{paddingTop: '100px', fontSize: '40px'}}></h3>
-                                    <h3 style={{fontSize: '40px'}}  className='pb-3' id='my-universe-navbar-logo' >
+                                    <h3 style={{fontSize: '40px'}}  className='pb-3' id='my-universe-navbar-logo-con' >
                                         myUniverse
                                     </h3>
                                 <p style={{fontSize: '20px'}}>
@@ -84,9 +85,7 @@ const Confirmation = () => {
                                 </Link>
                                 </b>
                                 <br></br>
-                                <i style={{color:'purple'}}>
-                                    
-                                </i>
+                                <i style={{color:'purple'}}></i>
                             </div>
                         </div>
                     </div>
@@ -97,7 +96,7 @@ const Confirmation = () => {
     }else{
         return(
             <>
-            <div className='container-fluid my-universe-background-home' id="my-universe-background-con">
+            <div className='container-fluid my-universe-background-con'>
                 <div className='pt-3'>     
                      <div className='container'>
                         <div className='row' style={{paddingBottom: '13px'}}>
@@ -109,7 +108,7 @@ const Confirmation = () => {
                             <div className="col-6" style={{fontFamily: "Source Sans Pro"}}>
                                 <div className='text-center mt-5'>
                                 <h3 style={{paddingTop: '100px'}}>Welcome to be a part of</h3>
-                                         <h3 style={{fontSize: '40px'}}  className='pb-3' id='my-universe-navbar-logo' >
+                                         <h3 style={{fontSize: '40px'}}  className='pb-3' id='my-universe-navbar-logo-con' >
                                             myUniverse
                                         </h3>
                                     <p style={{fontSize: '20px'}}>

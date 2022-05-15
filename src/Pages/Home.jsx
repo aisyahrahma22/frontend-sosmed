@@ -6,15 +6,12 @@ import { API_URL } from '../Supports/Helpers/index';
 import Heart from "../Supports/Images/heart.svg";
 import HeartFilled from "../Supports/Images/heartFilled.svg";
 import moment from 'moment';
-// // import CardHomePost from '../Components/CardHomePost';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 // Redux
 import {connect} from 'react-redux';
 import {onUserLogin, onCheckUserLogin, onCheckUserVerify} from './../Redux/Actions/userAction'
 import Loading from '../Components/Loading';
-// import { flushSync } from 'react-dom';
-
 
 class Home extends React.Component{
     state = {
@@ -33,8 +30,6 @@ class Home extends React.Component{
         selectedEditPostId: 0,
     }
 
-
-
     componentDidMount(){
         let token = localStorage.getItem('myTkn')
         this.props.onCheckUserVerify(token)
@@ -43,7 +38,6 @@ class Home extends React.Component{
     }
 
     getAllPost = () => {
-      
         let token = localStorage.getItem('myTkn')
         const headers = {
             headers: { 
@@ -56,8 +50,6 @@ class Home extends React.Component{
         axios.get(API_URL + "/post/getalldata?_limit=" + totalLimit,  headers)
             .then((res) => {
                 this.setState({ listPosts: res.data});
-                console.log('ini res.data home', res.data)
-                console.log('ini res.data. myLike home', res.data.myLike)
             }).catch((err) => {
                 console.log(err)
             })
@@ -89,80 +81,16 @@ class Home extends React.Component{
               }
           }
           
-          console.log(id)
           axios.post(`${API_URL}/post/likepost/${id}`, {}, headers)
           .then((res) => {
             this.getAllPost()
             this.setState({
                 liked: true
               });
-            console.log('ini res button like', res)
           }).catch((err) => {
               console.log(err)
           })
     }
-
-    // onCommentAddChange = (e) => {
-    //     // console.log(e.target.value)
-    //     if(e.target.value.length <= 300) {
-    //         this.setState({ commentAdd: e.target.value })
-    //     }
-    // }
-
-    // onBtnAddCommentClick = (id) => {
-    //     let token = localStorage.getItem('myTkn')
-    //     var headers = {
-    //         headers: {
-    //             'Authorization': `${token}`,
-    //         }
-    //     }
-    //     console.log(id)
-
-    //     var data = {
-    //         comment: this.state.commentAdd
-    //     }
-    //     console.log('ini data comment', data)
-
-    //     axios.post(API_URL + `/post/addcomment/${id}`, data, headers)
-    //     .then((res) => {
-    //         this.setState({ addComment: res.data })
-    //         console.log('ini res.data btn addComment',res.data)
-    //     })
-    //     .catch((err) =>{
-    //         console.log('ini err btn addComment', err)
-    //     })
-    // }
-
-
-    // onCommentEditChange = (id) => {
-    //     let token = localStorage.getItem('myTkn')
-    //     const headers = {
-    //         headers: { 
-    //             'Authorization': `${token}`,
-    //         }
-    //     }
-    //     axios.put(`${API_URL}/post/editcomment/${id}`,headers)
-    //     .then((res) => {
-    //         this.setState({ editComment: res.data })
-    //     }).catch((err) => {
-    //         console.log(err)
-    //     })
-    // }
-
-    // onCommentDeleteChange = (id) => {
-    //     let token = localStorage.getItem('myTkn')
-    //     const headers = {
-    //         headers: { 
-    //             'Authorization': `${token}`,
-    //         }
-    //     }
-    //     axios.delete(`${API_URL}/post/deletecomment/${id}`,headers)
-    //     .then((res) => {
-    //         this.setState({ deleteComment: res.data })
-    //     }).catch((err) => {
-    //         console.log(err)
-    //     })
-    // }
 
     renderListPosts = () => {
         return this.state.listPosts.map((item, id) => {
@@ -235,7 +163,7 @@ class Home extends React.Component{
                         </span>
                             :
                         <span className="ml-3">
-                            <input type="button" value="Resend Email Confirmation" onClick={() => this.onResendEmail()} className="btn rounded shadow-lg mytodosapps-bg-secondary mytodosapps-light mytodosapps-input" />     
+                            <input type="button" value="Resend Email Confirmation" onClick={() => this.onResendEmail()} className="btn rounded shadow-lg" />     
                         </span>
                     }                   
                     <div className='container'>
@@ -243,7 +171,7 @@ class Home extends React.Component{
                         <InfiniteScroll
                         dataLength={this.state.listPosts.length}
                         next={this.getAllPost}
-                        style={{ display: 'flex', flexWrap: 'wrap' }} //To put endMessage and loader to the top.
+                        style={{ display: 'flex', flexWrap: 'wrap' }} 
                         hasMore={true}
                     >
                         {this.renderListPosts()}

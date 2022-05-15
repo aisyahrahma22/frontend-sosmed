@@ -7,8 +7,6 @@ import axios from 'axios';
 import { API_URL } from '../Supports/Helpers/index';
 import LikedPost from './LikePost';
 import Swal from 'sweetalert2';
-// import '../Supports/Stylesheets/Coba.css';
-import Peoples88 from '../Supports/Images/Peoples88.png';
 import '../Supports/Stylesheets/Profile2.css';
 
 class LikedPage extends Component {
@@ -41,8 +39,6 @@ class LikedPage extends Component {
         }
         axios.get(`${API_URL}/user/allusers`, headers)
         .then((res) => {
-            console.log(res)
-            console.log('ini res.data get',res.data)
             this.setState({ listPosts: res.data })
         }).catch((err) => {
             console.log('ini err get',err)
@@ -100,28 +96,6 @@ class LikedPage extends Component {
         })
     }
 
-    // onBtnUpdateImage = (id) => {
-    //     var formData = new FormData()
-    //     let token = localStorage.getItem('myTkn')
-    //     var headers = {
-    //         headers: {
-    //             'Authorization': `${token}`,
-    //             'Content-Type': 'multipart/form-data'
-    //         }
-    //     }
-       
-    //     formData.append('image', this.state.editImageFile)
-
-    //     axios.put(API_URL + "/user/editprofileimage", formData, headers)
-    //     .then((res) => {
-    //         this.setState({ listPosts: res.data, selectedEditPostId: 0 })
-    //     })
-    //     .catch((err) =>{
-    //         console.log(err)
-    //     })
-    // }
-
-
     onBtnUpdatePostClick = (id) => {
         var formData = new FormData()
         let token = localStorage.getItem('myTkn')
@@ -149,7 +123,6 @@ class LikedPage extends Component {
         }) }
         axios.patch(API_URL + "/user/editprofiledata", formData, headers)
         .then((res) => {
-            console.log(res)
             this.setState({ listPosts: res.data, selectedEditPostId: 0})
             Swal.fire({
                 title: 'Success!',
@@ -171,11 +144,10 @@ class LikedPage extends Component {
 
     renderListPosts = () => {
         return this.state.listPosts.map((item, id) => {
-            console.log('ini item',item)
             if(item.id !== this.state.selectedEditPostId) {
                 return (
                     <>
-                     <div className='my-universe-background-home' key={id}>
+                     <div className='my-universe-background-pro' key={id}>
                     <div className='container' style={{fontFamily: "Source Sans Pro"}} >
                     <div className='container-edit'>
                         <div className='profile'>
@@ -209,16 +181,11 @@ class LikedPage extends Component {
                             </div>
                         
                             <div className='profile-bio' style={{paddingTop: '-10px'}} >
-                                <p>
-                                {/* <span className="profile-real-name" style={{color: 'black'}}>
-                                {users.usersData.displayname}
-                                </span> */}
-                                <p style={{fontSize: '1.4rem', color: 'black'}}>{item.bio}</p>
-                                </p>
-                            <p  style={{color: 'grey', fontSize: '1.2rem', display: 'flex'}}>
+                            <p style={{fontSize: '1.4rem', color: 'black'}}>{item.bio}</p>
+                            <span style={{color: 'grey', fontSize: '1.2rem', display: 'flex'}}>
                             <div style={{height: '20px', width: '20px', backgroundColor: 'grey', borderRadius: '50%'}}></div>
                             <span style={{marginTop: '-5px', marginLeft: '5px'}}>  {item.email}</span>
-                            </p>
+                            </span>
                             </div>
                         </div>
                     </div>
@@ -246,98 +213,12 @@ class LikedPage extends Component {
                         <div className='gallery mt-3'>
                             <div className='row'>
                             <LikedPost/>
-                             {/* <div className='col-lg-4 col-md-6 col-12'>
-                                <div className='d-flex'>
-                                    <div className='mt-3'>
-                                        <div className="gallery-item" tabindex="0">
-                                            <img  src={API_URL + '/' + item.image} alt={`${item.image}`} className="gallery-image"/>
-                                            <div className='gallery-item-info'>
-                                                <ul>
-                                                    <Link to={`/detailpost/${item.postId}`} style={{cursor: 'pointer'}}>
-                                                    <li className="gallery-item-likes"><span className="visually-hidden"></span><i className="fas fa-heart" aria-hidden="true"></i>detail</li>
-                                                    </Link>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> */}
                             </div>
                         </div>
                     </div>
                     </div>
                 </div>
                     </>
-                // <>
-                //    <div className="i" key={id}>
-                //         <div className="i-left">
-                //             <div className="i-left-wrapper">
-                //                  <p>
-                //                 {
-                //                     this.props.user.is_confirmed === 1?
-                //                     <>
-                //                     <span className="profile-stat-count" style={{fontFamily: "Source Sans Pro"}}>verified
-                //                     </span>  
-                //                     <span className='ml-2'>
-                //                     <img height='20px' width='20px' src={Verified} alt="" />
-                //                     </span>
-                //                     </>
-                //                         :
-                //                     <span className="" style={{fontFamily: "Source Sans Pro"}}>
-                //                         verify your account
-                //                     </span>
-                //                 }
-                //                 </p>
-                //                 <h2 className="i-intro" style={{fontFamily: "Source Sans Pro"}}>Hello, My name is</h2>
-                //                 <h1 className="i-name" style={{fontFamily: "Source Sans Pro"}}>{item.displayname}</h1>
-                //                 <p className="i-desc">
-                //                     <h4 className="a-award-title mx-2" style={{fontFamily: "Source Sans Pro", fontSize: '16px'}}> {item.bio} -  {item.username}</h4>
-                //                 </p>
-                //                 <p className="i-desc" style={{fontFamily: "Source Sans Pro", marginLeft: '10px', marginTop: '-20px'}}>
-                //                 contact me on {item.email}
-                //                 </p>
-                //                 <div>
-                //                 {
-                //                     this.props.user.is_confirmed === 1?
-                //                     <>
-                //                      <button style={{fontFamily: "Source Sans Pro"}} className="btn-edit profile-edit-btn" onClick={() => this.setState({ selectedEditPostId: item.id, username: item.username, displayname: item.displayname, bio: item.bio })}>Edit Profile</button>
-                //                     </>
-                //                         :
-                //                     <span className="ml-3">
-                //                       <input type="button" value="Resend Email Confirmation" onClick={() => this.onResendEmail()} className="btn rounded shadow-lg" />  
-                //                     </span>
-                //                 }
-                //                 </div>
-                //             </div>
-                //         </div>
-                //         <div className="i-right">
-                //             <div className="i-bg"></div>
-                //             <img src={`${API_URL + '/'}${item.profileimage}`} alt="" className="i-img" />
-                //         </div>
-                //         </div>
-                //         <div className=''>
-                //         <div className="pl">
-                //             <div className='col-12 mb-3' style={{borderTop: '1px solid purple'}}></div>
-                //             <div className='left'>
-                //                 <span style={{fontFamily: "Source Sans Pro"}}>Favorite</span>
-                //                 <h1 style={{fontFamily: "Source Sans Pro"}}>COLLECTION PAGE</h1>
-                //                 </div>
-                //             <div className='col-12 mt-3' style={{borderTop: '1px solid purple'}}></div>
-                //             <div className="pl-texts">
-
-                //                 {/* <h1 className="pl-title">Create & inspire with myUniverse</h1> */}
-                //                 {/* <p className="pl-desc">
-                //                 my Universe is a creative platform that your future has been waiting for.
-                //                 Beautiful homes, stunning social media styles & a whole lot more awaits
-                //                 inside.
-                //                 </p> */}
-                //             </div>
-                //             <div className="pl-list">
-                //             <LikedPost/>
-                //             </div>
-                //             </div>
-                //         </div>
-                // </>
                 )
             }
             

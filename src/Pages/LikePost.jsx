@@ -2,19 +2,12 @@ import React from 'react';
 import { Navigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { API_URL } from '../Supports/Helpers/index';
-import '../Supports/Stylesheets/HomePage.css';
-import Heart from "../Supports/Images/heart.svg";
 import '../Supports/Stylesheets/ProfilePosts.css';
-import HeartFilled from "../Supports/Images/heartFilled.svg";
 import moment from 'moment';
-// // import CardHomePost from '../Components/CardHomePost';
-import InfiniteScroll from 'react-infinite-scroll-component';
 
 // Redux
 import {connect} from 'react-redux';
 import {onUserLogin, onCheckUserLogin, onCheckUserVerify} from './../Redux/Actions/userAction'
-// import { flushSync } from 'react-dom';
-
 
 class LikedPost extends React.Component{
     state = {
@@ -26,14 +19,9 @@ class LikedPost extends React.Component{
         commentAdd: '',
         listPosts: [], 
         listLikes: [], 
-        addComment: [], 
-        editComment: [], 
-        deleteComment: [], 
         selectedLikedPostId: 0,
         selectedEditPostId: 0,
     }
-
-
 
     componentDidMount(){
         let token = localStorage.getItem('myTkn')
@@ -53,11 +41,7 @@ class LikedPost extends React.Component{
 
         axios.get(API_URL + "/post/getlikedpost",  headers)
             .then((res) => {
-                console.log('ini liked post res', res)
-                console.log('ini likes post res.data', res.data)
-                console.log('ini likes post res.data.results', res.data.results)
                 this.setState({ listPosts: res.data });
-                // console.log('ini res.data.results home', res.data.results)
             }).catch((err) => {
                 console.log(err)
             })
@@ -89,21 +73,18 @@ class LikedPost extends React.Component{
               }
           }
           
-          console.log(id)
           axios.post(`${API_URL}/post/likepost/${id}`, {}, headers)
           .then((res) => {
             this.getAllPost()
             this.setState({
                 liked: true
               });
-            console.log('ini res button like', res)
           }).catch((err) => {
               console.log(err)
           })
     }
 
     onCommentAddChange = (e) => {
-        // console.log(e.target.value)
         if(e.target.value.length <= 300) {
             this.setState({ commentAdd: e.target.value })
         }
@@ -116,17 +97,14 @@ class LikedPost extends React.Component{
                 'Authorization': `${token}`,
             }
         }
-        console.log(id)
 
         var data = {
             comment: this.state.commentAdd
         }
-        console.log('ini data comment', data)
 
         axios.post(API_URL + `/post/addcomment/${id}`, data, headers)
         .then((res) => {
             this.setState({ addComment: res.data })
-            console.log('ini res.data btn addComment',res.data)
         })
         .catch((err) =>{
             console.log('ini err btn addComment', err)
@@ -134,39 +112,38 @@ class LikedPost extends React.Component{
     }
 
 
-    onCommentEditChange = (id) => {
-        let token = localStorage.getItem('myTkn')
-        const headers = {
-            headers: { 
-                'Authorization': `${token}`,
-            }
-        }
-        axios.put(`${API_URL}/post/editcomment/${id}`,headers)
-        .then((res) => {
-            this.setState({ editComment: res.data })
-        }).catch((err) => {
-            console.log(err)
-        })
-    }
+    // onCommentEditChange = (id) => {
+    //     let token = localStorage.getItem('myTkn')
+    //     const headers = {
+    //         headers: { 
+    //             'Authorization': `${token}`,
+    //         }
+    //     }
+    //     axios.put(`${API_URL}/post/editcomment/${id}`,headers)
+    //     .then((res) => {
+    //         this.setState({ editComment: res.data })
+    //     }).catch((err) => {
+    //         console.log(err)
+    //     })
+    // }
 
-    onCommentDeleteChange = (id) => {
-        let token = localStorage.getItem('myTkn')
-        const headers = {
-            headers: { 
-                'Authorization': `${token}`,
-            }
-        }
-        axios.delete(`${API_URL}/post/deletecomment/${id}`,headers)
-        .then((res) => {
-            this.setState({ deleteComment: res.data })
-        }).catch((err) => {
-            console.log(err)
-        })
-    }
+    // onCommentDeleteChange = (id) => {
+    //     let token = localStorage.getItem('myTkn')
+    //     const headers = {
+    //         headers: { 
+    //             'Authorization': `${token}`,
+    //         }
+    //     }
+    //     axios.delete(`${API_URL}/post/deletecomment/${id}`,headers)
+    //     .then((res) => {
+    //         this.setState({ deleteComment: res.data })
+    //     }).catch((err) => {
+    //         console.log(err)
+    //     })
+    // }
 
     renderListPosts = () => {
         return this.state.listPosts.map((item, id) => {
-            console.log('ini item',item)
             if(item.id !== this.state.selectedEditPostId) {
                 return (
                     <div className='col-12 col-md-6 col-lg-4 my-2' key={id}>
@@ -192,25 +169,6 @@ class LikedPost extends React.Component{
                 </div>
                 </div>
                 </div>
-                    // <div className='col-12 col-md-6 col-lg-4' key={id}>
-                    //     <div className="p">
-                    // <div className="p-browser d-flex justify-content-between">
-                    //      <>
-                    //         <div className='d-flex'>
-                    //             <div className="p-circle"></div>
-                    //             <div className="p-circle"></div>
-                    //             <div className="p-circle"></div>
-                    //         </div>
-                    //         <div>
-                    //             <div className="p-ex">x</div>
-                    //         </div>
-                    //     </>
-                    //     </div>
-                    //         <Link to={`/detailpost/${item.id}`}>
-                    //         <img src={`${API_URL + '/'}${item.image}`} alt="" className="p-img" />
-                    //         </Link>
-                    //     </div>
-                    // </div>
                 )
             }
         })

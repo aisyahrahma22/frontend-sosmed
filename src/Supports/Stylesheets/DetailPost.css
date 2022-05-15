@@ -1,9 +1,9 @@
-/* .detail-post-img{
+.detail-post-img{
     width: 100%;
     height: 100%;
     object-fit: cover;
     margin-left: 15px;
-} */
+}
 
 .userImgDet {
   width: 50px;
@@ -89,7 +89,7 @@
     line-height: 1.5;
     margin: 15px 0;
   }
-  .thumb{
+  /* .thumb{
     width: 100%;
     height: 100px;
     display: flex;
@@ -109,7 +109,7 @@
   .thumb img.active{
     opacity: 1;
     border: 1px solid lightseagreen;
-  }
+  } */
   .box .cart{
     background: #333;
     color: white;

@@ -12,18 +12,14 @@ import moment from 'moment';
 import Swal from 'sweetalert2';
 
 const DetailPost = ({user}) => {
-    const navigate = useNavigate();
 
     let params = useParams();
     const [post, setPost] = useState({
         postData: {},
       });
-
-      console.log(post)
-      console.log('ini comment'. comment)
      
-      const [comment, setComment] = useState([]);
-      const [likes, setLikes] = useState([]);
+    const [comment, setComment] = useState([]);
+    const [likes, setLikes] = useState([]);
     
     const [message, setMessage] = useState('')
     const [commentAdd, setCommentAdd] = useState('')
@@ -38,32 +34,25 @@ const DetailPost = ({user}) => {
             }
         }
         const postId = params.id;
-        console.log('ini postId', postId)
         
         Axios.get(`${API_URL}/post/get/${postId}`, headers)
         .then((res) => {
             setPost({ ...post, postData: res.data.results[0]});
-            console.log('ini res.data.results[0] detail post',  res.data.results[0])
             setComment(res.data.comment);
             setLikes(res.data.likes);
-            console.log('ini res.data.likes', res.data.likes)
 
         })
         .catch((err) => {
             setMessage(err.response.data.message)
-            console.log('ini err.response.data.message', err.response.data.message)
         })
     }
 
     useEffect(() => {
         fetchPosts();
-        onCheckIsLogedIn();
         onCheckUserLogin()
       }, []);
 
     const onCommentAddChange = (e) => {
-        // console.log(e.target.value)
-
         if(e.target.value.length <= 300) {
             setCommentAdd(e.target.value)
         }else{
@@ -91,12 +80,8 @@ const DetailPost = ({user}) => {
 
         Axios.post(API_URL + `/post/addcomment/${id}`, data, headers)
         .then((res) => {
-            console.log('ini hasil komen res', res)
-            console.log('ini hasil komen res.data', res.data)
             // this.setState({ addComment: res.data })
             setCommentAdd('')
-            // alert('berhasil')
-            // navigate(`/`);
             window.location.reload(false)
         })
         .catch((err) =>{
@@ -113,7 +98,6 @@ const DetailPost = ({user}) => {
 
       const SHOW_BY_DEFAULT = 5;
       const visibleOptions = showAll ? comment.length : SHOW_BY_DEFAULT;
-      console.log('ini visibleOptions', visibleOptions)
        const toggleShowAll = () => {
         setShowAll(!showAll);
       };
@@ -127,33 +111,20 @@ const DetailPost = ({user}) => {
                 'Content-Type': 'application/json'
             }
         }
-
-        console.log('ini idnya', id)
        
         Axios.post(`${API_URL}/post/likepost/${id}`, {}, headers)
         .then((res) => {
           fetchPosts()
           setLiked(true);
-          console.log('ini res button like', res)
         }).catch((err) => {
             console.log(err)
         })
     }
 
-    
-    const [isLogedIn, setisLogedIn] = useState(false);
-    const onCheckIsLogedIn = () => {
-       let token = localStorage.getItem('myTkn')
-
-       if(token){
-           setisLogedIn(true)
-       }
-   }
-
 
    if(user.is_login){
     return(
-    <div className='container-fluid my-universe-background-home'>
+    <div className='container-fluid my-universe-background-dpost'>
         <div className='pt-1' style={{paddingBottom: '13px'}}>
             <div className='container'>
                 <div className='row'>
@@ -161,7 +132,7 @@ const DetailPost = ({user}) => {
                     <div className="app-detail rounded ml-4" style={{backgroundColor: 'white'}}>
                         <div className="details">
                                 <div className="big-img">
-                                    <img src={API_URL + '/' + post.postData.image} alt="" className='detail-post-img'/>
+                                    <img src={API_URL + '/' + post.postData.image} alt="post-gambar" className='detail-post-img'/>
                                 </div>
                                 <div className="box">
                                 <div id="content">
@@ -182,7 +153,7 @@ const DetailPost = ({user}) => {
                                         ) : (
                                         <img
                                             src={Heart}
-                                            alt=""
+                                            alt="heart"
                                             id="cardIconDet"
                                             onClick={() => handleClick(post.postData.id)}
                                         />
@@ -209,9 +180,6 @@ const DetailPost = ({user}) => {
                                             {item.comment}
                                             </span>
                                             </div>
-                                            {/* <div style={{fontSize: '10px'}}>
-                                            {moment(item.created_at).format('LL')}
-                                            </div> */}
                                             </div>
                                     ))}
                                     {comment.length > SHOW_BY_DEFAULT && (

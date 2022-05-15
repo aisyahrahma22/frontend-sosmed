@@ -65,7 +65,7 @@ class Register extends React.Component{
     }
 
     componentDidMount(){
-        this.props.onCheckUserLogin()
+        // this.props.onCheckUserLogin()
         this.onCheckIsLogedIn()
     }
 
@@ -201,7 +201,7 @@ class Register extends React.Component{
                                             </div>
                                         </div>
                                         <div className='mb-3'>
-                                            <button type="submit" id="my-universe-btn-reg" disabled={this.state.is_disabled} onClick={() => this.onSubmit()} className="btn w-100 my-universe-bg-secondary my-universe-light">
+                                            <button type="submit" id="my-universe-btn-reg" disabled={this.state.is_disabled} onClick={() => this.onSubmit()} className="btn w-100">
                                                 {
                                                     this.state.is_disabled?
                                                         'Loading'

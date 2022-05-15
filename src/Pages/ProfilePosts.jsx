@@ -3,10 +3,7 @@ import { Navigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { API_URL } from '../Supports/Helpers/index';
 import moment from 'moment';
-import Heart from "../Supports/Images/heart.svg";
-import HeartFilled from "../Supports/Images/heartFilled.svg";
-import Comment from "../Supports/Images/comment.svg";
-import '../Supports/Stylesheets/HomePage.css';
+// import '../Supports/Stylesheets/HomePage.css';
 import '../Supports/Stylesheets/ProfilePosts.css';
 
 // Redux
@@ -41,8 +38,6 @@ class ProfilePosts extends React.Component{
         }
         axios.get(`${API_URL}/post/getprofilepost`, headers)
         .then((res) => {
-            console.log(res)
-            console.log('ini res.data get',res.data)
             this.setState({ listPosts: res.data })
         }).catch((err) => {
             console.log('ini err get',err)
@@ -59,7 +54,6 @@ class ProfilePosts extends React.Component{
 
 
     onCaptionEditChange = (e) => {
-        // console.log(e.target.value)
         if(e.target.value.length <= 100) {
             this.setState({ captionEdit: e.target.value })
         }
@@ -111,7 +105,6 @@ class ProfilePosts extends React.Component{
 
     renderListPosts = () => {
         return this.state.listPosts.map((item, index) => {
-            console.log('ini item',item)
             if(item.id !== this.state.selectedEditPostId) {
                 return (
                     <div className='col-12 col-md-6 col-lg-4 my-2' key={index}>
@@ -159,39 +152,6 @@ class ProfilePosts extends React.Component{
                 </div>
                 </div>
                 </div>
-                    // <div className='col-12 col-md-6 col-lg-4' key={index}>
-                    //     <div className="p">
-                    // <div className="p-browser d-flex justify-content-between">
-                    //    {
-                    //        this.props.user.is_confirmed === 1?
-                    //       <>
-                    //         <div className='d-flex' style={{cursor: 'pointer'}} onClick={() => this.setState({ selectedEditPostId: item.id, captionEdit: item.caption })}>
-                    //                 <div className="p-circle"></div>
-                    //                 <div className="p-circle"></div>
-                    //                 <div className="p-circle"></div>
-                    //         </div>
-                    //         <div>
-                    //             <div className="p-ex" style={{cursor: 'pointer'}} onClick={() => this.onBtnDeletePostClick(item.id)}>x</div>
-                    //         </div>
-                    //       </>
-                    //         :
-                    //         <>
-                    //             <div className='d-flex'>
-                    //                 <div className="p-circle"></div>
-                    //                 <div className="p-circle"></div>
-                    //                 <div className="p-circle"></div>
-                    //             </div>
-                    //             <div>
-                    //                 <div className="p-ex">x</div>
-                    //             </div>
-                    //         </>
-                    //    }
-                    //     </div>
-                    //         <Link to={`/detailpost/${item.id}`}>
-                    //         <img src={`${API_URL + '/'}${item.image}`} alt="" className="p-img" />
-                    //         </Link>
-                    //     </div>
-                    // </div>
                 )
             }
             
@@ -230,28 +190,6 @@ class ProfilePosts extends React.Component{
             </div>
             </div>
             </div>
-            // <div className='col-12 col-md-6 col-lg-4 my-2' key={index}>
-            //     <div className="">
-            //         <div className="p-browser">
-            //             <div className="p-circle"></div>
-            //             <div className="p-circle"></div>
-            //             <div className="p-circle"></div>
-            //         </div>
-            //         <img src={`${API_URL + '/'}${item.image}`} alt="" className="p-img" />
-            //         <div>
-        
-                    // </div>
-                    // <div className='d-flex justify-content-around' style={{backgroundColor: 'white'}}>
-                    //     <span className="material-icons mb-2" style={{fontWeight: 'lighter', fontFamily: "Source Sans Pro", color: 'rgb(91, 1, 132)', cursor: 'pointer'}} onClick={() => this.setState({ selectedEditPostId: 0 })}>
-                    //     cancel
-                    //     </span>
-                    //     <span className="material-icons mb-2 mx-2" style={{fontWeight: 'lighter', fontFamily: "Source Sans Pro", color: 'rgb(91, 1, 132)', cursor: 'pointer'}} onClick={() => this.onBtnUpdatePostClick(item.id)} >
-                    //     save
-                    //     </span> 
-                    // </div>
-            //     </div>
-            // </div>
-
             )
         })
     }
@@ -268,12 +206,6 @@ class ProfilePosts extends React.Component{
         }
 
         return <Navigate to='/profile' />
-
-        // return(
-        //     <div>
-        //         123
-        //     </div>
-        // )
     }
 }
 

@@ -1,7 +1,7 @@
-.i {
+/* .i {
     display: flex;
     height: 80vh;
-  }
+  } */
 
   .my-universe-background-pro{
     background-image: url(./../Images/01.png);
@@ -11,7 +11,7 @@
     background-position-x: right;
 }
   
-  .i-left {
+  /* .i-left {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -81,9 +81,9 @@
     height: 350px;
     border-radius: 50%;
     object-fit: cover;
-  }
+  } */
 
-  .userImgSet {
+  /* .userImgSet {
     width: 100px;
     height: 100px;
     border-radius: 50%;
@@ -95,8 +95,8 @@
     width: 100%;
     height: 65px;
   }
-  
-  @media screen and (max-width: 480px) {
+   */
+  /* @media screen and (max-width: 480px) {
     .i {
       flex-direction: column;
     }
@@ -114,10 +114,10 @@
       display: none;
     }
     
-  }
+  } */
   
 /* sesi 2 */
-.pl {
+/* .pl {
     padding: 10px 50px;
     display: flex;
     flex-direction: column;
@@ -157,7 +157,7 @@
     .pl-desc {
       display: none;
     }
-  }
+  } */
   
   /* sesi 3 */
   label {
@@ -173,3 +173,5 @@
   .modal_container {
     margin: 0 20%;
   }
+
+  

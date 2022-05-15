@@ -4,7 +4,46 @@
     padding: 0 2rem;
 }
 
-#my-universe-nav-posts{
+.my-universe-background-dpro{
+    background-image: url(./../Images/01.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-x: right;
+}
+
+.product-card {
+    padding: 16px;
+    border-radius: 8px;
+    transition: all ease 150ms;
+    box-sizing: border-box;
+    width: 340px;
+    border: 1px solid #e2e5e6;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 4px;
+}
+
+.product-card:hover {
+    box-shadow: 0px 4px 8px rgb(91, 1, 132),
+    0px 2px 4px rgba(59, 69, 123, 0.2);
+}
+
+.product-card img {
+    object-fit: contain;
+    height: 250px;
+}
+
+  
+#postImg{
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+
+/* #my-universe-nav-posts{
     color: black;
     cursor: 'pointer';
     font-size: 30px;
@@ -22,10 +61,10 @@
 
 #row-nav{
     border-bottom: 1px solid grey;
-}
+} */
 
 
-.btn-edit {
+/* .btn-edit {
     display: inline-block;
     background: none;
     border: none;
@@ -38,15 +77,15 @@
 
 .btn-edit:focus {
     outline: 0.5rem auto purple;
-}
-
+} */
+/* 
 .visually-hidden {
     position: absolute !important;
     height: 1px;
     width: 1px;
     overflow: hidden;
     clip: rect(1px, 1px, 1px, 1px);
-}
+} */
 
 /* Profile Section */
 
@@ -92,7 +131,7 @@
     font-weight: 300;
 }
 
-.profile-edit-btn {
+/* .profile-edit-btn {
     font-size: 1.4rem;
     line-height: 1.8;
     border: 0.1rem solid #dbdbdb;
@@ -116,9 +155,9 @@
     font-weight: 500;
     margin-left: 5px;
     font-style: italic;
-}
+} */
 
-#profile-img {
+/* #profile-img {
     width: 30rem;
     height: 30rem;
     border: 1px solid #e0e0e0;
@@ -130,7 +169,7 @@
     height: 5rem;
     border: 1px solid #e0e0e0;
     border-radius: 100%;
-}
+} */
 
 .profile-bio {
     font-size: 1.6rem;
@@ -148,7 +187,7 @@
 
 /* Gallery Section */
 
-.gallery {
+/* .gallery {
     display: flex;
     flex-wrap: wrap;
     padding-bottom: 3rem;
@@ -157,7 +196,6 @@
 .gallery-item {
     display: flex;
     position: relative;
-    /* flex: 1 0 22rem; */
     margin: 1rem;
     color: #fff;
     cursor: pointer;
@@ -212,19 +250,7 @@
     height: 300px;
     object-fit: cover;
     margin-right: 10px;
-}
-
-/* Loader */
-
-.loader {
-    width: 5rem;
-    height: 5rem;
-    border: 0.6rem solid #999;
-    border-bottom-color: transparent;
-    border-radius: 50%;
-    margin: 0 auto;
-    animation: loader 500ms linear infinite;
-}
+} */
 
 /* Media Query */
 
@@ -307,22 +333,6 @@
         display: block;
     }
 }
-
-/* Spinner Animation */
-
-@keyframes loader {
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-/*
-
-The following code will only run if your browser supports CSS grid.
-
-Remove or comment-out the code block below to see how the browser will fall-back to flexbox & floated styling. 
-
-*/
 
 @supports (display: grid) {
     .profile {
