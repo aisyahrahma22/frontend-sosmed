@@ -3,7 +3,7 @@ import Axios from 'axios'
 import { useParams, Navigate } from 'react-router-dom'
 import Peoples7 from './../Supports/Images/Peoples7.png';
 import { Link } from 'react-router-dom';
-import '../Supports/Stylesheets/COnfirmation.css';
+import '../Supports/Stylesheets/Confirmation.css';
 
 // SweetAlert
 import Swal from 'sweetalert2';
@@ -80,7 +80,7 @@ const Confirmation = () => {
                                 <b>
                                 <Link to="/login" style={{cursor: 'pointer', textDecoration: 'none', color: 'purple'}}>
                                 <u>
-                                    Click here to Login
+                                    Click here to continue
                                 </u>
                                 </Link>
                                 </b>

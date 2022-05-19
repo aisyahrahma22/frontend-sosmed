@@ -4,10 +4,12 @@ import { connect } from 'react-redux';
 import {onUserLogin, onCheckUserLogin, onCheckUserVerify } from '../Redux/Actions/userAction'
 import Verified from './../Supports/Images/Verified2.png';
 import axios from 'axios';
+import Setting from './../Supports/Images/Setting.png';
 import { API_URL } from '../Supports/Helpers/index';
 import LikedPost from './LikePost';
 import Swal from 'sweetalert2';
 import '../Supports/Stylesheets/Profile2.css';
+import '../Supports/Stylesheets/Profile.css';
 
 class LikedPage extends Component {
     state = { 
@@ -89,7 +91,12 @@ class LikedPage extends Component {
             'Content-Type': 'application/json'
         }})
         .then((res) => {
-            alert('Check Your Email!')
+            Swal.fire({
+                title: 'Success!',
+                text: 'Check Your Email',
+                icon: 'success',
+                confirmButtonText: 'Okay!'
+            })
         })
         .catch((err) => {
             console.log(err)
@@ -147,145 +154,156 @@ class LikedPage extends Component {
             if(item.id !== this.state.selectedEditPostId) {
                 return (
                     <>
-                     <div className='my-universe-background-pro' key={id}>
-                    <div className='container' style={{fontFamily: "Source Sans Pro"}} >
-                    <div className='container-edit'>
-                        <div className='profile'>
-                            <div className='profile-image'>
-                                <img
-                                    src={API_URL + '/' + item.profileimage}
-                                    id='profile-image' alt="profile-image"
-                                />
-                            </div>
-                            <div className='profile-user-settings d-flex flex-column'>
-                                <h1 className="profile-user-name">
-                                {item.username}
-                                <span>
-                                {
-                                    this.props.user.is_confirmed === 1?
-                                    <>
-                                    <span className='ml-2'>
-                                    <img height='30px' width='30px' src={Verified} alt="verified" style={{marginTop: '-10px'}} />
-                                    </span>
-                                    </>
-                                        :
-                                    <span>
-                                    
-                                    </span>
-                                }
-                                </span>
-                                </h1>
-                                <span className="profile-real-name" style={{color: 'black', fontSize: '30px', fontWeight: 'light'}}>
-                                {item.displayname}
-                                </span>
-                            </div>
+                      <div className='container-new' style={{fontFamily: "Source Sans Pro"}}>
+                   <div className='photo'>
+                       <div>
+                       <img
+                            src={API_URL + '/' + item.profileimage}
+                            id='profile-image-pro' alt="profile-image"
+                            />
+                       </div>
+
+                   </div>
+                   <div className='name mt-5'>
+                   {item.username}
+                    {
+                        this.props.user.is_confirmed === 1?
+                        <>
+                        <span className='ml-2'>
+                        <img height='20px' width='20px' src={Verified} alt="verified" style={{marginTop: '-10px'}} />
+                        </span>
+                        </>
+                            :
+                        <span>
                         
-                            <div className='profile-bio' style={{paddingTop: '-10px'}} >
-                            <p style={{fontSize: '1.4rem', color: 'black'}}>{item.bio}</p>
-                            <span style={{color: 'grey', fontSize: '1.2rem', display: 'flex'}}>
-                            <div style={{height: '20px', width: '20px', backgroundColor: 'grey', borderRadius: '50%'}}></div>
-                            <span style={{marginTop: '-5px', marginLeft: '5px'}}>  {item.email}</span>
+                        </span>
+                    }
+                   </div>
+                   <div className='label d-flex flex-column'>
+                        <div style={{fontSize: '30px'}}>
+                        {item.displayname}
+                        </div>
+                        <div className='description mb-2' style={{fontSize: '18px'}}>
+                        {item.bio}
+                       {/* <div> Pitchfork tilde lomo chillwave keytar, tofu chartreuse letterpress mumblecore.mixtape palo santo kit</div> */}
+                       
+                        </div>
+                        <div className='d-flex'>
+                            <div className='mt-1' style={{height: '15px', width: '15px', backgroundColor: 'grey', borderRadius: '50%'}}></div>
+                            <span style={{marginTop: '0px', marginLeft: '5px'}}>  {item.email}</span>
+                        </div>
+                    </div>
+                    <div className='description'>
+                        {
+                            this.props.user.is_confirmed === 1?
+                            <>
+                            <span className=''>
+                            <input style={{fontFamily: "Source Sans Pro"}} type="button" value="Edit Profile"  className="btn btn-outline-dark"  onClick={() => this.setState({ selectedEditPostId: item.id, username: item.username, displayname: item.displayname, bio: item.bio })} />     
                             </span>
-                            </div>
-                        </div>
+                            </>
+                                :
+                            <span>
+                                <input  className="btn btn-outline-dark" type="button" value="Resend Email Confirmation" onClick={() => this.onResendEmail()} />     
+                            </span>
+                        }
                     </div>
-                    <div className='container-edit'>
-                    <div className='row border-top-0 border-left-0 border-right-0' id='row-nav'>
-                        <div className='col-3'></div>
-                        <div className='col-3'>
-                            <Link to='/profile'  style={{ textDecoration:"none", color: "black", cursor: 'pointer' }}>
-                                <span  id='my-universe-nav-posts'>
-                                Posts
-                                </span>
-                            </Link>
-                        </div>
-                        <div className='col-3'>
-                            <Link to = '/likedpage' style={{ textDecoration:"none", color: "black", cursor: 'pointer' }}>
-                                <span  id='my-universe-nav-posts'>
-                                Liked
-                                </span>
-                            </Link>
-                        </div>
-                        <div className='col-3'></div>
-                    </div>
-                    </div>
-                    <div className='container-edit'>
-                        <div className='gallery mt-3'>
-                            <div className='row'>
-                            <LikedPost/>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
+               </div>
+               <div className='container'>
+                   <div className='link-grid'>
+                       <div className='tab-link'>
+                           <Link to='/profile' style={{ textDecoration:"none", color: "black", cursor: 'pointer' }}>
+                           <span>
+                           Posts
+                           </span>
+                           </Link>
+                       </div>
+                       <div className='tab-link mx-5'>
+                          <Link to='/likedpage' style={{ textDecoration:"none", color: "black", cursor: 'pointer' }}>
+                           <span>
+                           Liked
+                           </span>
+                           </Link>
+                       </div>
+                   </div>
+               </div>
+               <div className='container ml-5'>
+               <LikedPost/>
+               </div>
                     </>
                 )
             }
             
             return (
                 <>
-                 <div className="container pt-5 pb-2">
-                    <div className="modal_container">
-                        <div className="m-5">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                            <h2 className='text-center' style={{fontFamily: "Source Sans Pro"}}>Setting your Account!</h2>
+                   <div className='container-fluid'>
+                <div className='pt-3'>     
+                    <div className='container'>
+                        <div className='row' style={{paddingBottom: '42px'}}>
+                            <div className="col-6 mt-5">
+                                <div className="d-none d-md-block mt-3">
+                                    <img src={Setting}  alt="" width="100%" />
+                                </div>
                             </div>
-                            <div className="modal-body">
-                            <div  className="text-xl-left">
-                            {
-                                 this.state.previewImage? <img src={this.state.previewImage} alt='Image Preview'  id='profile-img-edit' width='30%' /> : <img src={`${API_URL + '/'}${item.profileimage}`} alt='Image Preview'  id='profile-img-edit' width='30%' />
-                            }
-                            <input id="editImagePost" className='mx-3' type="file" label={this.state.editImageFileName} onChange={this.onEditImageFileChange} />
-                            </div>
-                            <div>
-                                <label htmlFor="editUserFullname" className="text-xl-left" style={{fontFamily: "Source Sans Pro"}}>
-                                Fullname
-                                </label>
-                                <input
-                                value={this.state.displayname} onChange={this.onDisplayNameEditChange}
-                                name="editUserFullname"
-                                type="text"
-                                id="editUserFullname"
-                                placeholder="Fullname"
-                                className="form-control"
-                                />
-                            </div>
-                            <div>
-                                <label htmlFor="editUserUsername" className="text-xl-left" style={{fontFamily: "Source Sans Pro"}}>
-                                Username
-                                </label>
-                                <input
-                                value={this.state.username} onChange={this.onUsernameEditChange}
-                                name="editUserUsername"
-                                type="text"
-                                id="editUserUsername"
-                                placeholder="Username"
-                                className="form-control"
-                                />
-                            </div>
-                            <div>
-                                <label htmlFor="editUserBio" className="text-xl-left" style={{fontFamily: "Source Sans Pro"}}>
-                                Bio
-                                </label>
-                                <textarea
-                                value={this.state.bio} onChange={this.onBioEditChange}
-                                name="editUserBio"
-                                id="Bio"
-                                type="text"
-                                placeholder="Bio"
-                                className="form-control"
-                                />
-                            </div>
-                            </div>
-                            <div className="modal-footer" style={{marginTop: '-10px'}}>
-                            <input style={{fontFamily: "Source Sans Pro"}} className="btn btn-primary w-50" type="button" value="Cancel" onClick={() => this.setState({ selectedEditPostId: 0 })} />
-                            <input style={{fontFamily: "Source Sans Pro"}} className="btn btn-danger w-50 mx-2" type="button" value="Save" onClick={() => this.onBtnUpdatePostClick(item.id)} />
+                            <div className="col-6" style={{fontFamily: "Source Sans Pro"}}>
+                                <div className='pt-4 mt-5' style={{width: '400px'}}>
+                                     <div  className="text-xl-left">
+                                        {
+                                            this.state.previewImage? <img src={this.state.previewImage} alt='Image Preview' className='userImgSet' /> : <img src={`${API_URL + '/'}${item.profileimage}`} alt='Image Preview' className='userImgSet' />
+                                        }
+                                        <input id="editImagePost" className='mx-3' type="file" label={this.state.editImageFileName} onChange={this.onEditImageFileChange} />
+                                    </div>
+                                    <div>
+                                            <label htmlFor="editUserFullname" className="text-xl-left" style={{fontFamily: "Source Sans Pro"}}>
+                                            Fullname
+                                            </label>
+                                            <input
+                                            value={this.state.displayname} onChange={this.onDisplayNameEditChange}
+                                            name="editUserFullname"
+                                            type="text"
+                                            id="editUserFullname"
+                                            placeholder="Fullname"
+                                            className="form-control"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label htmlFor="editUserUsername" className="text-xl-left" style={{fontFamily: "Source Sans Pro"}}>
+                                            Username
+                                            </label>
+                                            <input
+                                            value={this.state.username} onChange={this.onUsernameEditChange}
+                                            name="editUserUsername"
+                                            type="text"
+                                            id="editUserUsername"
+                                            placeholder="Username"
+                                            className="form-control"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label htmlFor="editUserBio" className="text-xl-left" style={{fontFamily: "Source Sans Pro"}}>
+                                            Bio
+                                            </label>
+                                            <textarea
+                                            value={this.state.bio} onChange={this.onBioEditChange}
+                                            name="editUserBio"
+                                            id="Bio"
+                                            type="text"
+                                            placeholder="Bio"
+                                            className="form-control"
+                                            />
+                                        </div>
+                                        <div className='mb-4 mt-2 d-flex justify-content-center'>
+                                            <Link  style={{fontFamily: "Source Sans Pro",  textDecoration: 'none'}} className="text-decoration-none" to ="/forgotpassword"> <span  style={{cursor: 'pointer', color: 'purple'}}>Forgot Password?</span></Link>
+                                        </div>
+                                        <div className="d-flex" style={{marginTop: '-10px'}}>
+                                        <input style={{fontFamily: "Source Sans Pro"}} className="btn btn-outline-dark w-50" type="button" value="Cancel" onClick={() => this.setState({ selectedEditPostId: 0 })} />
+                                        <input style={{fontFamily: "Source Sans Pro"}} className="btn btn-outline-primary w-50 mx-2" type="button" value="Save" onClick={() => this.onBtnUpdatePostClick(item.id)} />
+                                        </div>
+                                </div>
                             </div>
                         </div>
-                        </div>
-                    </div>
-                    </div>
+                    </div> 
+                </div>
+            </div>
                 </>
             )
         })
@@ -294,7 +312,7 @@ class LikedPage extends Component {
     render() {
         if(this.props.user.is_login) {
             return(
-            <div className=''>
+            <div className='pt-3'>
                 {this.renderListPosts()}
             </div>
             )

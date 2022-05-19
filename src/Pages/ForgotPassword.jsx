@@ -90,7 +90,10 @@ function ForgotPassword() {
                     <div className="d-flex flex-column align-items-center pt-5 mt-5">
                       <h1 className="mb-3 mt-4 fw-bold">Forgot Password</h1>
                       <p className="info">
-                        Please enter your registered email address. You will receice a link to
+                        Please enter your registered email address.
+                      </p>
+                      <p className="info" style={{marginTop: '-30px'}}>
+                        You will receice a link to
                         create a new password via email.
                       </p>
                       <form 
@@ -119,12 +122,12 @@ function ForgotPassword() {
                         </form>
                         {submitLoading && (
                           <div
-                            className="alert alert-secondary mt-1 d-flex justify-content-center pt-3 pb-1"
+                            className="alert alert-secondary mt-1 d-flex flex-column justify-content-center pt-3 pb-1"
                             role="alert"  
                           >
-                            <div className="spinner-border mt-1" role="status">
+                            {/* <div className="spinner-border mt-1 mb-3" role="status">
                               <span className="visually-hidden">Loading...</span>
-                            </div>
+                            </div> */}
                             <p>Submitting...</p>
                           </div>
                         )}

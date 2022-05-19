@@ -4,6 +4,8 @@ import axios from 'axios';
 import { API_URL } from '../Supports/Helpers/index';
 import '../Supports/Stylesheets/ProfilePosts.css';
 import moment from 'moment';
+import Heart from "../Supports/Images/heart.svg";
+import HeartFilled from "../Supports/Images/heartFilled.svg";
 
 // Redux
 import {connect} from 'react-redux';
@@ -42,6 +44,7 @@ class LikedPost extends React.Component{
         axios.get(API_URL + "/post/getlikedpost",  headers)
             .then((res) => {
                 this.setState({ listPosts: res.data });
+                console.log(res.data)
             }).catch((err) => {
                 console.log(err)
             })
@@ -148,9 +151,9 @@ class LikedPost extends React.Component{
                 return (
                     <div className='col-12 col-md-6 col-lg-4 my-2' key={id}>
                     <div className="card product-card">
-                        <div className='tittle'>
+                        <div className='tittle mb-2'>
                             <div className='d-flex'>
-                                <img  src={`${API_URL + '/'}${item.profileimage}`} id="userImg" />
+                                <img  src={`${API_URL + '/'}${item.profileImage}`} id="userImg" />
                                 <Link to={`/detailprofile/${item.userId}`} style={{cursor: 'pointer', textDecoration: 'none', color: 'black'}}>
                                 <span style={{fontFamily: "Source Sans Pro"}}>{item.username}</span>
                                 </Link>
@@ -163,8 +166,19 @@ class LikedPost extends React.Component{
                     <div className='d-flex flex-column'>
                         <span className="text-muted" style={{fontSize: '14px', fontFamily: "Source Sans Pro"}}>{moment(item.created_at).format('LLL')}</span>
                         <span style={{fontSize: '12px', color: 'purple', marginTop: '2px', fontFamily: "Source Sans Pro"}}>
-                           you love this
+                            {item.myLiked ? (
+                                <img src={HeartFilled} alt="" id="cardIconDet" onClick={() => this.handleClick(item.id)} />
+                                ) : (
+                                <img
+                                    src={Heart}
+                                    alt="heart"
+                                    id="cardIconDet"
+                                    onClick={() => this.handleClick(item.id)}
+                                />
+                            )}
+                             <span style={{fontSize: '14px', color: 'purple', marginTop: '0px', fontFamily: "Source Sans Pro"}}>{item.likesTotal} peoples love this</span>
                         </span>
+
                     </div>
                 </div>
                 </div>

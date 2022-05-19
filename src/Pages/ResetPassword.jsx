@@ -123,18 +123,18 @@ function ResetPassword() {
   if(params.token !== data.token ){
     return(
       <div className='container-fluid my-universe-background-reset'>
-      <div className='pt-3'>     
+      <div className='pt-2'>     
            <div className='container'>
-              <div className='row' style={{paddingBottom: '13px'}}>
+              <div className='row' style={{paddingBottom: '0px'}}>
                   <div className="col-6">
-                      <div className="d-none d-md-block">
+                      <div className="d-none d-md-block mt-4">
                           <img src={Forgot1} alt="" width="100%" />
                       </div>
                   </div>
                   <div className="col-6" style={{fontFamily: "Source Sans Pro"}}>
                       <div className='text-center mt-5'>
                       <h3 style={{paddingTop: '100px', fontSize: '40px'}}></h3>
-                               <h3 style={{fontSize: '40px'}}  className='pb-3' id='my-universe-navbar-logo' >
+                               <h3 style={{fontSize: '40px'}}  className='mb-3' id='my-universe-navbar-logo' >
                                   myUniverse
                               </h3>
                           <p style={{fontSize: '20px'}}>
@@ -146,7 +146,7 @@ function ResetPassword() {
                           <b>
                           <Link to="/login" style={{cursor: 'pointer', textDecoration: 'none', color: 'purple'}}>
                           <u>
-                              Click here to Login
+                              Click here to continue
                           </u>
                           </Link>
                           </b>

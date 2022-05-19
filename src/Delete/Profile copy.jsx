@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Navigate, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import {onUserLogin, onCheckUserLogin, onCheckUserVerify } from './../Redux/Actions/userAction'
+import {onUserLogin, onCheckUserLogin, onCheckUserVerify } from '../Redux/Actions/userAction'
 import Verified from './../Supports/Images/Verified2.png';
 import axios from 'axios';
 import '../Supports/Stylesheets/Profile.css';
 import Setting from './../Supports/Images/Setting.png';
 import { API_URL } from '../Supports/Helpers/index';
-import ProfilePosts from './ProfilePosts';
+import ProfilePosts from '../Pages/ProfilePosts';
 import Swal from 'sweetalert2';
 
 class Profile extends Component {
@@ -66,26 +66,12 @@ class Profile extends Component {
     onUsernameEditChange = (e) => {
         if(e.target.value.length <= 100) {
             this.setState({ username: e.target.value })
-        }else{
-            Swal.fire({
-                title: 'Error!',
-                text: 'Username can not more than 100 characters',
-                icon: 'error',
-                confirmButtonText: 'Okay!'
-            })
         }
     }
 
      onBioEditChange = (e) => {
         if(e.target.value.length <= 100) {
             this.setState({ bio: e.target.value })
-        }else{
-            Swal.fire({
-                title: 'Error!',
-                text: 'Bio can not more than 100 characters',
-                icon: 'error',
-                confirmButtonText: 'Okay!'
-            })
         }
     }
 
@@ -104,12 +90,7 @@ class Profile extends Component {
             'Content-Type': 'application/json'
         }})
         .then((res) => {
-            Swal.fire({
-                title: 'Success!',
-                text: 'Check Your Email',
-                icon: 'success',
-                confirmButtonText: 'Okay!'
-            })
+            alert('Check Your Email!')
         })
         .catch((err) => {
             console.log(err)
@@ -167,97 +148,183 @@ class Profile extends Component {
             if(item.id !== this.state.selectedEditPostId) {
                 return (
                 <>
-               <div className='container-new' style={{fontFamily: "Source Sans Pro"}}>
-                   <div className='photo'>
-                       <div>
-                       <img
-                            src={API_URL + '/' + item.profileimage}
-                            id='profile-image-pro' alt="profile-image"
-                            />
-                       </div>
+                <div className='container'>
+                <div className='profile-container pt-5'>
+                   <div className=''>
+                        <div className='profile-detail-wrap row'>
+                                <div>
+                                <img
+                                    src="https://images.pexels.com/photos/6347720/pexels-photo-6347720.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                                    alt="profile-image"
+                                    className='profile-image-container'
+                                    />
+                                </div>
+                                <div className='profile-status'>
+                                    <div className='status-block'>
+                                        <div className='status-number'>
+                                        515
+                                        </div>
+                                        <div className='status-label'>
+                                        posts
+                                        </div>
+                                    </div>
+                                    <div className='status-block'>
+                                        <div className='status-number'>
+                                        515K
+                                        </div>
+                                        <div className='status-label'>
+                                        followers
+                                        </div>
+                                    </div>
+                                    <div className='status-block'>
+                                        <div className='status-number'>
+                                        515
+                                        </div>
+                                        <div className='status-label'>
+                                        following
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className='about-wrap'>
+                                    <div className='profile-name-about'>Aisyah Rahmatull</div>
+                                    <div className='profile-name-category'>Education</div>
+                                    <div className='bio-text'>🌐All About FrontEnd Web-Development</div>
+                                    <div className='bio-text'>📒Resources/tips/tricks/tutorials</div>
+                                    <div className='bio-link'>t.me/sparshcodes</div>
+                                </div>
+                            </div>
+                            <div className='profile-button-wrap'>
+                                <div className='profile-button-row'>
+                                    <div className='profile-button-button'>Edit Profile</div>
+                                    <div className='profile-button-button'>Promotions</div>
+                                </div>
+                                <div className='profile-button-row'>
+                                    <div className='profile-button-button'>Insights</div>
+                                    <div className='profile-button-button'>Contact</div>
+                                </div>
+                            </div>
+                            <div style={{ display: 'flex',padding: '0 20px'}}>
+                                highlight
+                            </div>
+                            <div className='taps-wrap'>
+                                <div className='taps'>
+                                    Post
+                                </div>
+                                <div className='taps'>
+                                    Liked
+                                </div>
+                            </div>
+                            <div className='post-grid'>
+                                    <img
+                                    src="https://images.pexels.com/photos/6347720/pexels-photo-6347720.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                                    alt="profile-image"
+                                    />
+                            </div>
+                   </div>
+                </div>
 
-                   </div>
-                   <div className='name mt-5'>
-                   {item.username}
-                    {
-                        this.props.user.is_confirmed === 1?
-                        <>
-                        <span className='ml-2'>
-                        <img height='20px' width='20px' src={Verified} alt="verified" style={{marginTop: '-10px'}} />
-                        </span>
-                        </>
-                            :
-                        <span>
+                </div>
+                 {/* <div className='my-universe-background-prof' key={id}>
+                    <div className='container' style={{fontFamily: "Source Sans Pro"}} >
+                    <div className='container-edit'>
+                        <div className='profile'>
+                            <div className='profile-image'>
+                                <img
+                                    src={API_URL + '/' + item.profileimage}
+                                    id='profile-image' alt="profile-image"
+                                />
+                            </div>
+                            <div className='profile-user-settings d-flex flex-column'>
+                                <h1 className="profile-user-name">
+                                {item.username}
+                                <span>
+                                {
+                                    this.props.user.is_confirmed === 1?
+                                    <>
+                                    <span className='ml-2'>
+                                    <img height='30px' width='30px' src={Verified} alt="verified" style={{marginTop: '-10px'}} />
+                                    </span>
+                                    </>
+                                        :
+                                    <span>
+                                    
+                                    </span>
+                                }
+                                </span>
+                                </h1>
+                                <span className="profile-real-name" style={{color: 'black', fontSize: '30px', fontWeight: 'light'}}>
+                                {item.displayname}
+                                </span>
+                            </div>
                         
-                        </span>
-                    }
-                   </div>
-                   <div className='label d-flex flex-column'>
-                        <div style={{fontSize: '30px'}}>
-                        {item.displayname}
-                        </div>
-                        <div className='description mb-2' style={{fontSize: '18px'}}>
-                        {item.bio}
-                       {/* <div> Pitchfork tilde lomo chillwave keytar, tofu chartreuse letterpress mumblecore.mixtape palo santo kit</div> */}
-                       
-                        </div>
-                        <div className='d-flex'>
-                            <div className='mt-1' style={{height: '15px', width: '15px', backgroundColor: 'grey', borderRadius: '50%'}}></div>
-                            <span style={{marginTop: '0px', marginLeft: '5px'}}>  {item.email}</span>
+                            <div className='profile-bio' style={{paddingTop: '-10px'}} >
+                            <p style={{fontSize: '1.4rem', color: 'black'}}>{item.bio}</p>
+                            <span  style={{color: 'grey', fontSize: '1.2rem', display: 'flex'}}>
+                            <div style={{height: '20px', width: '20px', backgroundColor: 'grey', borderRadius: '50%'}}></div>
+                            <span style={{marginTop: '-5px', marginLeft: '5px'}}>  {item.email}</span>
+                            </span>
+                            <div>
+                                {
+                                    this.props.user.is_confirmed === 1?
+                                    <>
+                                    <span className='ml-2'>
+                                    <input style={{fontFamily: "Source Sans Pro", width: '150px'}} type="button" value="Edit Profile" className="btn rounded shadow-lg"  onClick={() => this.setState({ selectedEditPostId: item.id, username: item.username, displayname: item.displayname, bio: item.bio })} />     
+                                    </span>
+                                    </>
+                                        :
+                                    <span>
+                                     <input type="button" value="Resend Email Confirmation" onClick={() => this.onResendEmail()} className="btn rounded shadow-lg" />     
+                                    </span>
+                                }
+                            </div>
+                            </div>
                         </div>
                     </div>
-                    <div className='description'>
-                        {
-                            this.props.user.is_confirmed === 1?
-                            <>
-                            <span className=''>
-                            <input style={{fontFamily: "Source Sans Pro"}} type="button" value="Edit Profile"  className="btn btn-outline-dark"  onClick={() => this.setState({ selectedEditPostId: item.id, username: item.username, displayname: item.displayname, bio: item.bio })} />     
-                            </span>
-                            </>
-                                :
-                            <span>
-                                <input  className="btn btn-outline-dark" type="button" value="Resend Email Confirmation" onClick={() => this.onResendEmail()} />     
-                            </span>
-                        }
+                    <div className='container-edit'>
+                    <div className='row border-top-0 border-left-0 border-right-0' id='row-nav'>
+                        <div className='col-3'></div>
+                        <div className='col-3'>
+                            <Link to='/profile'  style={{ textDecoration:"none", color: "black", cursor: 'pointer' }}>
+                                <span  id='my-universe-nav-posts'>
+                                Posts
+                                </span>
+                            </Link>
+                        </div>
+                        <div className='col-3'>
+                            <Link to = '/likedpage' style={{ textDecoration:"none", color: "black", cursor: 'pointer' }}>
+                                <span  id='my-universe-nav-posts'>
+                                Liked
+                                </span>
+                            </Link>
+                        </div>
+                        <div className='col-3'></div>
                     </div>
-               </div>
-               <div className='container'>
-                   <div className='link-grid'>
-                       <div className='tab-link'>
-                           <Link to='/profile' style={{ textDecoration:"none", color: "black", cursor: 'pointer' }}>
-                           <span>
-                           Posts
-                           </span>
-                           </Link>
-                       </div>
-                       <div className='tab-link mx-5'>
-                          <Link to='/likedpage' style={{ textDecoration:"none", color: "black", cursor: 'pointer' }}>
-                           <span>
-                           Liked
-                           </span>
-                           </Link>
-                       </div>
-                   </div>
-               </div>
-               <div className='container ml-5'>
-               <ProfilePosts/>
-               </div>
+                    </div>
+                    <div className='container-edit'>
+                        <div className='gallery mt-3'>
+                            <div className='row'>
+                            <ProfilePosts/>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div> */}
                 </>
                 )
             }
             
             return (
-                <div className='container-fluid'>
+                <div className='container-fluid my-universe-background-prof'>
                 <div className='pt-3'>     
                     <div className='container'>
-                        <div className='row' style={{paddingBottom: '42px'}}>
+                        <div className='row' style={{paddingBottom: '30px'}}>
                             <div className="col-6 mt-5">
                                 <div className="d-none d-md-block mt-3">
                                     <img src={Setting}  alt="" width="100%" />
                                 </div>
                             </div>
                             <div className="col-6" style={{fontFamily: "Source Sans Pro"}}>
-                                <div className='pt-4 mt-5' style={{width: '400px'}}>
+                                <div className='pt-5 mt-5'>
                                      <div  className="text-xl-left">
                                         {
                                             this.state.previewImage? <img src={this.state.previewImage} alt='Image Preview' className='userImgSet' /> : <img src={`${API_URL + '/'}${item.profileimage}`} alt='Image Preview' className='userImgSet' />

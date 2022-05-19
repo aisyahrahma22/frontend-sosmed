@@ -29,7 +29,7 @@ class Header extends React.Component{
 
 
     render(){
-        if(this.props.user.is_login){
+        if(localStorage.getItem('myTkn')){
             return(
                 <div className='container-fluid' style={{position: 'fixed', zIndex: '2', width: '100%', background: 'white'}}>
                     <div className='row'>
@@ -100,12 +100,12 @@ class Header extends React.Component{
                  <div className='d-flex flex-wrap justify-content-center align-items-center h-100'>
                      <span className="ml-3">
                         <Link to="/login">
-                            <button value="Login" className="btn my-universe-btn-nav-01">LOG IN</button>
+                            <button  style={{fontFamily: "Source Sans Pro"}} value="Login" className="btn my-universe-btn-nav-01">Login</button>
                         </Link>
                      </span>
                      <span className="ml-3">
                         <Link to="/register">
-                            <button value="Register" className="btn my-universe-btn-nav-02">REGISTER</button>
+                            <button style={{fontFamily: "Source Sans Pro"}} value="Register" className="btn my-universe-btn-nav-02">Register</button>
                         </Link>
                      </span>
                  </div>

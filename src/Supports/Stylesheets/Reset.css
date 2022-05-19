@@ -17,9 +17,9 @@
   }
 
   .my-universe-background-reset{
-    background-image: url(./../Images/01.png);
+    background-image: url(./../Images/bg-09.png);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     background-position-x: right;
-}
+  }

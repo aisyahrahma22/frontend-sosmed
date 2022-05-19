@@ -1,9 +1,9 @@
 .my-universe-background-for{
-  background-image: url(./../Images/bg-09.png);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position-x: right;
+    background-image: url(./../Images/bg-09.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-x: right;
 }
 
 /* .forgot-password {

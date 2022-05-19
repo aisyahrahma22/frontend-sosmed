@@ -25,7 +25,7 @@ const userReducer = (state = initialState, action) => {
         case 'IS_CONFIRMED':
             return { ...state, is_confirmed: action.payload }
         case 'USER_LOGOUT' :
-                return { ...state, is_login: false, authChecked: true}
+            return initialState;
         default : return state
     }
 }

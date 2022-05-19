@@ -5,7 +5,7 @@ import { API_URL } from '../Supports/Helpers/index';
 import moment from 'moment';
 // import '../Supports/Stylesheets/HomePage.css';
 import '../Supports/Stylesheets/ProfilePosts.css';
-
+import Swal from 'sweetalert2';
 // Redux
 import {connect} from 'react-redux';
 import {onCheckUserLogin,  onCheckUserVerify} from '../Redux/Actions/userAction';
@@ -29,7 +29,6 @@ class ProfilePosts extends React.Component{
 
     componentDidMount(){
         let token = localStorage.getItem('myTkn')
-        // this.props.onCheckUserVerify(token)
         this.onCheckIsLogedIn(token)
         const headers = {
             headers: { 
@@ -39,6 +38,7 @@ class ProfilePosts extends React.Component{
         axios.get(`${API_URL}/post/getprofilepost`, headers)
         .then((res) => {
             this.setState({ listPosts: res.data })
+            console.log(res.data )
         }).catch((err) => {
             console.log('ini err get',err)
         })
@@ -54,9 +54,16 @@ class ProfilePosts extends React.Component{
 
 
     onCaptionEditChange = (e) => {
-        if(e.target.value.length <= 100) {
+        if(e.target.value.length <= 300) {
             this.setState({ captionEdit: e.target.value })
-        }
+        }else{
+            Swal.fire({
+                title: 'Error!',
+                text: 'Caption can not more than 300 characters',
+                icon: 'error',
+                confirmButtonText: 'Okay!'
+            })
+        } 
     }
 
     onBtnDeletePostClick = (id) => {
@@ -68,8 +75,8 @@ class ProfilePosts extends React.Component{
         }
         axios.delete(`${API_URL}/post/deletepost/${id}`,headers)
         .then((res) => {
-            this.setState({ listPosts: res.data })
             window.location.reload(false)
+            console.log(res)
         }).catch((err) => {
             console.log(err)
         })
@@ -77,7 +84,7 @@ class ProfilePosts extends React.Component{
 
     onBtnUpdatePostClick = (id) => {
         var formData = new FormData()
-         let token = localStorage.getItem('myTkn')
+        let token = localStorage.getItem('myTkn')
         var headers = {
             headers: {
                 'Authorization': `${token}`,
@@ -96,7 +103,6 @@ class ProfilePosts extends React.Component{
         axios.put(API_URL + "/post/editpost/" + id, formData, headers)
         .then((res) => {
             this.setState({ listPosts: res.data, selectedEditPostId: 0 })
-            window.location.reload(false)
         })
         .catch((err) =>{
             console.log(err)
@@ -159,7 +165,7 @@ class ProfilePosts extends React.Component{
                 <div className='col-12 col-md-6 col-lg-4 my-2' key={index}>
                 <div className="card product-card">
                     <div className='tittle'>
-                        <div className='d-flex justify-content-between'>
+                        <div className='d-flex justify-content-between'  style={{fontSize: '16px', fontFamily: "Source Sans Pro"}}>
                             Edit your caption
                         </div>
                     </div>
@@ -179,12 +185,8 @@ class ProfilePosts extends React.Component{
                         />
                     </span>
                     <div className='d-flex justify-content-around mt-2' style={{backgroundColor: 'white'}}>
-                        <div className="mb-2" style={{fontWeight: 'lighter', fontSize: '16px', fontFamily: "Source Sans Pro", color: 'rgb(91, 1, 132)', cursor: 'pointer'}} onClick={() => this.setState({ selectedEditPostId: 0 })}>
-                        cancel
-                        </div>
-                        <div className="mb-2 mx-2" style={{fontWeight: 'lighter', fontSize: '16px', fontFamily: "Source Sans Pro", color: 'rgb(91, 1, 132)', cursor: 'pointer'}} onClick={() => this.onBtnUpdatePostClick(item.id)} >
-                        save
-                        </div> 
+                        <input style={{fontFamily: "Source Sans Pro"}} className="btn btn-outline-dark w-50" type="button" value="Cancel" onClick={() => this.setState({ selectedEditPostId: 0 })} />
+                        <input style={{fontFamily: "Source Sans Pro"}} className="btn btn-outline-primary w-50 mx-2" type="button" value="Save" onClick={() => this.onBtnUpdatePostClick(item.id)}  />
                     </div>
                 </div>
             </div>
@@ -198,7 +200,7 @@ class ProfilePosts extends React.Component{
         if(this.state.isLogedIn){
             return(
             <div className='container'>
-                <div className='row'>
+                <div className='row ml-3'>
                 {this.renderListPosts()}
                 </div>
            </div>

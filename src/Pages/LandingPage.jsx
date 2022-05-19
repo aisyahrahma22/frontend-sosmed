@@ -2,8 +2,8 @@ import React from 'react';
 import { Navigate, Link } from 'react-router-dom';
 
 // Redux
-// import {connect} from 'react-redux';
-// import {onCheckUserLogin} from './../Redux/Actions/userAction';
+import {connect} from 'react-redux';
+import {onCheckUserLogin} from './../Redux/Actions/userAction';
 
 // SweetAlert
 import '../Supports/Stylesheets/LandingPage.css'
@@ -18,7 +18,7 @@ class LandingPage extends React.Component{
     }
 
     componentDidMount(){
-        // this.props.onCheckUserLogin()
+        this.props.onCheckUserLogin()
         this.onCheckIsLogedIn()
     }
 
@@ -79,16 +79,14 @@ class LandingPage extends React.Component{
     }
 }
 
-// const mapDispatchToProps = {
-//     onCheckUserLogin
-// }
+const mapDispatchToProps = {
+    onCheckUserLogin
+}
 
-// const mapStateToProps = (state) => {
-//     return{
-//         user: state.user
-//     }
-// }
+const mapStateToProps = (state) => {
+    return{
+        user: state.user
+    }
+}
 
-// export default connect(mapStateToProps, mapDispatchToProps)(LandingPage)
-
-export default LandingPage
+export default connect(mapStateToProps, mapDispatchToProps)(LandingPage)

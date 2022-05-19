@@ -42,7 +42,7 @@ export class CreatePost extends Component{
         }else{
             Swal.fire({
                 title: 'Error!',
-                text: 'Caption too long',
+                text: 'Caption can not more than 300 characters',
                 icon: 'error',
                 confirmButtonText: 'Okay!'
             })
@@ -82,7 +82,7 @@ export class CreatePost extends Component{
             .catch((err) =>{
                 Swal.fire({
                     title: 'Error!',
-                    text: err.message,
+                    text: 'Upload picture failed!',
                     icon: 'error',
                     confirmButtonText: 'Okay!'
                 })
@@ -108,8 +108,8 @@ export class CreatePost extends Component{
             </div>
             <Modal toggle={() => this.setState({modalOpen: false})} isOpen={this.state.modalOpen}>
                 <ModalBody className="border border-white">
-                        <div className="pt-0 pb-3 text-left mr-5">
-                            <div className="pt-1 pb-3 text-right" style={{fontFamily: "Source Sans Pro"}}>
+                        <div className="text-left mr-5">
+                            <div className="pt-1 pb-1 text-right" style={{fontFamily: "Source Sans Pro"}}>
                                 <h3><span className="font-weight-bold">Create</span><span className="font-weight-light">Post</span></h3>
                                 <h5 className="font-weight-normal" style={{fontSize: '14', color: 'grey'}}>Share your moment with us!</h5>
                             </div>

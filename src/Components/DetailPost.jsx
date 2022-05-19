@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Navigate, useNavigate  } from 'react-router-dom';
+import { useParams, Navigate, Link  } from 'react-router-dom';
 import Axios from 'axios';
 import { connect } from 'react-redux';
 import '../Supports/Stylesheets/DetailPost.css';
@@ -38,7 +38,8 @@ const DetailPost = ({user}) => {
         Axios.get(`${API_URL}/post/get/${postId}`, headers)
         .then((res) => {
             setPost({ ...post, postData: res.data.results[0]});
-            setComment(res.data.comment);
+            // setComment(res.data.comment);
+            console.log(res.data.results[0])
             setLikes(res.data.likes);
 
         })
@@ -47,9 +48,33 @@ const DetailPost = ({user}) => {
         })
     }
 
+    const getComments = () => {
+        let token = localStorage.getItem('myTkn')
+        const headers = {
+            headers: { 
+                'Authorization': `${token}`,
+            }
+        }
+        const postId = params.id;
+        
+        Axios.get(`${API_URL}/post/getcomment/${postId}`, headers)
+        .then((res) => {
+            setComment(res.data);
+            console.log('ini res.data comment', res.data)
+
+        })
+        .catch((err) => {
+            setMessage(err.response.data.message)
+        })
+    }
+    
+
+    
+
     useEffect(() => {
         fetchPosts();
-        onCheckUserLogin()
+        onCheckUserLogin();
+        getComments()
       }, []);
 
     const onCommentAddChange = (e) => {
@@ -80,7 +105,6 @@ const DetailPost = ({user}) => {
 
         Axios.post(API_URL + `/post/addcomment/${id}`, data, headers)
         .then((res) => {
-            // this.setState({ addComment: res.data })
             setCommentAdd('')
             window.location.reload(false)
         })
@@ -95,6 +119,21 @@ const DetailPost = ({user}) => {
         })
         
       };
+     const onBtnDeletePostClick = (id) => {
+        let token = localStorage.getItem('myTkn')
+        const headers = {
+            headers: { 
+                'Authorization': `${token}`,
+            }
+        }
+        Axios.delete(`${API_URL}/post/deletepost/${id}`,headers)
+        .then((res) => {
+            console.log(res)
+        }).catch((err) => {
+            console.log(err)
+        })
+    }
+
 
       const SHOW_BY_DEFAULT = 5;
       const visibleOptions = showAll ? comment.length : SHOW_BY_DEFAULT;
@@ -125,77 +164,87 @@ const DetailPost = ({user}) => {
    if(user.is_login){
     return(
     <div className='container-fluid my-universe-background-dpost'>
-        <div className='pt-1' style={{paddingBottom: '13px'}}>
+        <div className='pt-3' style={{paddingBottom: '13px'}}>
             <div className='container'>
-                <div className='row'>
-                <div className='pt-1' style={{height: '550px'}}>
-                    <div className="app-detail rounded ml-4" style={{backgroundColor: 'white'}}>
-                        <div className="details">
-                                <div className="big-img">
-                                    <img src={API_URL + '/' + post.postData.image} alt="post-gambar" className='detail-post-img'/>
+            <div className="app-detail rounded" style={{backgroundColor: 'white'}}>
+                <div className="details">
+                        <div className="big-img">
+                            <img src={API_URL + '/' + post.postData.image} alt="post-gambar" className='detail-post-img'/>
+                        </div>
+                        <div className="box">
+                        <div id="content">
+                        <div className="row">
+                                <span>
+                                <img
+                                    style={{borderRadius: '50%'}}
+                                    src={API_URL + '/' + post.postData.profileimage}
+                                    className ='userImgDet'
+                                    alt="gambar"
+                                />
+                            </span>
+                            
+                            <Link to={`/detailprofile/${post.postData.userId}`} style={{cursor: 'pointer', textDecoration: 'none', color: 'black'}}>
+                            <h2 className='mx-3 mt-2' style={{fontFamily: "Source Sans Pro", fontSize: '25px'}}>{post.postData.displayname}</h2>
+                            </Link>
+                            </div>
+                            <div>
+                            {likes.includes(post.postData.id)  ? (
+                                <img src={HeartFilled} alt="" id="cardIconDet" onClick={() => handleClick(post.postData.id)} />
+                                ) : (
+                                <img
+                                    src={Heart}
+                                    alt="heart"
+                                    id="cardIconDet"
+                                    onClick={() => handleClick(post.postData.id)}
+                                />
+                            )}
+                            <span style={{fontSize: '14px', color: 'purple', marginTop: '0px', fontFamily: "Source Sans Pro"}}>{post.postData.totalLike} peoples love this</span>
+                            </div>
+                            <div className='mt-2'>
+                                <div style={{fontSize: '12px'}}>
+                                    {moment(post.postData.created_at).format('LLL')}
                                 </div>
-                                <div className="box">
-                                <div id="content">
-                                <div className="row">
-                                        <span>
-                                        <img
-                                            style={{borderRadius: '50%'}}
-                                            src={API_URL + '/' + post.postData.profileimage}
-                                            className ='userImgDet'
-                                            alt="gambar"
-                                        />
-                                    </span>
-                                    <h2 className='mx-3 mt-2' style={{fontFamily: "Source Sans Pro"}}>{post.postData.displayname}</h2>
-                                    </div>
-                                    <div>
-                                    {likes.includes(post.postData.id)  ? (
-                                        <img src={HeartFilled} alt="" id="cardIconDet" onClick={() => handleClick(post.postData.id)} />
-                                        ) : (
-                                        <img
-                                            src={Heart}
-                                            alt="heart"
-                                            id="cardIconDet"
-                                            onClick={() => handleClick(post.postData.id)}
-                                        />
-                                    )}
-                                    <span style={{fontSize: '14px', color: 'purple', marginTop: '0px', fontFamily: "Source Sans Pro"}}>{post.postData.totalLike} peoples love this</span>
-                                    </div>
-                                    <div>
-                                        <div style={{fontSize: '12px'}}>
-                                            {moment(post.postData.created_at).format('LLL')}
-                                        </div>
-                                    </div>
-                                    <div className="d-flex mt-3">
-                                    <strong><span style={{fontFamily: "Source Sans Pro"}}>{post.postData.username}</span></strong>
-                                    <span style={{marginTop: '0px', marginLeft: '10px',  fontFamily: "Source Sans Pro" }}>{post.postData.caption}</span>
-                                    </div>
-                                    <div className='container'>
-                                    {comment.slice(0, visibleOptions).map(( item) => (
-                                            <div>
-                                            <div className='d-flex' key={item.postId}>
+                            </div>
+                            <div className="d-flex mt-2">
+                            <strong><span style={{fontFamily: "Source Sans Pro"}}>{post.postData.username}</span></strong>
+                            <span style={{marginTop: '0px', marginLeft: '10px',  fontFamily: "Source Sans Pro" }}>{post.postData.caption}</span>
+                            </div>
+                            <div className='container'>
+                            {comment.slice(0, visibleOptions).map(( item) => (
+                                    <div className=''>
+                                        <div className='d-flex' key={item.postId}>
                                             <span style={{fontSize: '14px', color: 'purple', fontWeight: 'bold', fontFamily: "Source Sans Pro"}}>
                                                 {item.username} 
                                             </span>
                                             <span className='mx-2' style={{fontSize: '14px', fontFamily: "Source Sans Pro"}}>
                                             {item.comment}
                                             </span>
-                                            </div>
-                                            </div>
-                                    ))}
-                                    {comment.length > SHOW_BY_DEFAULT && (
-                                        <div onClick={toggleShowAll} style={{cursor: 'pointer', fontSize: '14px', color: 'darkblue', fontFamily: "Source Sans Pro"}}>
-                                            {!showAll ? "Show more" : "Show Less"}
+                                        <span className='mx-2 text-muted' style={{fontSize: '10px', fontFamily: "Source Sans Pro"}}>
+                                        {/* {moment(item.created_at).format('LLL')} */}
+                                        {/* {moment(item.created_at).startOf('day').fromNow()} */}
+                                        </span>
                                         </div>
-                                    )}
+                                        <div className='text-muted' style={{fontSize: '10px', fontFamily: "Source Sans Pro"}}>
+                                        {moment(item.created_at).startOf('day').fromNow()}
+                                        </div>
+                                   
+                                    {/* <span className="material-icons"  style={{cursor: 'pointer', fontSize: '14px'}} onClick={() => onBtnDeletePostClick(item.postId)}>
+                                    close
+                                    </span> */}
                                     </div>
-                                    <div className='d-flex mt-2'>
-                                        <input  style={{fontFamily: "Source Sans Pro"}} type='text' value={commentAdd} onChange={onCommentAddChange}  placeholder="Add comment.." className="form-control rounded-0 cart-comment" />
-                                        <span> <button disabled={!commentAdd} style={{fontFamily: "Source Sans Pro"}} onClick={() => onBtnAddCommentClick(post.postData.id)}  className="cart">
-                                        Post
-                                        </button></span>
-                                    </div>
-                                    </div>
+                            ))}
+                            {comment.length > SHOW_BY_DEFAULT && (
+                                <div onClick={toggleShowAll} style={{cursor: 'pointer', fontSize: '14px', color: 'darkblue', fontFamily: "Source Sans Pro"}}>
+                                    {!showAll ? "Show more" : "Show Less"}
                                 </div>
+                            )}
+                            </div>
+                            <div className='d-flex mt-2'>
+                                <input  style={{fontFamily: "Source Sans Pro"}} type='text' value={commentAdd} onChange={onCommentAddChange}  placeholder="Add comment.." className="form-control rounded-0 cart-comment" />
+                                <span> <button disabled={!commentAdd} style={{fontFamily: "Source Sans Pro"}} onClick={() => onBtnAddCommentClick(post.postData.id)}  className="cart">
+                                Post
+                                </button></span>
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -203,82 +252,6 @@ const DetailPost = ({user}) => {
             </div> 
         </div>
     </div>
-   
-    // <div className='pt-1 '>
-    //     <div className="app-detail">
-    //    <div className="details">
-    //           <div className="big-img">
-    //             <img src={API_URL + '/' + post.postData.image} alt="" className='detail-post-img'/>
-    //           </div>
-    //           <div className="box">
-    //            <div id="content">
-    //            <div className="row">
-    //                 <span>
-    //                 <img
-    //                     style={{borderRadius: '50%'}}
-    //                     src={API_URL + '/' + post.postData.profileimage}
-    //                     width="50px"
-    //                     height="50px"
-    //                     alt="gambar"
-    //                 />
-    //               </span>
-    //               <h2 className='mx-3' style={{fontFamily: "Source Sans Pro"}}>{post.postData.displayname}</h2>
-    //             </div>
-    //             <div>
-    //             {likes.includes(post.postData.id)  ? (
-    //                 <img src={HeartFilled} alt="" id="cardIcon" onClick={() => handleClick(post.postData.id)} />
-    //                 ) : (
-    //                 <img
-    //                     src={Heart}
-    //                     alt=""
-    //                     id="cardIcon"
-    //                     onClick={() => handleClick(post.postData.id)}
-    //                 />
-    //             )}
-    //             <span style={{fontSize: '12px', color: 'purple', marginTop: '0px', fontFamily: "Source Sans Pro"}}>{post.postData.totalLike} peoples love this</span>
-    //             </div>
-    //             <div>
-    //                  <div style={{fontSize: '10px'}}>
-    //                     {moment(post.postData.created_at).format('LL')}
-    //                 </div>
-    //             </div>
-    //             <div className="d-flex mt-3">
-    //               <strong><span style={{fontFamily: "Source Sans Pro"}}>{post.postData.username}</span></strong>
-    //               <span style={{marginTop: '0px', marginLeft: '10px',  fontFamily: "Source Sans Pro" }}>{post.postData.caption}</span>
-    //             </div>
-    //             <div className='container'>
-    //             {comment.slice(0, visibleOptions).map(( item) => (
-    //                     <div>
-    //                     <div className='d-flex' key={item.postId}>
-    //                     <span style={{fontSize: '14px', color: 'purple', fontWeight: 'bold', fontFamily: "Source Sans Pro"}}>
-    //                         {item.username} 
-    //                     </span>
-    //                     <span className='mx-2' style={{fontSize: '14px', fontFamily: "Source Sans Pro"}}>
-    //                     {item.comment}
-    //                     </span>
-    //                     </div>
-    //                     {/* <div style={{fontSize: '10px'}}>
-    //                     {moment(item.created_at).format('LL')}
-    //                     </div> */}
-    //                     </div>
-    //             ))}
-    //             {comment.length > SHOW_BY_DEFAULT && (
-    //                 <div onClick={toggleShowAll} style={{cursor: 'pointer', fontSize: '14px', color: 'darkblue', fontFamily: "Source Sans Pro"}}>
-    //                      {!showAll ? "Show more" : "Show Less"}
-    //                 </div>
-    //             )}
-    //             </div>
-    //             <div className='d-flex mt-2'>
-    //                 <input  style={{fontFamily: "Source Sans Pro"}} type='text' value={commentAdd} onChange={onCommentAddChange}  placeholder="Add comment.." className="form-control rounded-0 cart-comment" />
-    //                 <span> <button disabled={!commentAdd} style={{fontFamily: "Source Sans Pro"}} onClick={() => onBtnAddCommentClick(post.postData.id)}  className="cart">
-    //                    Post
-    //                 </button></span>
-    //             </div>
-    //            </div>
-    //           </div>
-    //         </div>
-    //   </div>
-    // </div>
     )
    }else{
     return <Navigate to='/landing' />

@@ -1,209 +1,119 @@
-import React from 'react';
-import { Navigate, Link } from 'react-router-dom';
-import '../Supports/Stylesheets/HomePage.css';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
+import Posts from '../Supports/Function/Posts'
+import LoadingSkeleton from '../Components/LoadingSkeleton';
+import HomePost from '../Components/HomePost';
+import Swal from 'sweetalert2';
 import axios from 'axios';
-import { API_URL } from '../Supports/Helpers/index';
-import Heart from "../Supports/Images/heart.svg";
-import HeartFilled from "../Supports/Images/heartFilled.svg";
-import moment from 'moment';
-import InfiniteScroll from 'react-infinite-scroll-component';
 
-// Redux
-import {connect} from 'react-redux';
-import {onUserLogin, onCheckUserLogin, onCheckUserVerify} from './../Redux/Actions/userAction'
-import Loading from '../Components/Loading';
+function Home() {
+    const [pageNumber, setPageNumber] = useState(1)
+    const {
+        posts,
+        hasMore,
+        loading,
+        error,
+        errorMessage
+      } = Posts(pageNumber)
 
-class Home extends React.Component{
-    state = {
-        limit: 0,
-        isLoading: false,
-        liked: false,
-        is_disabled: false,
-        isLogedIn: false,
-        commentAdd: '',
-        listPosts: [], 
-        listLikes: [], 
-        addComment: [], 
-        editComment: [], 
-        deleteComment: [], 
-        selectedLikedPostId: 0,
-        selectedEditPostId: 0,
-    }
+    const [verify, setVerify] = useState('')
+    const observer = useRef()
+    const lastPostRef = useCallback(node => {
+        if (loading) return
+        if (observer.current) observer.current.disconnect()
+        observer.current = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting && hasMore) {
+            setPageNumber(prevPageNumber => prevPageNumber + 1)
+        }
+        })
+        if (node) observer.current.observe(node)
+    }, [loading, hasMore])
 
-    componentDidMount(){
-        let token = localStorage.getItem('myTkn')
-        this.props.onCheckUserVerify(token)
-        this.getAllPost();
-
-    }
-
-    getAllPost = () => {
+    const getUserVerify = () => {
         let token = localStorage.getItem('myTkn')
         const headers = {
             headers: { 
                 'Authorization': `${token}`,
             }
         }
-        let totalLimit = this.state.limit + 6
-        this.setState({ limit: totalLimit, isLoading: true })
-    
-        axios.get(API_URL + "/post/getalldata?_limit=" + totalLimit,  headers)
+
+        axios.get(`http://localhost:5000/user//userverify`,  headers)
             .then((res) => {
-                this.setState({ listPosts: res.data});
+                setVerify(res.data[0].is_confirmed)
             }).catch((err) => {
                 console.log(err)
             })
     }
 
-    onResendEmail = () => {
+    const onResendEmail = () => {
         let token = localStorage.getItem('myTkn')
 
-        axios.post(`${API_URL}/user/resend`, {}, {headers: {
+        axios.post('http://localhost:5000/user/resend', {}, {headers: {
             'Authorization': token,
             'Accept' : 'application/json',
             'Content-Type': 'application/json'
         }})
         .then((res) => {
-            alert('Check Your Email!')
+            Swal.fire({
+                title: 'Success!',
+                text: 'Check Your Email',
+                icon: 'success',
+                confirmButtonText: 'Okay!'
+            })
         })
         .catch((err) => {
             console.log(err)
         })
     }
 
-    handleClick = (id) => {
-          let token = localStorage.getItem('myTkn')
-          const headers = {
-              headers: { 
-                  'Authorization': token,
-                  'Accept': 'application/json',
-                  'Content-Type': 'application/json'
-              }
-          }
-          
-          axios.post(`${API_URL}/post/likepost/${id}`, {}, headers)
-          .then((res) => {
-            this.getAllPost()
-            this.setState({
-                liked: true
-              });
-          }).catch((err) => {
-              console.log(err)
-          })
-    }
-
-    renderListPosts = () => {
-        return this.state.listPosts.map((item, id) => {
-            console.log('ini item',item)
-            if(item.id !== this.state.selectedEditPostId) {
-                return (
-                    <div className='col-12 col-md-6 col-lg-4 my-2' key={id}>
-                        <div className="card product-card">
-                            <div className='tittle'>
-                                <div className='d-flex'>
-                                    <img  src={`${API_URL + '/'}${item.profilepicture}`} id="userImg" />
-                                    <Link to={`/detailprofile/${item.userId}`} style={{cursor: 'pointer', textDecoration: 'none', color: 'black'}}>
-                                    <span style={{fontFamily: "Source Sans Pro"}}>{item.username}</span>
-                                    </Link>
-                                </div>    
-                            </div>
-                            <Link  to={`/detailpost/${item.id}`}style={{ textDecoration:"none", color: "inherit" }}>
-                            <img src={`${API_URL + '/'}${item.image}`} alt="foto post" id="postImg" />
-                            </Link>
-                            <div className="mt-2">
-                        <div className='d-flex flex-column'>
-                            <span className="text-muted" style={{fontSize: '14px', fontFamily: "Source Sans Pro"}}>{moment(item.created_at).format('LLL')}</span>
-                            <span>
-                            {
-                                this.props.user.is_confirmed === 1?
-                                <div id="interaction">
-                                {item.myLike > 0 ? (
-                                <img src={HeartFilled} alt="" id="cardIcon" onClick={() => this.handleClick(item.id)}/>
-                                ) : (
-                                <img
-                                    src={Heart}
-                                    alt=""
-                                    id="cardIcon"
-                                    onClick={() => this.handleClick(item.id)}
-                                />
-                                )}
-                               <span style={{fontSize: '12px', color: 'purple', marginTop: '2px', fontFamily: "Source Sans Pro"}}>
-                               {item.totalLike} peoples love this
-                               </span>
-                                </div>
-                                    :
-                                <span>
-                                <img
-                                    src={Heart}
-                                    alt=""
-                                    id="cardIcon"
-                                />
-                                </span>
-                            }
-                            </span>
-                        </div>
-                    </div>
-                    </div>
-                    </div>
-                )
-            }
-        })
-    }
-
-    render(){
-        if(this.props.user.is_login){
-            return(
-                <>
-                <div className='container-fluid my-universe-background-home'>
-                    <div className='pt-3'>
-                    {
-                        this.props.user.is_confirmed === 1?
+    if(!localStorage.getItem('myTkn')){
+        return(
+            <Navigate to='/landing' />
+        )
+    }else{
+        return (
+            <div className='pt-5'>
+                <div className='container pt-5'>
+                   {
+                        verify === 1?
                         <span>
                         
                         </span>
                             :
-                        <span className="ml-3">
-                            <input type="button" value="Resend Email Confirmation" onClick={() => this.onResendEmail()} className="btn rounded shadow-lg" />     
+                       <div className='col-3'  style={{fontSize: '14px', fontFamily: "Source Sans Pro"}}>
+                            <span className="d-flex flex-column">
+                            <div className='mb-2 text-center'>Click button here to activate the feature</div>
+                            <input  className="btn btn-outline-dark" type="button" value="Resend Email Confirmation" onClick={() => onResendEmail()} />     
                         </span>
-                    }                   
-                    <div className='container'>
-                        <div className='row mt-5 pt-5'>
-                        <InfiniteScroll
-                        dataLength={this.state.listPosts.length}
-                        next={this.getAllPost}
-                        style={{ display: 'flex', flexWrap: 'wrap' }} 
-                        hasMore={true}
-                    >
-                        {this.renderListPosts()}
-                    </InfiniteScroll>
-                        </div>
-                    <h1>
-                        {
-                            this.state.isLoading? 'Loading' : null
-                        }
-                    </h1>
-                </div> 
-               </div>
-                  
+                       </div>
+                    } 
                 </div>
-                </>
-            )
-        }
-
-        return(
-            <Navigate to='/landing' />
-        )
+                 <div className='d-flex'> 
+                 <div className='home-con'>
+                    
+                    {
+                        posts.map((post, index) => {
+                            if (posts.length === index + 1) {
+                                return <div ref={lastPostRef} key={post.id}>
+                                    <HomePost  post={post} pageNumber={pageNumber} />
+                                </div>
+                            } 
+                            else {
+                                return <div key={post.id}>
+                                    <HomePost post={post} pageNumber={pageNumber} />
+                                </div>
+                            }
+                        })
+                    }
+                     <div>{loading && <LoadingSkeleton />}</div>
+                     <div>{error && `${errorMessage}`}</div>
+                 </div>
+             </div>
+            </div>
+         );
     }
+
+   
 }
 
-const mapDispatchToProps = {
-    onUserLogin, onCheckUserLogin,  onCheckUserVerify
-}
-
-const mapStateToProps = (state) => {
-    return{
-        user: state.user
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home)
+export default Home
