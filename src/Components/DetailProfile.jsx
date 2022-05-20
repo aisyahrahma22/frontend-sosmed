@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Axios from 'axios';
 import Heart from "../Supports/Images/heart.svg";
 import HeartFilled from "../Supports/Images/heartFilled.svg";
+import default1 from '../Supports/Images/default.jpg';
 import { API_URL } from '../Supports/Helpers/index';
 import {onUserLogin, onCheckUserLogin, onCheckUserVerify } from './../Redux/Actions/userAction'
 import '../Supports/Stylesheets/DetailProfile.css';
@@ -97,10 +98,18 @@ const DetailProfile = ({user}) => {
             <div className='container-new' style={{fontFamily: "Source Sans Pro"}}>
                 <div className='photo'>
                     <div>
-                    <img
-                         src={API_URL + '/' + users.usersData.profileimage}
-                         id='profile-image-pro' alt="profile-image"
-                         />
+                   {
+                       users.usersData.profileimage ?
+                       <img
+                       src={API_URL + '/' + users.usersData.profileimage}
+                       id='profile-image-pro' alt="profile-image"
+                       />
+                       :
+                       <img
+                       src={default1}
+                       id='profile-image-pro' alt="profile-image"
+                       />
+                   }
                     </div>
 
                 </div>

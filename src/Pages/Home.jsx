@@ -2,11 +2,13 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import Posts from '../Supports/Function/Posts'
 import LoadingSkeleton from '../Components/LoadingSkeleton';
+import {onUserLogin, onCheckUserLogin, onCheckUserVerify } from './../Redux/Actions/userAction'
+import { connect } from 'react-redux';
 import HomePost from '../Components/HomePost';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 
-function Home() {
+function Home({user}) {
     const [pageNumber, setPageNumber] = useState(1)
     const {
         posts,
@@ -29,6 +31,12 @@ function Home() {
         if (node) observer.current.observe(node)
     }, [loading, hasMore])
 
+    
+    useEffect(() => {
+        getUserVerify()
+        onCheckUserLogin()
+    }, [])
+
     const getUserVerify = () => {
         let token = localStorage.getItem('myTkn')
         const headers = {
@@ -37,7 +45,7 @@ function Home() {
             }
         }
 
-        axios.get(`http://localhost:5000/user//userverify`,  headers)
+        axios.get(`http://localhost:5000/user/userverify`,  headers)
             .then((res) => {
                 setVerify(res.data[0].is_confirmed)
             }).catch((err) => {
@@ -66,7 +74,7 @@ function Home() {
         })
     }
 
-    if(!localStorage.getItem('myTkn')){
+    if(!user.is_login){
         return(
             <Navigate to='/landing' />
         )
@@ -89,31 +97,42 @@ function Home() {
                     } 
                 </div>
                  <div className='d-flex'> 
-                 <div className='home-con'>
-                    
-                    {
-                        posts.map((post, index) => {
-                            if (posts.length === index + 1) {
-                                return <div ref={lastPostRef} key={post.id}>
-                                    <HomePost  post={post} pageNumber={pageNumber} />
-                                </div>
-                            } 
-                            else {
-                                return <div key={post.id}>
-                                    <HomePost post={post} pageNumber={pageNumber} />
-                                </div>
-                            }
-                        })
-                    }
-                     <div>{loading && <LoadingSkeleton />}</div>
-                     <div>{error && `${errorMessage}`}</div>
-                 </div>
-             </div>
-            </div>
+                    <div className='home-con'> 
+                        <div>
+                            </div>                   
+                                {
+                                    posts.map((post, index) => {
+                                        if (posts.length === index + 1) {
+                                            return <div ref={lastPostRef} key={post.id}>
+                                                <HomePost  post={post} pageNumber={pageNumber} />
+                                            </div>
+                                        } 
+                                        else {
+                                            return <div key={post.id}>
+                                                <HomePost post={post} pageNumber={pageNumber} />
+                                            </div>
+                                        }
+                                    })
+                                }
+                                <div>{loading && <LoadingSkeleton />}</div>
+                                <div>{error && `${errorMessage}`}</div>
+                            </div>
+                    </div>
+                </div>
          );
     }
 
    
 }
 
-export default Home
+const mapDispatchToProps = {
+    onUserLogin, onCheckUserLogin, onCheckUserVerify
+}
+
+const mapStateToProps = (state) => {
+    return{
+        user: state.user
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps) (Home)

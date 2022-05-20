@@ -6,6 +6,7 @@ import '../Supports/Stylesheets/DetailPost.css';
 import { API_URL } from '../Supports/Helpers/index';
 import Heart from "../Supports/Images/heart.svg";
 import HeartFilled from "../Supports/Images/heartFilled.svg";
+import default1 from '../Supports/Images/default.jpg';
 import {onUserLogin, onCheckUserLogin, onCheckUserVerify } from './../Redux/Actions/userAction'
 
 import moment from 'moment';
@@ -67,7 +68,24 @@ const DetailPost = ({user}) => {
             setMessage(err.response.data.message)
         })
     }
-    
+    const [verify, setVerify] = useState('')
+    const getUserVerify = () => {
+        let token = localStorage.getItem('myTkn')
+        const headers = {
+            headers: { 
+                'Authorization': `${token}`,
+            }
+        }
+
+        Axios.get(`http://localhost:5000/user/userverify`,  headers)
+            .then((res) => {
+                setVerify(res.data[0].is_confirmed)
+                console.log('verify', res.data[0].is_confirmed)
+            }).catch((err) => {
+                console.log(err)
+            })
+    }
+
 
     
 
@@ -75,6 +93,7 @@ const DetailPost = ({user}) => {
         fetchPosts();
         onCheckUserLogin();
         getComments()
+        getUserVerify()
       }, []);
 
     const onCommentAddChange = (e) => {
@@ -175,12 +194,22 @@ const DetailPost = ({user}) => {
                         <div id="content">
                         <div className="row">
                                 <span>
-                                <img
+                                {
+                                    post.postData.profileimage ?
+                                    <img
                                     style={{borderRadius: '50%'}}
                                     src={API_URL + '/' + post.postData.profileimage}
                                     className ='userImgDet'
                                     alt="gambar"
                                 />
+                                    :
+                                    <img
+                                    style={{borderRadius: '50%'}}
+                                    src={default1}
+                                    className ='userImgDet'
+                                    alt="gambar"
+                                />
+                                }
                             </span>
                             
                             <Link to={`/detailprofile/${post.postData.userId}`} style={{cursor: 'pointer', textDecoration: 'none', color: 'black'}}>

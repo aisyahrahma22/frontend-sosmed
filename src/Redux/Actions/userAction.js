@@ -24,7 +24,6 @@ export const onUserLogin = (data) => {
 
         Axios.post(`${API_URL}/user/login`, {account: data.account, password: data.password})
         .then((res) => {
-            console.log('ini res', res)
             if(res.data.error === true){
                 console.log('ini res.data.error', res.data.error)
                 dispatch(

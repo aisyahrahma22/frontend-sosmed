@@ -21,6 +21,7 @@ class LikedPost extends React.Component{
         commentAdd: '',
         listPosts: [], 
         listLikes: [], 
+        verify: '', 
         selectedLikedPostId: 0,
         selectedEditPostId: 0,
     }
@@ -29,6 +30,7 @@ class LikedPost extends React.Component{
         let token = localStorage.getItem('myTkn')
         this.props.onCheckUserVerify(token)
         this.getAllPost();
+        this.getUserVerify()
 
     }
 
@@ -64,6 +66,23 @@ class LikedPost extends React.Component{
         .catch((err) => {
             console.log(err)
         })
+    }
+
+    getUserVerify = () => {
+        let token = localStorage.getItem('myTkn')
+        const headers = {
+            headers: { 
+                'Authorization': `${token}`,
+            }
+        }
+
+        axios.get(`http://localhost:5000/user/userverify`,  headers)
+            .then((res) => {
+                this.setState({ verify: res.data[0].is_confirmed })
+                console.log('verify', res.data[0].is_confirmed)
+            }).catch((err) => {
+                console.log(err)
+            })
     }
 
     handleClick = (id) => {
@@ -154,14 +173,25 @@ class LikedPost extends React.Component{
                         <div className='tittle mb-2'>
                             <div className='d-flex'>
                                 <img  src={`${API_URL + '/'}${item.profileImage}`} id="userImg" />
-                                <Link to={`/detailprofile/${item.userId}`} style={{cursor: 'pointer', textDecoration: 'none', color: 'black'}}>
-                                <span style={{fontFamily: "Source Sans Pro"}}>{item.username}</span>
-                                </Link>
+                                {
+                                    this.state.verify === 1?
+                                    <Link to={`/detailprofile/${item.userId}`} style={{cursor: 'pointer', textDecoration: 'none', color: 'black'}}>
+                                    <span style={{fontFamily: "Source Sans Pro"}}>{item.username}</span>
+                                    </Link>
+                                    :
+                                    <span style={{fontFamily: "Source Sans Pro"}}>{item.username}</span>
+                                }
+                               
                             </div>    
                         </div>
-                        <Link  to={`/detailpost/${item.id}`} style={{ textDecoration:"none", color: "inherit" }}>
-                        <img src={`${API_URL + '/'}${item.image}`} alt="foto post" id="postImg" />
-                        </Link>
+                        {
+                             this.state.verify === 1?
+                             <Link  to={`/detailpost/${item.id}`} style={{ textDecoration:"none", color: "inherit" }}>
+                             <img src={`${API_URL + '/'}${item.image}`} alt="foto post" id="postImg" />
+                             </Link>
+                             :
+                             <img src={`${API_URL + '/'}${item.image}`} alt="foto post" id="postImg" />
+                        }
                         <div className="mt-2">
                     <div className='d-flex flex-column'>
                         <span className="text-muted" style={{fontSize: '14px', fontFamily: "Source Sans Pro"}}>{moment(item.created_at).format('LLL')}</span>

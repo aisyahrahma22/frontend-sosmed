@@ -13,7 +13,8 @@ class Header extends React.Component{
     
         this.toggle = this.toggle.bind(this);
         this.state = {
-          isOpen: false
+          isOpen: false,
+          isLogedIn: false,
         };
     }
 
@@ -21,6 +22,19 @@ class Header extends React.Component{
         this.setState({
             isOpen: !this.state.isOpen
         });
+    }
+
+    componentDidMount(){
+        this.props.onCheckUserLogin()
+        this.onCheckIsLogedIn()
+    }
+
+    onCheckIsLogedIn = () => {
+        let token = localStorage.getItem('myTkn')
+
+        if(token){
+            this.setState({ isLogedIn: true })
+        }
     }
 
     onBtnLogOutClick = () => {
@@ -61,8 +75,8 @@ class Header extends React.Component{
                                             />
                                         </>
                                     :
-                                        <span className="ml-3">
-                                            <span className="material-icons"  style={{cursor: 'pointer', color: 'rgb(91, 1, 132)'}}>
+                                        <span className="">
+                                            <span className="material-icons"  style={{color: 'rgb(91, 1, 132)'}}>
                                             add_a_photo
                                             </span>
                                         </span>

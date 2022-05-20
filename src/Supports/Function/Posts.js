@@ -3,7 +3,7 @@ import { API_URL } from '../Helpers/index';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-export default function Posts(pageNumber) {
+export default function Posts(pageNumber, props) {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')

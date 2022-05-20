@@ -1,10 +1,13 @@
 import { API_URL } from '../Supports/Helpers/index';
 import '../Supports/Stylesheets/Forgot.css';
+import { Navigate } from 'react-router-dom';
 import Axios from "axios";
 import { useEffect, useState } from "react";
+import { connect } from 'react-redux';
 import Forgot2 from '../Supports/Images/Forgot2.png';
+import {onUserLogin, onCheckUserLogin, onCheckUserVerify } from './../Redux/Actions/userAction'
 
-function ForgotPassword() {
+const ForgotPassword = ({user}) => {
  
   let [inputValues, setInputValues] = useState({ email: "" }); 
   let [errors, setErrors] = useState({});
@@ -41,6 +44,7 @@ function ForgotPassword() {
   };
 
   useEffect(() => {
+    onCheckUserLogin();
     if (Object.keys(errors).length === 0 && isSubmitting) {
       setSubmitLoading(true);
       let token = localStorage.getItem('myTkn')
@@ -77,6 +81,13 @@ function ForgotPassword() {
     }
   }, [errors]);
 
+  useEffect(() => {
+    onCheckUserLogin();
+  }, []);
+
+  if(localStorage.getItem('myTkn')){
+    return <Navigate to='/' />
+  }
   return (
       <>
       <div className='container-fluid my-universe-background-for'>
@@ -152,4 +163,14 @@ function ForgotPassword() {
   );
 }
 
-export default ForgotPassword;
+const mapDispatchToProps = {
+  onUserLogin, onCheckUserLogin, onCheckUserVerify
+}
+
+const mapStateToProps = (state) => {
+  return{
+      user: state.user
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps) (ForgotPassword)

@@ -14,6 +14,7 @@ export class CreatePost extends Component{
         modalOpen: false,
         images: null,
         listPosts: [], 
+        message: [],
         addImageFileName: 'Select Image...', 
         addImageFile: undefined, 
         captionAdd: '',
@@ -59,7 +60,7 @@ export class CreatePost extends Component{
                     'Content-Type': 'multipart/form-data'
                 }
             }
-
+         
             var data = {
                 caption: this.state.captionAdd
             }
@@ -67,26 +68,41 @@ export class CreatePost extends Component{
             formData.append('image', this.state.addImageFile)
             formData.append('data', JSON.stringify(data))
 
-            axios.post(API_URL + "/post/addpost", formData, headers)
-            .then((res) => {
-                this.setState({ listPosts: res.data })
-                Swal.fire({
-                    title: 'Success!',
-                    text: res.data.message,
-                    icon: 'success',
-                    confirmButtonText: 'Okay!'
-                })
-                this.setState({ modalOpen: false })
-                window.location.reload(false)
-            })
-            .catch((err) =>{
+            // if(data.caption == '') throw { message: 'Caption Empty!' }
+
+            if(data.caption == ''){
+                // alert('caption empty')
                 Swal.fire({
                     title: 'Error!',
-                    text: 'Upload picture failed!',
+                    text: 'Caption empty',
                     icon: 'error',
                     confirmButtonText: 'Okay!'
                 })
-            })
+            }else{
+                axios.post(API_URL + "/post/addpost", formData, headers)
+                .then((res) => {
+                    console.log('ini res uploud', res)
+                    this.setState({ listPosts: res.data })
+                    Swal.fire({
+                        title: 'Success!',
+                        text: res.data.message,
+                        icon: 'success',
+                        confirmButtonText: 'Okay!'
+                    })
+                    this.setState({ modalOpen: false })
+                    window.location.reload(false)
+                })
+                .catch((err) =>{
+                    console.log('ini err uploud',err)
+                    Swal.fire({
+                        title: 'Error!',
+                        text: err.message,
+                        icon: 'error',
+                        confirmButtonText: 'Okay!'
+                    })
+                })
+            }
+           
         }
         else {
             Swal.fire({
@@ -147,6 +163,7 @@ export class CreatePost extends Component{
                                     }    
                                 </button>
                             </div>
+                        
                         </div>
                 </ModalBody>
             </Modal>

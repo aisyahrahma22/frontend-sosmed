@@ -148,9 +148,14 @@ class ProfilePosts extends React.Component{
                         </div>
                            
                         </div>
-                        <Link  to={`/detailpost/${item.id}`} style={{ textDecoration:"none", color: "inherit" }}>
-                        <img src={`${API_URL + '/'}${item.image}`} alt="foto post" id="postImg" />
-                        </Link>
+                        {
+                             this.props.user.is_confirmed === 1?
+                             <Link  to={`/detailpost/${item.id}`} style={{ textDecoration:"none", color: "inherit" }}>
+                             <img src={`${API_URL + '/'}${item.image}`} alt="foto post" id="postImg" />
+                             </Link>
+                             :
+                             <img src={`${API_URL + '/'}${item.image}`} alt="foto post" id="postImg" />
+                        }
                         <div className="mt-2">
                     <div className='d-flex flex-column'>
                         <span className="text-muted" style={{fontSize: '14px', fontFamily: "Source Sans Pro"}}>{moment(item.created_at).format('LLL')}</span>

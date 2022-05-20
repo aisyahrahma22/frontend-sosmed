@@ -3,6 +3,7 @@ import { Navigate, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {onUserLogin, onCheckUserLogin, onCheckUserVerify } from '../Redux/Actions/userAction'
 import Verified from './../Supports/Images/Verified2.png';
+import default1 from '../Supports/Images/default.jpg';
 import axios from 'axios';
 import Setting from './../Supports/Images/Setting.png';
 import { API_URL } from '../Supports/Helpers/index';
@@ -157,10 +158,18 @@ class LikedPage extends Component {
                       <div className='container-new' style={{fontFamily: "Source Sans Pro"}}>
                    <div className='photo'>
                        <div>
-                       <img
+                       {
+                           item.profileimage?
+                            <img
                             src={API_URL + '/' + item.profileimage}
                             id='profile-image-pro' alt="profile-image"
                             />
+                           :
+                           <img
+                           src={default1}
+                           id='profile-image-pro' alt="profile-image"
+                           />
+                       }
                        </div>
 
                    </div>
@@ -248,7 +257,14 @@ class LikedPage extends Component {
                                 <div className='pt-4 mt-5' style={{width: '400px'}}>
                                      <div  className="text-xl-left">
                                         {
-                                            this.state.previewImage? <img src={this.state.previewImage} alt='Image Preview' className='userImgSet' /> : <img src={`${API_URL + '/'}${item.profileimage}`} alt='Image Preview' className='userImgSet' />
+                                            this.state.previewImage? 
+                                            <img src={this.state.previewImage} alt='Image Preview' className='userImgSet' /> 
+                                            : 
+                                            
+                                            item.profileimage ?
+                                            <img src={`${API_URL + '/'}${item.profileimage}`} alt='Image Preview' className='userImgSet' />
+                                             :
+                                            <img  src={default1} alt='Image Preview' className='userImgSet' />
                                         }
                                         <input id="editImagePost" className='mx-3' type="file" label={this.state.editImageFileName} onChange={this.onEditImageFileChange} />
                                     </div>
@@ -278,7 +294,7 @@ class LikedPage extends Component {
                                             className="form-control"
                                             />
                                         </div>
-                                        <div>
+                                        <div className='mb-4'>
                                             <label htmlFor="editUserBio" className="text-xl-left" style={{fontFamily: "Source Sans Pro"}}>
                                             Bio
                                             </label>
@@ -290,9 +306,6 @@ class LikedPage extends Component {
                                             placeholder="Bio"
                                             className="form-control"
                                             />
-                                        </div>
-                                        <div className='mb-4 mt-2 d-flex justify-content-center'>
-                                            <Link  style={{fontFamily: "Source Sans Pro",  textDecoration: 'none'}} className="text-decoration-none" to ="/forgotpassword"> <span  style={{cursor: 'pointer', color: 'purple'}}>Forgot Password?</span></Link>
                                         </div>
                                         <div className="d-flex" style={{marginTop: '-10px'}}>
                                         <input style={{fontFamily: "Source Sans Pro"}} className="btn btn-outline-dark w-50" type="button" value="Cancel" onClick={() => this.setState({ selectedEditPostId: 0 })} />
