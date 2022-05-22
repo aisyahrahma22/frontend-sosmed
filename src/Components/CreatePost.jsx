@@ -68,10 +68,10 @@ export class CreatePost extends Component{
             formData.append('image', this.state.addImageFile)
             formData.append('data', JSON.stringify(data))
 
-            // if(data.caption == '') throw { message: 'Caption Empty!' }
+           
 
             if(data.caption == ''){
-                // alert('caption empty')
+               
                 Swal.fire({
                     title: 'Error!',
                     text: 'Caption empty',
@@ -96,7 +96,7 @@ export class CreatePost extends Component{
                     console.log('ini err uploud',err)
                     Swal.fire({
                         title: 'Error!',
-                        text: err.message,
+                        text: 'Uploud Photo Failed',
                         icon: 'error',
                         confirmButtonText: 'Okay!'
                     })

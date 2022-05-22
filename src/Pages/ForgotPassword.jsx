@@ -62,6 +62,7 @@ const ForgotPassword = ({user}) => {
      
       Axios.post(`${API_URL}/user/resendpassword`, data, headers)
       .then((res) => {
+        console.log('ini res', res)
         setSubmitLoading(false);
 
         if (res.data.errMessage) {
@@ -72,9 +73,10 @@ const ForgotPassword = ({user}) => {
           setInputValues({ email: "" });
         }
       }).catch((err) => {
+        console.log('ini err', err)
           setResMessage({
             ...resMessage,
-            error: "Server error, please try again later",
+            error: 'Account Not Found',
           });
       })
 
@@ -136,10 +138,10 @@ const ForgotPassword = ({user}) => {
                             className="alert alert-secondary mt-1 d-flex flex-column justify-content-center pt-3 pb-1"
                             role="alert"  
                           >
-                            {/* <div className="spinner-border mt-1 mb-3" role="status">
+                            <div className="spinner-border mt-1 mb-3" role="status">
                               <span className="visually-hidden">Loading...</span>
-                            </div> */}
-                            <p>Submitting...</p>
+                            </div>
+                            
                           </div>
                         )}
                         {resMessage.success && (

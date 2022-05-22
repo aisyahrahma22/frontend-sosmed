@@ -91,7 +91,14 @@ function Home({user}) {
                        <div className='col-3'  style={{fontSize: '14px', fontFamily: "Source Sans Pro"}}>
                             <span className="d-flex flex-column">
                             <div className='mb-2 text-center'>Click button here to activate the feature</div>
-                            <input  className="btn btn-outline-dark" type="button" value="Resend Email Confirmation" onClick={() => onResendEmail()} />     
+                            <button type="button" className="btn btn-outline-dark" disabled={user.loading} onClick={() => onResendEmail()}>
+                                {
+                                    user.loading?
+                                        'Loading'
+                                    :
+                                        'Resend Email Confirmation'
+                                }
+                            </button>    
                         </span>
                        </div>
                     } 

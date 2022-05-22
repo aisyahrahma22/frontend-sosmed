@@ -66,7 +66,7 @@ function HomePost({post, pageNumber}) {
             }
         }
 
-        axios.get(`http://localhost:5000/user//userverify`,  headers)
+        axios.get(`http://localhost:5000/user/userverify`,  headers)
             .then((res) => {
                 setVerify(res.data[0].is_confirmed)
             }).catch((err) => {

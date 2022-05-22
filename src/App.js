@@ -13,7 +13,6 @@ import ForgotPassword from './Pages/ForgotPassword';
 import Header from './Components/Header';
 import DetailPost from './Components/DetailPost';
 import DetailProfile from './Components/DetailProfile';
-import Navbar from './Components/Navbar';
 
 // Route
 import { Routes, Route, useLocation } from 'react-router-dom'

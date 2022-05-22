@@ -208,8 +208,7 @@ class Profile extends Component {
                         </div>
                         <div className='description mb-2' style={{fontSize: '18px'}}>
                         {item.bio}
-                       {/* <div> Pitchfork tilde lomo chillwave keytar, tofu chartreuse letterpress mumblecore.mixtape palo santo kit</div> */}
-                       
+                      
                         </div>
                         <div className='d-flex'>
                             <div className='mt-1' style={{height: '15px', width: '15px', backgroundColor: 'grey', borderRadius: '50%'}}></div>

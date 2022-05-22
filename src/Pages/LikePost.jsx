@@ -134,36 +134,6 @@ class LikedPost extends React.Component{
     }
 
 
-    // onCommentEditChange = (id) => {
-    //     let token = localStorage.getItem('myTkn')
-    //     const headers = {
-    //         headers: { 
-    //             'Authorization': `${token}`,
-    //         }
-    //     }
-    //     axios.put(`${API_URL}/post/editcomment/${id}`,headers)
-    //     .then((res) => {
-    //         this.setState({ editComment: res.data })
-    //     }).catch((err) => {
-    //         console.log(err)
-    //     })
-    // }
-
-    // onCommentDeleteChange = (id) => {
-    //     let token = localStorage.getItem('myTkn')
-    //     const headers = {
-    //         headers: { 
-    //             'Authorization': `${token}`,
-    //         }
-    //     }
-    //     axios.delete(`${API_URL}/post/deletecomment/${id}`,headers)
-    //     .then((res) => {
-    //         this.setState({ deleteComment: res.data })
-    //     }).catch((err) => {
-    //         console.log(err)
-    //     })
-    // }
-
     renderListPosts = () => {
         return this.state.listPosts.map((item, id) => {
             if(item.id !== this.state.selectedEditPostId) {

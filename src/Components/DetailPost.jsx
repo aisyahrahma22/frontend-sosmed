@@ -249,17 +249,14 @@ const DetailPost = ({user}) => {
                                             {item.comment}
                                             </span>
                                         <span className='mx-2 text-muted' style={{fontSize: '10px', fontFamily: "Source Sans Pro"}}>
-                                        {/* {moment(item.created_at).format('LLL')} */}
-                                        {/* {moment(item.created_at).startOf('day').fromNow()} */}
+                                       
                                         </span>
                                         </div>
                                         <div className='text-muted' style={{fontSize: '10px', fontFamily: "Source Sans Pro"}}>
                                         {moment(item.created_at).startOf('day').fromNow()}
                                         </div>
                                    
-                                    {/* <span className="material-icons"  style={{cursor: 'pointer', fontSize: '14px'}} onClick={() => onBtnDeletePostClick(item.postId)}>
-                                    close
-                                    </span> */}
+                                   
                                     </div>
                             ))}
                             {comment.length > SHOW_BY_DEFAULT && (

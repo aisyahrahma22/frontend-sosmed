@@ -134,8 +134,7 @@ const DetailProfile = ({user}) => {
                      </div>
                      <div className='description mb-2' style={{fontSize: '18px'}}>
                      {users.usersData.bio}
-                    {/* <div> Pitchfork tilde lomo chillwave keytar, tofu chartreuse letterpress mumblecore.mixtape palo santo kit</div> */}
-                    
+                   
                      </div>
                      <div className='d-flex'>
                          <div className='mt-1' style={{height: '15px', width: '15px', backgroundColor: 'grey', borderRadius: '50%'}}></div>
@@ -166,16 +165,7 @@ const DetailProfile = ({user}) => {
                                 </div>
                             </div>
                             <div>
-                            {/* {likes.includes(item.id)  ? (
-                                <img src={HeartFilled} alt="" id="cardIconDet" onClick={() => handleClick(item.id)} />
-                                ) : (
-                                <img
-                                    src={Heart}
-                                    alt="heart"
-                                    id="cardIconDet"
-                                    onClick={() => handleClick(item.id)}
-                                />
-                            )} */}
+                          
                             </div>
                             <span className='mt-2' style={{color: 'black', fontSize: '14px', fontWeight: 'light', fontFamily: "Source Sans Pro"}}>
                             {item.caption}
